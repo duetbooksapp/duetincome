@@ -118,6 +118,23 @@ body.dark-mode .login-card input{background:#1a1a2e;color:var(--txt);border-colo
 .login-error{color:#c0392b;font-size:12px;text-align:center;margin-top:12px;display:none}
 .sync-dot{width:8px;height:8px;border-radius:50%;background:var(--grn);display:inline-block;margin-right:6px;vertical-align:middle}
 
+/* ── Feedback Button + Modal ── */
+.fb-fab{position:fixed;bottom:24px;left:24px;width:50px;height:50px;border-radius:50%;background:var(--dgrn);color:#fff;border:none;font-size:22px;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,.25);z-index:9000;transition:transform .2s;padding:0;display:flex;align-items:center;justify-content:center}
+.fb-fab:hover{transform:scale(1.08)}
+.fb-modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.4);z-index:9001;display:none;justify-content:center;align-items:center;padding:20px}
+.fb-modal-overlay.show{display:flex}
+.fb-modal-box{background:var(--card);color:var(--txt);border-radius:12px;padding:24px;max-width:520px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.25);max-height:85vh;overflow-y:auto}
+.fb-item{background:var(--card);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow);margin-bottom:8px;border-left:4px solid var(--border)}
+.fb-item.fb-bug{border-left-color:#c0392b}
+.fb-item.fb-suggestion{border-left-color:var(--pri)}
+.fb-item.fb-question{border-left-color:var(--amb)}
+.fb-badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;color:#fff}
+.fb-badge-new{background:var(--amb)}
+.fb-badge-reviewing{background:var(--pri)}
+.fb-badge-resolved{background:var(--grn)}
+.fb-badge-wontfix{background:#999}
+@media(max-width:700px){.fb-fab{bottom:16px;left:16px;width:44px;height:44px;font-size:20px}}
+
 /* ── Mobile ── */
 @media(max-width:700px){
  .topbar{padding:10px 14px}
@@ -192,6 +209,14 @@ body.dark-mode .login-card input{background:#1a1a2e;color:var(--txt);border-colo
 <div id="p1" class="panel"></div>
 <div id="p2" class="panel"></div>
 <div id="p3" class="panel"></div>
+
+<!-- ═══ FLOATING FEEDBACK BUTTON ═══ -->
+<button class="fb-fab" onclick="openFeedbackModal()" title="Submit Feedback">💡</button>
+
+<!-- ═══ FEEDBACK MODAL ═══ -->
+<div id="fbModal" class="fb-modal-overlay" onclick="if(event.target===this)closeFeedbackModal()">
+ <div class="fb-modal-box" id="fbModalContent"></div>
+</div>
 
 </div><!-- /appShell -->
 
@@ -366,6 +391,186 @@ function enterApp(){
  document.getElementById('topAgentInfo').textContent = currentAgent.name + ' | ' + currentAgent.branch;
  setSync('synced');
  renderCDConversion();
+ loadFeedback().catch(function(e){ console.error('Feedback load error:', e); });
+}
+
+// ═══════════════════════════════════════════════════
+// FEEDBACK SYSTEM
+// ═══════════════════════════════════════════════════
+var feedbackItems = [];
+var nextFbId = 1;
+
+function isAdmin(){
+ return currentAgent && currentAgent.id === 'steve_maxim';
+}
+
+function fbFeedbackPath(id){
+ return FIREBASE_URL + '/_feedback' + (id ? '/' + id : '') + '.json';
+}
+
+function fbSaveFeedback(item){
+ setSync('saving');
+ return fetch(fbFeedbackPath(item.id), {method:'PUT', body: JSON.stringify(item)})
+  .then(function(r){ return r.json(); })
+  .then(function(d){ setSync('synced'); return d; })
+  .catch(function(e){ setSync('error'); console.error('Feedback save error:', e); });
+}
+
+function fbLoadAllFeedback(){
+ return fetch(fbFeedbackPath(null)).then(function(r){ return r.json(); }).then(function(data){
+  if(!data) return [];
+  var arr = [];
+  Object.keys(data).forEach(function(k){ if(data[k]) arr.push(data[k]); });
+  return arr;
+ }).catch(function(){ return []; });
+}
+
+async function loadFeedback(){
+ feedbackItems = await fbLoadAllFeedback();
+ nextFbId = 1;
+ feedbackItems.forEach(function(f){
+  var num = parseInt(String(f.id).replace('fb_',''));
+  if(!isNaN(num) && num >= nextFbId) nextFbId = num + 1;
+ });
+}
+
+function openFeedbackModal(){
+ var admin = isAdmin();
+ var h = '';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">';
+ h += '<div style="font-size:18px;font-weight:700;color:var(--pri)">💡 Submit Feedback</div>';
+ h += '<button onclick="closeFeedbackModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)">&times;</button>';
+ h += '</div>';
+
+ h += '<div style="font-size:11px;color:var(--muted);margin-bottom:12px;padding:6px 10px;background:var(--ptint);border-radius:4px">From: <b>'+getActiveTabName()+'</b> · '+(currentAgent?currentAgent.name:'')+'</div>';
+
+ h += '<div class="form-group" style="margin-bottom:10px"><label>Type</label>';
+ h += '<select id="fbm_type" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;background:var(--card);color:var(--txt)"><option value="bug">Bug Report</option><option value="suggestion">Suggestion</option><option value="question">Question</option></select></div>';
+
+ h += '<div style="margin-bottom:10px"><label style="font-size:11px;font-weight:600;color:var(--muted);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px">Priority</label>';
+ h += '<div style="display:flex;gap:8px">';
+ h += '<label style="flex:1;text-align:center;padding:8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12px"><input type="radio" name="fbm_pri" value="low" style="display:none"><span>Low</span></label>';
+ h += '<label style="flex:1;text-align:center;padding:8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12px"><input type="radio" name="fbm_pri" value="medium" checked style="display:none"><span style="font-weight:600;color:var(--amb)">Medium</span></label>';
+ h += '<label style="flex:1;text-align:center;padding:8px;border:1px solid var(--border);border-radius:6px;cursor:pointer;font-size:12px"><input type="radio" name="fbm_pri" value="high" style="display:none"><span>High</span></label>';
+ h += '</div></div>';
+
+ h += '<div class="form-group" style="margin-bottom:10px"><label>Title</label>';
+ h += '<input id="fbm_title" placeholder="Short summary" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;background:var(--card);color:var(--txt)"></div>';
+
+ h += '<div class="form-group" style="margin-bottom:14px"><label>Description</label>';
+ h += '<textarea id="fbm_desc" rows="4" placeholder="Details, steps to reproduce, or your suggestion..." style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;resize:vertical;background:var(--card);color:var(--txt)"></textarea></div>';
+
+ h += '<button class="btn btn-pri" style="width:100%;padding:10px;font-size:14px" onclick="submitFeedbackModal()">Submit Feedback</button>';
+
+ if(admin){
+  var newCount = feedbackItems.filter(function(f){ return f.status==='new'; }).length;
+  h += '<div style="text-align:center;margin-top:12px">';
+  h += '<a onclick="showAdminFeedback()" style="font-size:12px;color:var(--pri);cursor:pointer;text-decoration:underline">View All Feedback'+(newCount > 0 ? ' ('+newCount+' new)' : '')+'</a>';
+  h += '</div>';
+ }
+
+ document.getElementById('fbModalContent').innerHTML = h;
+ document.getElementById('fbModal').className = 'fb-modal-overlay show';
+
+ // Highlight selected priority button
+ setTimeout(function(){
+  document.querySelectorAll('input[name="fbm_pri"]').forEach(function(r){
+   r.parentElement.style.background = r.checked ? 'var(--ptint)' : '';
+   r.addEventListener('change', function(){
+    document.querySelectorAll('input[name="fbm_pri"]').forEach(function(r2){
+     r2.parentElement.style.background = r2.checked ? 'var(--ptint)' : '';
+    });
+   });
+  });
+ }, 50);
+}
+
+function closeFeedbackModal(){
+ document.getElementById('fbModal').className = 'fb-modal-overlay';
+}
+
+function submitFeedbackModal(){
+ var title = (document.getElementById('fbm_title').value || '').trim();
+ var desc = (document.getElementById('fbm_desc').value || '').trim();
+ if(!title){ showToast('Please enter a title', 2500); return; }
+
+ var priEl = document.querySelector('input[name="fbm_pri"]:checked');
+ var item = {
+  id: 'fb_' + nextFbId++,
+  type: document.getElementById('fbm_type').value,
+  priority: priEl ? priEl.value : 'medium',
+  area: getActiveTabName(),
+  title: title,
+  description: desc,
+  agentId: currentAgent ? currentAgent.id : 'unknown',
+  agentName: currentAgent ? currentAgent.name : 'Unknown',
+  status: 'new',
+  timestamp: new Date().toISOString()
+ };
+
+ feedbackItems.push(item);
+ fbSaveFeedback(item);
+ showToast('✓ Feedback submitted: ' + title, 3500);
+ closeFeedbackModal();
+}
+
+function showAdminFeedback(){
+ var items = feedbackItems.slice().sort(function(a,b){ return (b.timestamp||'').localeCompare(a.timestamp||''); });
+ var h = '';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">';
+ h += '<div style="font-size:18px;font-weight:700;color:var(--pri)">All Feedback ('+items.length+')</div>';
+ h += '<button onclick="closeFeedbackModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)">&times;</button>';
+ h += '</div>';
+
+ if(items.length === 0){
+  h += '<div style="text-align:center;padding:30px;color:var(--muted);font-size:13px">No feedback submitted yet.</div>';
+ } else {
+  items.forEach(function(f){
+   var typeLabel = f.type === 'bug' ? '🐛 Bug' : f.type === 'suggestion' ? '💡 Suggestion' : '❓ Question';
+   var date = f.timestamp ? new Date(f.timestamp).toLocaleDateString() + ' ' + new Date(f.timestamp).toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}) : '';
+   var statusClass = 'fb-badge-' + (f.status || 'new');
+   h += '<div class="fb-item fb-'+f.type+'">';
+   h += '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:6px;gap:8px">';
+   h += '<div style="font-weight:600;font-size:13px;flex:1">'+escapeHtml(f.title)+'</div>';
+   h += '<span class="fb-badge '+statusClass+'">'+(f.status||'new').toUpperCase()+'</span>';
+   h += '</div>';
+   h += '<div style="font-size:10px;color:var(--muted);margin-bottom:6px">'+typeLabel+' · '+(f.priority||'medium')+' priority · '+(f.area||'')+' · '+escapeHtml(f.agentName||'')+' · '+date+'</div>';
+   if(f.description) h += '<div style="font-size:12px;color:var(--muted);white-space:pre-wrap;margin-bottom:6px">'+escapeHtml(f.description)+'</div>';
+   h += '<div style="display:flex;gap:6px;margin-top:6px;flex-wrap:wrap">';
+   ['new','reviewing','resolved','wontfix'].forEach(function(s){
+    if(s !== f.status){
+     h += '<button class="btn btn-outline btn-sm" style="font-size:10px;padding:3px 8px" onclick="updateFeedbackStatus(\''+f.id+'\',\''+s+'\')">Mark '+s+'</button>';
+    }
+   });
+   h += '<button class="btn btn-outline btn-sm" style="font-size:10px;padding:3px 8px;color:#c0392b" onclick="deleteFeedback(\''+f.id+'\')">Delete</button>';
+   h += '</div>';
+   h += '</div>';
+  });
+ }
+
+ h += '<div style="text-align:center;margin-top:14px"><button class="btn btn-outline" onclick="openFeedbackModal()" style="font-size:12px">← Back to Submit</button></div>';
+
+ document.getElementById('fbModalContent').innerHTML = h;
+}
+
+function escapeHtml(s){
+ if(s == null) return '';
+ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+function updateFeedbackStatus(id, newStatus){
+ var item = feedbackItems.find(function(f){ return f.id === id; });
+ if(!item) return;
+ item.status = newStatus;
+ fbSaveFeedback(item);
+ showAdminFeedback();
+}
+
+function deleteFeedback(id){
+ if(!confirm('Delete this feedback permanently?')) return;
+ feedbackItems = feedbackItems.filter(function(f){ return f.id !== id; });
+ fetch(fbFeedbackPath(id), {method:'DELETE'}).catch(function(e){ console.error('Delete feedback error:', e); });
+ showAdminFeedback();
 }
 
 // One-time migration: if legacy (un-prefixed) keys exist and per-agent keys don't,
@@ -453,7 +658,9 @@ function toggleDarkMode(){
 })();
 
 // ═══ TAB SYSTEM ═══
+var activeTab = 0;
 function showTab(i){
+ activeTab = i;
  var panels = document.querySelectorAll('.panel');
  var tabs = document.querySelectorAll('.tab');
  panels.forEach(function(p,idx){ p.classList.toggle('active', idx===i); });
@@ -462,6 +669,10 @@ function showTab(i){
  if(i===1) renderAnnuityVsAnnuity();
  if(i===2) renderIndexingTool();
  if(i===3) renderConversations();
+}
+function getActiveTabName(){
+ var tabNames = ['CD → Annuity','Annuity vs Annuity','S&P vs Annuity','Conversations'];
+ return tabNames[activeTab] || 'Unknown';
 }
 
 // ═══ SETTINGS ═══
