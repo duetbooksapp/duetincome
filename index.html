@@ -100,6 +100,24 @@ tr:hover td{background:rgba(83,74,183,.03)}
 .panel{display:none;padding:16px;max-width:1100px;margin:0 auto}
 .panel.active{display:block}
 
+/* ── Login Screen ── */
+.login-screen{display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px;background:linear-gradient(135deg,#534AB7 0%,#1D9E75 100%)}
+.login-card{background:#fff;border-radius:16px;padding:40px;max-width:420px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+body.dark-mode .login-card{background:#252540;color:var(--txt)}
+.login-card h1{color:var(--pri);font-size:28px;margin-bottom:4px;text-align:center}
+body.dark-mode .login-card h1{color:#8B80E0}
+.login-card .subtitle{color:var(--muted);font-size:13px;text-align:center;margin-bottom:30px}
+.login-card label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:4px;margin-top:16px;text-transform:uppercase;letter-spacing:.5px}
+.login-card input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:var(--radius);font-size:14px;font-family:inherit}
+body.dark-mode .login-card input{background:#1a1a2e;color:var(--txt);border-color:var(--border)}
+.login-card input:focus{outline:none;border-color:var(--pri);box-shadow:0 0 0 3px rgba(83,74,183,.15)}
+.login-btn{width:100%;padding:12px;background:var(--pri);color:#fff;border:none;border-radius:var(--radius);font-size:15px;font-weight:600;cursor:pointer;margin-top:24px;transition:background .2s}
+.login-btn:hover{background:#4339A0}
+.login-toggle{text-align:center;margin-top:16px;font-size:13px;color:var(--muted)}
+.login-toggle a{color:var(--pri);cursor:pointer;text-decoration:underline}
+.login-error{color:#c0392b;font-size:12px;text-align:center;margin-top:12px;display:none}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:var(--grn);display:inline-block;margin-right:6px;vertical-align:middle}
+
 /* ── Mobile ── */
 @media(max-width:700px){
  .topbar{padding:10px 14px}
@@ -109,19 +127,55 @@ tr:hover td{background:rgba(83,74,183,.03)}
  .panel{padding:10px}
  table{font-size:11px}
  th,td{padding:5px 6px}
+ .login-card{padding:28px 22px}
 }
 </style>
 </head>
 <body>
 
+<!-- ═══ LOGIN SCREEN ═══ -->
+<div id="loginScreen" class="login-screen">
+ <div class="login-card">
+  <h1>DuetIncome</h1>
+  <div class="subtitle">Smart Retirement Comparison Tools</div>
+  <div id="loginMode">
+   <label>Full Name</label>
+   <input id="login_name" type="text" placeholder="First Last" autocomplete="name">
+   <label>PIN</label>
+   <input id="login_pin" type="password" placeholder="4-6 digit PIN" maxlength="6" inputmode="numeric">
+   <button class="login-btn" onclick="doLogin()">Sign In</button>
+   <div class="login-toggle">New here? <a onclick="toggleLoginMode()">Create Account</a></div>
+   <div id="loginError" class="login-error"></div>
+  </div>
+  <div id="registerMode" style="display:none">
+   <label>Full Name</label>
+   <input id="reg_name" type="text" placeholder="First Last" autocomplete="name">
+   <label>Branch</label>
+   <input id="reg_branch" type="text" placeholder="e.g. Venice">
+   <label>PIN</label>
+   <input id="reg_pin" type="password" placeholder="4-6 digits" maxlength="6" inputmode="numeric">
+   <label>Confirm PIN</label>
+   <input id="reg_pin2" type="password" placeholder="Confirm PIN" maxlength="6" inputmode="numeric">
+   <button class="login-btn" onclick="doRegister()">Create Account</button>
+   <div class="login-toggle">Already have an account? <a onclick="toggleLoginMode()">Sign In</a></div>
+   <div id="regError" class="login-error"></div>
+  </div>
+ </div>
+</div>
+
+<!-- ═══ MAIN APP (hidden until login) ═══ -->
+<div id="appShell" style="display:none">
+
 <!-- ═══ TOPBAR ═══ -->
 <div class="topbar">
  <div>
   <h1>DuetIncome</h1>
-  <div class="topbar-sub">Smart Retirement Comparison Tools — Steve Maxim | AAA Life Specialist</div>
+  <div class="topbar-sub" id="topAgentInfo">Smart Retirement Comparison Tools</div>
  </div>
  <div class="topbar-right">
+  <span id="syncLabel" style="font-size:11px;opacity:.8"><span class="sync-dot" id="syncDot"></span>Synced</span>
   <button class="topbar-btn" onclick="toggleDarkMode()" id="darkBtn">🌙</button>
+  <button class="topbar-btn" onclick="doLogout()">Logout</button>
  </div>
 </div>
 
@@ -130,12 +184,16 @@ tr:hover td{background:rgba(83,74,183,.03)}
  <div class="tab active" onclick="showTab(0)">CD → Annuity</div>
  <div class="tab" onclick="showTab(1)">Annuity vs Annuity</div>
  <div class="tab" onclick="showTab(2)">S&P vs Annuity</div>
+ <div class="tab" onclick="showTab(3)">Conversations</div>
 </div>
 
 <!-- ═══ PANELS ═══ -->
 <div id="p0" class="panel active"></div>
 <div id="p1" class="panel"></div>
 <div id="p2" class="panel"></div>
+<div id="p3" class="panel"></div>
+
+</div><!-- /appShell -->
 
 <div id="toastBox"></div>
 
@@ -155,6 +213,229 @@ function showToast(msg, dur){
  d.innerHTML = msg;
  document.getElementById('toastBox').appendChild(d);
  setTimeout(function(){ d.style.opacity='0'; setTimeout(function(){ d.remove(); },300); }, dur);
+}
+
+// ═══════════════════════════════════════════════════
+// AUTHENTICATION + FIREBASE SYNC
+// ═══════════════════════════════════════════════════
+var FIREBASE_URL = 'https://duet-crm-default-rtdb.firebaseio.com/duetincome';
+var currentAgent = null;
+
+async function sha256(str){
+ var buf = new TextEncoder().encode(str);
+ var hash = await crypto.subtle.digest('SHA-256', buf);
+ return Array.from(new Uint8Array(hash)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+}
+
+function makeAgentId(name){
+ return name.trim().toLowerCase().replace(/[^a-z0-9]/g,'_').replace(/_+/g,'_').replace(/^_|_$/g,'');
+}
+
+function fbPath(key){
+ return FIREBASE_URL + '/' + currentAgent.id + '/' + key + '.json';
+}
+
+function setSync(state){
+ var dot = document.getElementById('syncDot');
+ var lbl = document.getElementById('syncLabel');
+ if(!dot || !lbl) return;
+ if(state === 'saving'){ dot.style.background = 'var(--amb)'; lbl.childNodes[1] && (lbl.childNodes[1].nodeValue = 'Saving...'); lbl.lastChild && (lbl.lastChild.nodeValue = 'Saving...'); lbl.innerHTML = '<span class="sync-dot" id="syncDot" style="background:var(--amb)"></span>Saving...'; }
+ else if(state === 'error'){ lbl.innerHTML = '<span class="sync-dot" id="syncDot" style="background:#c0392b"></span>Error'; }
+ else { lbl.innerHTML = '<span class="sync-dot" id="syncDot" style="background:var(--grn)"></span>Synced'; }
+}
+
+function fbSave(key, data){
+ if(!currentAgent) return Promise.resolve();
+ setSync('saving');
+ return fetch(fbPath(key), {method:'PUT', body: JSON.stringify(data)})
+  .then(function(r){ return r.json(); })
+  .then(function(d){ setSync('synced'); return d; })
+  .catch(function(e){ setSync('error'); console.error('fbSave error:', e); });
+}
+
+function fbLoad(key){
+ if(!currentAgent) return Promise.resolve(null);
+ return fetch(fbPath(key))
+  .then(function(r){ return r.json(); })
+  .catch(function(){ return null; });
+}
+
+function toggleLoginMode(){
+ var lm = document.getElementById('loginMode');
+ var rm = document.getElementById('registerMode');
+ if(lm.style.display === 'none'){ lm.style.display = 'block'; rm.style.display = 'none'; }
+ else { lm.style.display = 'none'; rm.style.display = 'block'; }
+ document.getElementById('loginError').style.display = 'none';
+ document.getElementById('regError').style.display = 'none';
+}
+
+async function doRegister(){
+ var name = document.getElementById('reg_name').value.trim();
+ var branch = document.getElementById('reg_branch').value.trim();
+ var pin = document.getElementById('reg_pin').value.trim();
+ var pin2 = document.getElementById('reg_pin2').value.trim();
+ var errEl = document.getElementById('regError');
+
+ if(!name || name.split(' ').length < 2){ errEl.textContent = 'Please enter your full name (first and last)'; errEl.style.display='block'; return; }
+ if(!branch){ errEl.textContent = 'Please enter your branch'; errEl.style.display='block'; return; }
+ if(!pin || pin.length < 4){ errEl.textContent = 'PIN must be at least 4 digits'; errEl.style.display='block'; return; }
+ if(pin !== pin2){ errEl.textContent = 'PINs do not match'; errEl.style.display='block'; return; }
+
+ var agentId = makeAgentId(name);
+ try {
+  var existing = await fetch(FIREBASE_URL + '/' + agentId + '/profile.json').then(function(r){return r.json();});
+  if(existing && existing.name){
+   errEl.textContent = 'An account with that name already exists. Please sign in.';
+   errEl.style.display = 'block';
+   return;
+  }
+ } catch(e){}
+
+ var pinHash = await sha256(pin);
+ var profile = { name: name, branch: branch, pin: pinHash, created: new Date().toISOString() };
+ await fetch(FIREBASE_URL + '/' + agentId + '/profile.json', {method:'PUT', body: JSON.stringify(profile)});
+
+ currentAgent = { id: agentId, name: name, branch: branch };
+ sessionStorage.setItem('doi_agent', JSON.stringify(currentAgent));
+
+ var remembered = JSON.parse(localStorage.getItem('doi_remembered_agents') || '[]');
+ if(!remembered.find(function(a){return a.id===agentId})){
+  remembered.push({id:agentId, name:name});
+  localStorage.setItem('doi_remembered_agents', JSON.stringify(remembered));
+ }
+
+ await migrateLegacyLocalData();
+ await loadAgentData();
+ enterApp();
+ showToast('Account created. Welcome, ' + name.split(' ')[0] + '!', 5000);
+}
+
+async function doLogin(){
+ var name = document.getElementById('login_name').value.trim();
+ var pin = document.getElementById('login_pin').value.trim();
+ var errEl = document.getElementById('loginError');
+
+ if(!name){ errEl.textContent = 'Please enter your name'; errEl.style.display='block'; return; }
+ if(!pin){ errEl.textContent = 'Please enter your PIN'; errEl.style.display='block'; return; }
+
+ var agentId = makeAgentId(name);
+ try {
+  var profile = await fetch(FIREBASE_URL + '/' + agentId + '/profile.json').then(function(r){return r.json();});
+  if(!profile || !profile.name){
+   errEl.textContent = 'No account found. Check your name or create a new account.';
+   errEl.style.display = 'block';
+   return;
+  }
+  var pinHash = await sha256(pin);
+  if(pinHash !== profile.pin){
+   errEl.textContent = 'Incorrect PIN. Please try again.';
+   errEl.style.display = 'block';
+   return;
+  }
+  currentAgent = { id: agentId, name: profile.name, branch: profile.branch };
+  sessionStorage.setItem('doi_agent', JSON.stringify(currentAgent));
+
+  var remembered = JSON.parse(localStorage.getItem('doi_remembered_agents') || '[]');
+  if(!remembered.find(function(a){return a.id===agentId})){
+   remembered.push({id:agentId, name:profile.name});
+   localStorage.setItem('doi_remembered_agents', JSON.stringify(remembered));
+  }
+
+  await migrateLegacyLocalData();
+  await loadAgentData();
+  enterApp();
+  showToast('Welcome back, ' + profile.name.split(' ')[0] + '!', 4000);
+ } catch(e){
+  console.error('Login error:', e);
+  errEl.textContent = 'Connection error: ' + (e.message || e);
+  errEl.style.display = 'block';
+ }
+}
+
+function doLogout(){
+ sessionStorage.removeItem('doi_agent');
+ currentAgent = null;
+ document.getElementById('appShell').style.display = 'none';
+ document.getElementById('loginScreen').style.display = 'flex';
+ document.getElementById('login_pin').value = '';
+}
+
+function enterApp(){
+ document.getElementById('loginScreen').style.display = 'none';
+ document.getElementById('appShell').style.display = 'block';
+ document.getElementById('topAgentInfo').textContent = currentAgent.name + ' | ' + currentAgent.branch;
+ setSync('synced');
+ renderCDConversion();
+}
+
+// One-time migration: if legacy (un-prefixed) keys exist and per-agent keys don't,
+// copy them into this agent's namespace. Runs on first login/register only.
+async function migrateLegacyLocalData(){
+ if(!currentAgent) return;
+ var id = currentAgent.id;
+ var pairs = [
+  ['cd_illustration_rates', 'doi_cd_rates_' + id],
+  ['cd_yearly_rates', 'doi_cd_yearly_rates_' + id],
+  ['ava_illustration_rates', 'doi_ava_rates_' + id],
+  ['annuity_features', 'doi_annuity_features_' + id],
+  ['duet_idx_inputs2', 'doi_idx_inputs_' + id]
+ ];
+ var migrated = false;
+ pairs.forEach(function(p){
+  var legacy = localStorage.getItem(p[0]);
+  var current = localStorage.getItem(p[1]);
+  if(legacy && !current){
+   localStorage.setItem(p[1], legacy);
+   migrated = true;
+  }
+ });
+ if(migrated){
+  // Push migrated data to Firebase
+  try {
+   await fbSave('cd_illustration_rates', JSON.parse(localStorage.getItem('doi_cd_rates_'+id) || '{}'));
+   await fbSave('cd_yearly_rates', JSON.parse(localStorage.getItem('doi_cd_yearly_rates_'+id) || '{}'));
+   await fbSave('ava_illustration_rates', JSON.parse(localStorage.getItem('doi_ava_rates_'+id) || '{}'));
+   await fbSave('annuity_features', JSON.parse(localStorage.getItem('doi_annuity_features_'+id) || '{}'));
+   await fbSave('duet_idx_inputs2', JSON.parse(localStorage.getItem('doi_idx_inputs_'+id) || 'null'));
+  } catch(e){ console.error('Migration push error:', e); }
+ }
+}
+
+// Load all agent data from Firebase (falls back to local cache)
+async function loadAgentData(){
+ if(!currentAgent) return;
+ var id = currentAgent.id;
+ try {
+  var fbCD = await fbLoad('cd_illustration_rates');
+  var fbCDY = await fbLoad('cd_yearly_rates');
+  var fbAVA = await fbLoad('ava_illustration_rates');
+  var fbFeat = await fbLoad('annuity_features');
+  var fbIdx = await fbLoad('duet_idx_inputs2');
+
+  cdIllustrationRates = fbCD || JSON.parse(localStorage.getItem('doi_cd_rates_' + id) || '{}');
+  cdYearlyRates = fbCDY || JSON.parse(localStorage.getItem('doi_cd_yearly_rates_' + id) || '{}');
+  avaIllustrationRates = fbAVA || JSON.parse(localStorage.getItem('doi_ava_rates_' + id) || '{}');
+  // Re-apply default AVA rates for any missing products
+  if(typeof avaDefaultRates !== 'undefined'){
+   Object.keys(avaDefaultRates).forEach(function(k){ if(!avaIllustrationRates[k]) avaIllustrationRates[k] = avaDefaultRates[k]; });
+  }
+  annuityFeatures = fbFeat || JSON.parse(localStorage.getItem('doi_annuity_features_' + id) || '{}');
+  // Seed defaults for any missing annuity features
+  if(typeof defaultAnnuityFeatures !== 'undefined'){
+   Object.keys(defaultAnnuityFeatures).forEach(function(k){ if(!annuityFeatures[k]) annuityFeatures[k] = defaultAnnuityFeatures[k]; });
+  }
+  var idxData = fbIdx !== null && fbIdx !== undefined ? fbIdx : JSON.parse(localStorage.getItem('doi_idx_inputs_' + id) || 'null');
+  if(idxData) idxInputs = idxData;
+
+  // Refresh local caches
+  localStorage.setItem('doi_cd_rates_' + id, JSON.stringify(cdIllustrationRates));
+  localStorage.setItem('doi_cd_yearly_rates_' + id, JSON.stringify(cdYearlyRates));
+  localStorage.setItem('doi_ava_rates_' + id, JSON.stringify(avaIllustrationRates));
+  localStorage.setItem('doi_annuity_features_' + id, JSON.stringify(annuityFeatures));
+  if(idxData) localStorage.setItem('doi_idx_inputs_' + id, JSON.stringify(idxInputs));
+ } catch(e){
+  console.error('loadAgentData error:', e);
+ }
 }
 
 // ═══ DARK MODE ═══
@@ -180,6 +461,7 @@ function showTab(i){
  if(i===0) renderCDConversion();
  if(i===1) renderAnnuityVsAnnuity();
  if(i===2) renderIndexingTool();
+ if(i===3) renderConversations();
 }
 
 // ═══ SETTINGS ═══
@@ -218,12 +500,12 @@ function findProd(n){ return products.find(function(p){return p.name===n}) || pr
 // ═══════════════════════════════════════════════════
 
 var cdConvAnswers = {};
-var cdIllustrationRates = JSON.parse(localStorage.getItem('cd_illustration_rates') || '{}');
+var cdIllustrationRates = {}; // populated by loadAgentData() after login (annuity illustration rates, keyed by product)
+var cdYearlyRates = {}; // CD APY rates per year, keyed by annuity product name; populated by loadAgentData()
 var cdInputs = {amount:'100000', rate:'4', term:'1', product:'Platinum Annuity 5 External (ages 0-79)'};
 
 function saveCDInputs(){
  cdInputs.amount = document.getElementById('cd_amount')?.value || '100000';
- cdInputs.rate = document.getElementById('cd_rate')?.value || '4.5';
  cdInputs.term = document.getElementById('cd_term')?.value || '1';
  cdInputs.product = document.getElementById('cd_annuity')?.value || cdInputs.product;
 }
@@ -238,12 +520,34 @@ function saveIllustrationRates(){
   rates.push(parseFloat(el?.value) || 0);
  }
  cdIllustrationRates[sel] = rates;
- localStorage.setItem('cd_illustration_rates', JSON.stringify(cdIllustrationRates));
+ if(currentAgent){
+  localStorage.setItem('doi_cd_rates_' + currentAgent.id, JSON.stringify(cdIllustrationRates));
+  fbSave('cd_illustration_rates', cdIllustrationRates);
+ }
+}
+
+function saveCDYearlyRates(){
+ var sel = document.getElementById('cd_annuity')?.value || '';
+ if(!sel) return;
+ var termMatch = sel.match(/\d+/);
+ var termYears = termMatch ? parseInt(termMatch[0]) : 5;
+ if(termYears > 10) termYears = 5;
+ var rates = [];
+ for(var y=1;y<=termYears;y++){
+  var el = document.getElementById('cd_yrate_'+y);
+  rates.push(parseFloat(el?.value) || 0);
+ }
+ cdYearlyRates[sel] = rates;
+ if(currentAgent){
+  localStorage.setItem('doi_cd_yearly_rates_' + currentAgent.id, JSON.stringify(cdYearlyRates));
+  fbSave('cd_yearly_rates', cdYearlyRates);
+ }
+ showToast('CD yearly rates saved for '+sel, 2000);
 }
 
 function renderCDConversion(){
  var h = '<h2 style="margin-bottom:4px;color:var(--pri)">CD → Annuity Conversion Tool</h2>';
- h += '<p style="font-size:12px;color:var(--muted);margin-bottom:16px">Walk clients through a guided comparison using NEPQ questioning to help them see the advantages of annuities over CDs.</p>';
+ h += '<p style="font-size:12px;color:var(--muted);margin-bottom:16px">Walk clients through a guided comparison to help them see the advantages of annuities over CDs.</p>';
 
  // ═══ SIDE-BY-SIDE COMPARISON ═══
  h += '<div class="card" style="border:2px solid var(--pri)">';
@@ -256,7 +560,6 @@ function renderCDConversion(){
  });
  h += '</select></div>';
  h += '<div class="form-group"><label>Deposit Amount</label><input id="cd_amount" type="number" value="'+cdInputs.amount+'" onchange="saveCDInputs();renderCDConversion()" placeholder="$100,000" style="width:120px"></div>';
- h += '<div class="form-group"><label>CD Rate (APY %)</label><input id="cd_rate" type="number" value="'+cdInputs.rate+'" step="0.1" onchange="saveCDInputs();renderCDConversion()" style="width:80px"></div>';
  h += '<div class="form-group"><label>Annuity Product</label><select id="cd_annuity" onchange="saveCDInputs();renderCDConversion()">';
  products.filter(function(p){return p.cat==='Annuities'}).forEach(function(p){
   h += '<option value="'+p.name+'"'+(cdInputs.product===p.name?' selected':'')+'>'+p.name+'</option>';
@@ -265,7 +568,6 @@ function renderCDConversion(){
  h += '</div>';
 
  var amt = parseFloat(document.getElementById('cd_amount')?.value) || 100000;
- var cdRate = parseFloat(document.getElementById('cd_rate')?.value) || 4.5;
  var cdTerm = parseFloat(document.getElementById('cd_term')?.value) || 1;
  var selAnnuity = document.getElementById('cd_annuity')?.value || 'Platinum Annuity 5 External (ages 0-79)';
  var annProd = products.find(function(p){return p.name===selAnnuity});
@@ -275,11 +577,26 @@ function renderCDConversion(){
  var termYears = termMatch ? parseInt(termMatch[0]) : 5;
  if(termYears > 10) termYears = 5;
 
- // Illustration rates
+ // CD yearly rates — one rate per year of the term (matches annuity illustration rates)
+ var savedCdRates = cdYearlyRates[selAnnuity] || [];
+ h += '<div style="margin-bottom:12px;padding:10px;background:#e3f2fd;border-radius:var(--radius)">';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">';
+ h += '<b style="font-size:12px;color:#1565c0">CD Yearly APY Rates — '+termYears+' year projection</b>';
+ h += '<button class="btn btn-sm" style="background:#1565c0;color:#fff;font-size:10px;padding:2px 8px" onclick="saveCDYearlyRates();renderCDConversion()">Save CD Rates</button>';
+ h += '</div>';
+ h += '<div style="font-size:10px;color:var(--muted);margin-bottom:6px">Enter the CD APY you expect for each year — useful when rates are expected to drop (or rise) over the term.</div>';
+ h += '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:end">';
+ for(var cyr=1;cyr<=termYears;cyr++){
+  var savedCd = (savedCdRates[cyr-1] !== undefined && savedCdRates[cyr-1] !== null) ? savedCdRates[cyr-1] : '';
+  h += '<div class="form-group" style="margin:0;min-width:60px"><label style="font-size:9px">Year '+cyr+'</label><input id="cd_yrate_'+cyr+'" type="number" step="0.01" value="'+savedCd+'" placeholder="%" style="width:65px;font-size:11px;padding:3px"></div>';
+ }
+ h += '</div></div>';
+
+ // Annuity illustration rates
  var savedRates = cdIllustrationRates[selAnnuity] || [];
  h += '<div style="margin-bottom:12px;padding:10px;background:var(--gtint);border-radius:var(--radius)">';
  h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">';
- h += '<b style="font-size:12px;color:var(--dgrn)">Illustration Rates — '+selAnnuity+' ('+termYears+' year term)</b>';
+ h += '<b style="font-size:12px;color:var(--dgrn)">Annuity Illustration Rates — '+selAnnuity+' ('+termYears+' year term)</b>';
  h += '<button class="btn btn-grn btn-sm" onclick="saveIllustrationRates();renderCDConversion()" style="font-size:10px;padding:2px 8px">Save Rates</button>';
  h += '</div>';
  h += '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:end">';
@@ -297,6 +614,15 @@ function renderCDConversion(){
  }
  var hasIllusRates = illusRates.some(function(r){return r > 0});
 
+ // Collect live CD yearly rates (from inputs, fall back to saved)
+ var cdRates = [];
+ for(var cy=1;cy<=termYears;cy++){
+  var cel = document.getElementById('cd_yrate_'+cy);
+  var live = parseFloat(cel?.value);
+  cdRates.push(!isNaN(live) ? live : (savedCdRates[cy-1] || 0));
+ }
+ var cdRate = cdRates[0] || 0; // "current rate" for feature table / objections = Year 1 rate
+
  // Year-by-year growth comparison table
  if(hasIllusRates){
   h += '<div style="margin-bottom:12px">';
@@ -304,7 +630,8 @@ function renderCDConversion(){
   h += '<table><tr><th>Year</th><th style="background:#1565c0;color:#fff">CD Rate</th><th style="background:#1565c0;color:#fff">CD Balance</th><th style="background:#1565c0;color:#fff">CD Earnings (taxed)</th><th style="background:var(--grn);color:#fff">Annuity Rate</th><th style="background:var(--grn);color:#fff">Annuity Balance</th><th style="background:var(--grn);color:#fff">Annuity Earnings (tax-deferred)</th></tr>';
   var cdBal = amt, annBal = amt, totalCdEarnings = 0, totalAnnEarnings = 0;
   for(var y=1;y<=termYears;y++){
-   var cdEarn = cdBal * (cdRate/100);
+   var yrCdRate = cdRates[y-1] || 0;
+   var cdEarn = cdBal * (yrCdRate/100);
    var cdTaxHit = cdEarn * 0.24;
    cdBal += cdEarn;
    totalCdEarnings += cdEarn - cdTaxHit;
@@ -315,7 +642,7 @@ function renderCDConversion(){
    var winner = annBal > cdBal;
    h += '<tr>';
    h += '<td style="font-weight:700">Year '+y+'</td>';
-   h += '<td style="text-align:center">'+cdRate+'%</td>';
+   h += '<td style="text-align:center">'+yrCdRate+'%</td>';
    h += '<td style="text-align:center">'+fmt(cdBal)+'</td>';
    h += '<td style="text-align:center;color:var(--muted)">'+fmt(cdEarn-cdTaxHit)+' <span style="font-size:9px">(after tax)</span></td>';
    h += '<td style="text-align:center;font-weight:600;color:var(--dgrn)">'+aRate+'%</td>';
@@ -336,7 +663,13 @@ function renderCDConversion(){
  // Feature table
  var annAvgRate = hasIllusRates ? illusRates.reduce(function(s,r){return s+r},0)/illusRates.length : 4.0;
  var cdReturn1 = amt * (cdRate/100);
- var cdReturn5 = amt * Math.pow(1 + cdRate/100, termYears) - amt;
+ // 5-year CD return using year-by-year rates (not flat compound)
+ var cdReturn5 = 0;
+ (function(){
+  var bal = amt;
+  for(var cy5=0;cy5<termYears;cy5++){ bal += bal * ((cdRates[cy5]||0)/100); }
+  cdReturn5 = bal - amt;
+ })();
  var cdTax1 = cdReturn1 * 0.24;
  var cdNet1 = cdReturn1 - cdTax1;
  var annReturn5 = hasIllusRates ? (annBal - amt) : amt * Math.pow(1 + 4.0/100, 5) - amt;
@@ -384,98 +717,6 @@ function renderCDConversion(){
  h += '<button class="btn btn-pri" onclick="generateClientComparison()" style="font-size:13px;padding:8px 16px">📧 Email Comparison to Client</button>';
  h += '<div class="form-group" style="margin:0"><input id="cd_client_email" placeholder="Client email (optional)" style="font-size:11px;width:200px;padding:6px"></div>';
  h += '</div>';
-
- h += '</div>';
-
- // ═══ NEPQ GUIDED CONVERSATION ═══
- h += '<div class="card" style="margin-top:16px;border:2px solid #1abc9c">';
- h += '<h3 style="color:#1abc9c">NEPQ Guided Conversation</h3>';
- h += '<p style="font-size:11px;color:var(--muted);margin-bottom:12px">Use these questions in order during the conversation. Each builds on the last to help the client see the value of converting.</p>';
-
- var nepqSteps = [
-  {phase:'Situation',color:'#3498db',questions:[
-   {q:'How long have you been doing CDs?',note:'Establishes history — most say years/decades. This builds the pattern.'},
-   {q:'What made you start putting money into CDs originally?',note:'Safety, simplicity. Acknowledge their smart decision at the time.'},
-   {q:'What rate are you currently getting on your CD?',note:'Document this — you\'ll compare it later.'},
-   {q:'When your CD matures, what do you typically do with the money?',note:'Most say "roll it over." This reveals they don\'t actually need the liquidity.'},
-   {q:'How much total do you have in CDs right now?',note:'Size the opportunity.'}
-  ]},
-  {phase:'Problem Awareness',color:'#e67e22',questions:[
-   {q:'Are you happy with the rate you\'re getting, or do you feel like your money could be working harder?',note:'Opens the door to dissatisfaction without being pushy.'},
-   {q:'When you look at what you\'ve earned on CDs over the years versus inflation, do you feel like you\'re actually getting ahead?',note:'Plants the seed — CD rates often barely beat inflation after taxes.'},
-   {q:'Did you know that CD interest is taxed as ordinary income every year — even if you don\'t withdraw it?',note:'Most people don\'t realize this. Let it sink in.'},
-   {q:'How much did you pay in taxes on your CD interest last year?',note:'Makes the tax hit real and personal.'},
-   {q:'When was the last time your CD matured and you actually spent all of that money within the next year?',note:'KEY QUESTION — reveals they never need the full liquidity they think they do.'}
-  ]},
-  {phase:'Solution Awareness',color:'#1abc9c',questions:[
-   {q:'What if there was a way to get a similar or better rate, but not pay taxes on the growth until you actually use the money?',note:'Introduces tax-deferred advantage without naming the product yet.'},
-   {q:'Would it be helpful if your money was protected from market downturns but still had the potential to earn more than a CD?',note:'Introduces the guarantee + upside concept.'},
-   {q:'If you could keep the same safety but add a guaranteed income stream for retirement — would that be worth looking at?',note:'Introduces the income rider benefit.'},
-   {q:'What if instead of your earnings going through probate, they went directly to your beneficiaries — tax-efficiently?',note:'Introduces probate avoidance benefit.'}
-  ]},
-  {phase:'Consequence',color:'#c0392b',questions:[
-   {q:'If you keep rolling CDs for the next 5-10 years, and rates drop back to 1-2% like they were a few years ago — how would that affect your retirement plans?',note:'Creates urgency — rates won\'t stay high forever. Lock in now.'},
-   {q:'How much have you lost to taxes on CD interest over the past 5 years? What could that money be worth if it had been growing tax-deferred?',note:'Quantifies the cost of inaction.'},
-   {q:'If something happened to you, would your family have to go through probate to access this money?',note:'Emotional trigger — protecting family.'}
-  ]},
-  {phase:'Commitment',color:'var(--grn)',questions:[
-   {q:'Based on what we\'ve discussed, it sounds like the annuity would give you everything your CD does — plus tax-deferred growth, probate avoidance, and a guaranteed income option. Does that make sense?',note:'Summary close — get agreement on the value.'},
-   {q:'You mentioned your CD matures on [DATE]. Would it make sense to have the annuity application ready so we can make a smooth transition — no gap in your earnings?',note:'Tie to a specific date — creates a natural action step.'},
-   {q:'Would you like to move the full amount, or start with a portion to see how it works?',note:'Assumptive close with a safety valve. Either answer is a yes.'}
-  ]}
- ];
-
- nepqSteps.forEach(function(step, si){
-  h += '<div style="margin-bottom:16px;border-left:4px solid '+step.color+';padding-left:12px">';
-  h += '<div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="var el=document.getElementById(\'nepq_'+si+'\');el.style.display=el.style.display===\'none\'?\'block\':\'none\'">';
-  h += '<h4 style="margin:0;color:'+step.color+';font-size:14px">Phase '+(si+1)+': '+step.phase+'</h4>';
-  h += '<span style="font-size:11px;color:var(--muted)">'+step.questions.length+' questions ▾</span>';
-  h += '</div>';
-  h += '<div id="nepq_'+si+'" style="'+(si===0?'':'display:none')+'">';
-  step.questions.forEach(function(q, qi){
-   h += '<div style="margin:8px 0;padding:8px 12px;background:'+(qi%2===0?'#fff':'#f9f9f9')+';border-radius:6px;border:1px solid #eee">';
-   h += '<div style="font-size:13px;font-weight:600;color:#333;margin-bottom:4px">"'+q.q+'"</div>';
-   h += '<div style="font-size:10px;color:var(--amb);font-style:italic">💡 '+q.note+'</div>';
-   h += '</div>';
-  });
-  h += '</div></div>';
- });
-
- h += '</div>';
-
- // ═══ OBJECTION HANDLING ═══
- h += '<div class="card" style="margin-top:16px;border:2px solid var(--amb)">';
- h += '<h3 style="color:var(--amb)">Handling: "It Ties Up My Money"</h3>';
- h += '<p style="font-size:12px;color:var(--muted);margin-bottom:12px">This is the #1 objection. Here\'s how to reframe it:</p>';
-
- var objections = [
-  {obj:'It ties up my money for too long.',
-   response:'I understand that concern. Let me ask you — how long have you been doing CDs? [They say years]. And in all that time, have you ever taken out the full amount and spent it all within a year? [They say no]. So really, your money has been "tied up" in CDs this whole time — you\'ve just been rolling it over. The annuity does the same thing, but with better tax treatment and a guaranteed floor rate.',
-   tag:'Reframe the pattern'},
-  {obj:'What if I need the money?',
-   response:'Great question. Most annuities allow you to withdraw up to 10% per year with no penalty — that\'s '+fmt(amt*0.10)+' on your deposit. When was the last time you needed more than '+fmt(amt*0.10)+' from your CD in a single year? Plus, many have nursing home and terminal illness waivers for full access if something unexpected happens.',
-   tag:'10% free withdrawal'},
-  {obj:'CD rates are really good right now.',
-   response:'They are — and that\'s exactly why now is the time to lock in. CD rates were 0.5% just 3 years ago. When your CD matures in '+cdTerm+' year'+(cdTerm>1?'s':'')+', rates could be anywhere. With the annuity, you lock in a guaranteed minimum rate — so even if market rates drop, your floor is protected.',
-   tag:'Lock in now'},
-  {obj:'I don\'t want to pay a surrender charge.',
-   response:'I get it — nobody wants fees. But think about it this way: your CD also has an early withdrawal penalty. The difference is the annuity\'s surrender charge decreases every year and disappears completely after 3-5 years. And during that time, your money is growing tax-deferred — so the net benefit far outweighs the surrender period.',
-   tag:'CD has penalties too'},
-  {obj:'I need to think about it / talk to my spouse.',
-   response:'Absolutely, this is an important decision. What specifically would you want to think through? [Let them answer]. That way I can get you the exact information you need so you and [spouse] can make a confident decision. Also — when does your current CD mature? I\'d hate for you to miss the window and have it auto-renew at whatever rate the bank decides.',
-   tag:'Isolate the concern'}
- ];
-
- objections.forEach(function(o, i){
-  h += '<div style="margin-bottom:12px;padding:12px;background:#fff;border-radius:8px;border:1px solid #eee">';
-  h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">';
-  h += '<div style="font-weight:700;color:#c0392b;font-size:13px">"'+o.obj+'"</div>';
-  h += '<span style="background:var(--atint);color:var(--amb);padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">'+o.tag+'</span>';
-  h += '</div>';
-  h += '<div style="font-size:12px;color:#333;line-height:1.5;padding:8px;background:var(--gtint);border-radius:6px;border-left:3px solid var(--grn)">';
-  h += '<b style="color:var(--grn)">Response:</b> '+o.response;
-  h += '</div></div>';
- });
 
  h += '</div>';
 
@@ -539,7 +780,7 @@ function renderCDConversion(){
  h += '</div>';
 
  h += '<div style="padding:10px;background:var(--ptint);border-radius:8px">';
- h += '<h4 style="color:var(--pri);margin-bottom:6px;font-size:13px">NEPQ Talking Point</h4>';
+ h += '<h4 style="color:var(--pri);margin-bottom:6px;font-size:13px">Talking Point</h4>';
  h += '<p style="font-size:12px;margin:0;font-style:italic">"One thing most people don\'t realize is that in Florida, if you or your spouse ever need assisted living or nursing home care, your CD is considered a countable asset — meaning you\'d have to spend it down to $2,000 before Medicaid would help. But a properly structured annuity can protect that money. It\'s not something you hope you\'ll need, but it\'s one more layer of protection that a CD simply can\'t provide."</p>';
  h += '</div>';
 
@@ -550,7 +791,6 @@ function renderCDConversion(){
 
 function generateClientComparison(){
  var amt = parseFloat(document.getElementById('cd_amount')?.value) || 100000;
- var cdRate = parseFloat(document.getElementById('cd_rate')?.value) || 4;
  var selAnnuity = document.getElementById('cd_annuity')?.value || 'Platinum Annuity 5 External (ages 0-79)';
  var clientEmail = document.getElementById('cd_client_email')?.value || '';
  var termMatch = selAnnuity.match(/\d+/);
@@ -560,6 +800,16 @@ function generateClientComparison(){
  var hasIL = ilRates.some(function(r){return r > 0});
  var fmtN = function(n){return '$'+Math.round(n).toLocaleString()};
 
+ // Pull year-by-year CD rates from the live inputs (fall back to saved)
+ var savedCd = cdYearlyRates[selAnnuity] || [];
+ var cdRatesArr = [];
+ for(var cyg=1;cyg<=termYears;cyg++){
+  var cgEl = document.getElementById('cd_yrate_'+cyg);
+  var lv = parseFloat(cgEl?.value);
+  cdRatesArr.push(!isNaN(lv) ? lv : (savedCd[cyg-1] || 0));
+ }
+ var cdRate = cdRatesArr[0] || 0; // Year 1 rate used for "current" / Year-1 displays
+
  var cdReturn1 = amt * (cdRate/100);
  var cdTax1 = cdReturn1 * 0.24;
  var cdNet1 = cdReturn1 - cdTax1;
@@ -568,7 +818,7 @@ function generateClientComparison(){
 
  var b = 'CD vs Fixed Annuity Comparison\n';
  b += 'Based on your '+fmtN(amt)+' deposit\n';
- b += 'Prepared by Steve Maxim | AAA Life Specialist\n';
+ b += 'Prepared by '+(currentAgent?currentAgent.name:'Agent')+' | AAA Life Specialist\n';
  b += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
 
  b += 'FEATURE COMPARISON\n';
@@ -597,14 +847,15 @@ function generateClientComparison(){
   b += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
   var eCdBal = amt, eAnnBal = amt;
   for(var y=1;y<=termYears;y++){
-   var eCdEarn = eCdBal*(cdRate/100);
+   var yCdRate = cdRatesArr[y-1] || 0;
+   var eCdEarn = eCdBal*(yCdRate/100);
    var eCdTax = eCdEarn*0.24;
    eCdBal += eCdEarn;
    var eARate = ilRates[y-1]||0;
    var eAnnEarn = eAnnBal*(eARate/100);
    eAnnBal += eAnnEarn;
    b += 'Year '+y+':\n';
-   b += '  CD: '+cdRate+'% → Balance '+fmtN(eCdBal)+' ('+fmtN(eCdEarn-eCdTax)+' after tax)\n';
+   b += '  CD: '+yCdRate+'% → Balance '+fmtN(eCdBal)+' ('+fmtN(eCdEarn-eCdTax)+' after tax)\n';
    b += '  Annuity: '+eARate+'% → Balance '+fmtN(eAnnBal)+' ('+fmtN(eAnnEarn)+' tax-deferred)\n\n';
   }
   var eDiff = eAnnBal - eCdBal;
@@ -627,7 +878,7 @@ function generateClientComparison(){
  b += 'This comparison is for educational purposes. Annuity features, rates,\n';
  b += 'and guarantees vary by product. Please review the specific product\n';
  b += 'details before making any decisions.\n\n';
- b += 'Steve Maxim | AAA Life Specialist | Branch Venice/Sarasota\n';
+ b += ''+(currentAgent?currentAgent.name:'Agent')+' | AAA Life Specialist | Branch '+(currentAgent?currentAgent.branch:'')+'\n';
  b += settings.agentEmail+'\n';
 
  // HTML email
@@ -655,11 +906,12 @@ function generateClientComparison(){
   eh += '<tr><th style="padding:6px;background:#333;color:#fff;font-size:11px">Year</th><th style="padding:6px;background:#1565c0;color:#fff;font-size:11px">CD Rate</th><th style="padding:6px;background:#1565c0;color:#fff;font-size:11px">CD Balance</th><th style="padding:6px;background:#1565c0;color:#fff;font-size:11px">CD Net Earnings</th><th style="padding:6px;background:#0F6E56;color:#fff;font-size:11px">Annuity Rate</th><th style="padding:6px;background:#0F6E56;color:#fff;font-size:11px">Annuity Balance</th><th style="padding:6px;background:#0F6E56;color:#fff;font-size:11px">Annuity Earnings</th></tr>';
   var hCdBal = amt, hAnnBal = amt;
   for(var hy=1;hy<=termYears;hy++){
-   var hCdE = hCdBal*(cdRate/100); var hCdT = hCdE*0.24; hCdBal += hCdE;
+   var hCdRate = cdRatesArr[hy-1] || 0;
+   var hCdE = hCdBal*(hCdRate/100); var hCdT = hCdE*0.24; hCdBal += hCdE;
    var hAR = ilRates[hy-1]||0; var hAE = hAnnBal*(hAR/100); hAnnBal += hAE;
    var hBg = hy%2===0?'#f9f9f9':'#fff';
    eh += '<tr style="background:'+hBg+'"><td style="padding:5px;border:1px solid #eee;font-weight:700;font-size:11px;text-align:center">Year '+hy+'</td>';
-   eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px">'+cdRate+'%</td>';
+   eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px">'+hCdRate+'%</td>';
    eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px">'+fmtN(hCdBal)+'</td>';
    eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px;color:#999">'+fmtN(hCdE-hCdT)+'</td>';
    eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px;color:#0F6E56;font-weight:600">'+hAR+'%</td>';
@@ -697,7 +949,7 @@ function generateClientComparison(){
 
  eh += '<div style="background:#FFF5F5;padding:10px;border-left:4px solid #c0392b;margin:12px 0;font-size:11px;color:#666"><b>Important:</b> This comparison is for educational purposes. Features, rates, and guarantees vary by product. Please review specific product details before making decisions.</div>';
 
- eh += '<div style="margin-top:20px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999">Steve Maxim | AAA Life Specialist | Branch Venice/Sarasota<br>'+settings.agentEmail+'</div>';
+ eh += '<div style="margin-top:20px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999">'+(currentAgent?currentAgent.name:'Agent')+' | AAA Life Specialist | Branch '+(currentAgent?currentAgent.branch:'')+'<br>'+settings.agentEmail+'</div>';
  eh += '</div></div>';
 
  var blob = new Blob([eh], {type:'text/html'});
@@ -721,6 +973,114 @@ function generateClientComparison(){
 
 
 // ═══════════════════════════════════════════════════
+// TAB 4: CONVERSATIONS (Guided Conversation + Objection Handling)
+// ═══════════════════════════════════════════════════
+
+function renderConversations(){
+ // Use the current CD tab deposit amount if available, otherwise default
+ var amt = parseFloat(document.getElementById('cd_amount')?.value) || parseFloat(cdInputs.amount) || 100000;
+ var cdTerm = parseFloat(cdInputs.term) || 1;
+
+ var h = '<h2 style="margin-bottom:4px;color:var(--pri)">Conversations</h2>';
+ h += '<p style="font-size:12px;color:var(--muted);margin-bottom:16px">Guided conversation flow and objection-handling scripts to help clients see the value of converting.</p>';
+
+ // ═══ GUIDED CONVERSATION ═══
+ h += '<div class="card" style="border:2px solid #1abc9c">';
+ h += '<h3 style="color:#1abc9c">Guided Conversation</h3>';
+ h += '<p style="font-size:11px;color:var(--muted);margin-bottom:12px">Use these questions in order during the conversation. Each builds on the last to help the client see the value of converting.</p>';
+
+ var nepqSteps = [
+  {phase:'Situation',color:'#3498db',questions:[
+   {q:'How long have you been doing CDs?',note:'Establishes history — most say years/decades. This builds the pattern.'},
+   {q:'What made you start putting money into CDs originally?',note:'Safety, simplicity. Acknowledge their smart decision at the time.'},
+   {q:'What rate are you currently getting on your CD?',note:'Document this — you\'ll compare it later.'},
+   {q:'When your CD matures, what do you typically do with the money?',note:'Most say "roll it over." This reveals they don\'t actually need the liquidity.'},
+   {q:'How much total do you have in CDs right now?',note:'Size the opportunity.'}
+  ]},
+  {phase:'Problem Awareness',color:'#e67e22',questions:[
+   {q:'Are you happy with the rate you\'re getting, or do you feel like your money could be working harder?',note:'Opens the door to dissatisfaction without being pushy.'},
+   {q:'When you look at what you\'ve earned on CDs over the years versus inflation, do you feel like you\'re actually getting ahead?',note:'Plants the seed — CD rates often barely beat inflation after taxes.'},
+   {q:'Did you know that CD interest is taxed as ordinary income every year — even if you don\'t withdraw it?',note:'Most people don\'t realize this. Let it sink in.'},
+   {q:'How much did you pay in taxes on your CD interest last year?',note:'Makes the tax hit real and personal.'},
+   {q:'When was the last time your CD matured and you actually spent all of that money within the next year?',note:'KEY QUESTION — reveals they never need the full liquidity they think they do.'}
+  ]},
+  {phase:'Solution Awareness',color:'#1abc9c',questions:[
+   {q:'What if there was a way to get a similar or better rate, but not pay taxes on the growth until you actually use the money?',note:'Introduces tax-deferred advantage without naming the product yet.'},
+   {q:'Would it be helpful if your money was protected from market downturns but still had the potential to earn more than a CD?',note:'Introduces the guarantee + upside concept.'},
+   {q:'If you could keep the same safety but add a guaranteed income stream for retirement — would that be worth looking at?',note:'Introduces the income rider benefit.'},
+   {q:'What if instead of your earnings going through probate, they went directly to your beneficiaries — tax-efficiently?',note:'Introduces probate avoidance benefit.'}
+  ]},
+  {phase:'Consequence',color:'#c0392b',questions:[
+   {q:'If you keep rolling CDs for the next 5-10 years, and rates drop back to 1-2% like they were a few years ago — how would that affect your retirement plans?',note:'Creates urgency — rates won\'t stay high forever. Lock in now.'},
+   {q:'How much have you lost to taxes on CD interest over the past 5 years? What could that money be worth if it had been growing tax-deferred?',note:'Quantifies the cost of inaction.'},
+   {q:'If something happened to you, would your family have to go through probate to access this money?',note:'Emotional trigger — protecting family.'}
+  ]},
+  {phase:'Commitment',color:'var(--grn)',questions:[
+   {q:'Based on what we\'ve discussed, it sounds like the annuity would give you everything your CD does — plus tax-deferred growth, probate avoidance, and a guaranteed income option. Does that make sense?',note:'Summary close — get agreement on the value.'},
+   {q:'You mentioned your CD matures on [DATE]. Would it make sense to have the annuity application ready so we can make a smooth transition — no gap in your earnings?',note:'Tie to a specific date — creates a natural action step.'},
+   {q:'Would you like to move the full amount, or start with a portion to see how it works?',note:'Assumptive close with a safety valve. Either answer is a yes.'}
+  ]}
+ ];
+
+ nepqSteps.forEach(function(step, si){
+  h += '<div style="margin-bottom:16px;border-left:4px solid '+step.color+';padding-left:12px">';
+  h += '<div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="var el=document.getElementById(\'conv_phase_'+si+'\');el.style.display=el.style.display===\'none\'?\'block\':\'none\'">';
+  h += '<h4 style="margin:0;color:'+step.color+';font-size:14px">Phase '+(si+1)+': '+step.phase+'</h4>';
+  h += '<span style="font-size:11px;color:var(--muted)">'+step.questions.length+' questions ▾</span>';
+  h += '</div>';
+  h += '<div id="conv_phase_'+si+'" style="'+(si===0?'':'display:none')+'">';
+  step.questions.forEach(function(q, qi){
+   h += '<div style="margin:8px 0;padding:8px 12px;background:'+(qi%2===0?'#fff':'#f9f9f9')+';border-radius:6px;border:1px solid #eee">';
+   h += '<div style="font-size:13px;font-weight:600;color:#333;margin-bottom:4px">"'+q.q+'"</div>';
+   h += '<div style="font-size:10px;color:var(--amb);font-style:italic">💡 '+q.note+'</div>';
+   h += '</div>';
+  });
+  h += '</div></div>';
+ });
+
+ h += '</div>';
+
+ // ═══ OBJECTION HANDLING ═══
+ h += '<div class="card" style="margin-top:16px;border:2px solid var(--amb)">';
+ h += '<h3 style="color:var(--amb)">Handling: "It Ties Up My Money"</h3>';
+ h += '<p style="font-size:12px;color:var(--muted);margin-bottom:12px">This is the #1 objection. Here\'s how to reframe it:</p>';
+
+ var objections = [
+  {obj:'It ties up my money for too long.',
+   response:'I understand that concern. Let me ask you — how long have you been doing CDs? [They say years]. And in all that time, have you ever taken out the full amount and spent it all within a year? [They say no]. So really, your money has been "tied up" in CDs this whole time — you\'ve just been rolling it over. The annuity does the same thing, but with better tax treatment and a guaranteed floor rate.',
+   tag:'Reframe the pattern'},
+  {obj:'What if I need the money?',
+   response:'Great question. Most annuities allow you to withdraw up to 10% per year with no penalty — that\'s '+fmt(amt*0.10)+' on your deposit. When was the last time you needed more than '+fmt(amt*0.10)+' from your CD in a single year? Plus, many have nursing home and terminal illness waivers for full access if something unexpected happens.',
+   tag:'10% free withdrawal'},
+  {obj:'CD rates are really good right now.',
+   response:'They are — and that\'s exactly why now is the time to lock in. CD rates were 0.5% just 3 years ago. When your CD matures in '+cdTerm+' year'+(cdTerm>1?'s':'')+', rates could be anywhere. With the annuity, you lock in a guaranteed minimum rate — so even if market rates drop, your floor is protected.',
+   tag:'Lock in now'},
+  {obj:'I don\'t want to pay a surrender charge.',
+   response:'I get it — nobody wants fees. But think about it this way: your CD also has an early withdrawal penalty. The difference is the annuity\'s surrender charge decreases every year and disappears completely after 3-5 years. And during that time, your money is growing tax-deferred — so the net benefit far outweighs the surrender period.',
+   tag:'CD has penalties too'},
+  {obj:'I need to think about it / talk to my spouse.',
+   response:'Absolutely, this is an important decision. What specifically would you want to think through? [Let them answer]. That way I can get you the exact information you need so you and [spouse] can make a confident decision. Also — when does your current CD mature? I\'d hate for you to miss the window and have it auto-renew at whatever rate the bank decides.',
+   tag:'Isolate the concern'}
+ ];
+
+ objections.forEach(function(o, i){
+  h += '<div style="margin-bottom:12px;padding:12px;background:#fff;border-radius:8px;border:1px solid #eee">';
+  h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">';
+  h += '<div style="font-weight:700;color:#c0392b;font-size:13px">"'+o.obj+'"</div>';
+  h += '<span style="background:var(--atint);color:var(--amb);padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">'+o.tag+'</span>';
+  h += '</div>';
+  h += '<div style="font-size:12px;color:#333;line-height:1.5;padding:8px;background:var(--gtint);border-radius:6px;border-left:3px solid var(--grn)">';
+  h += '<b style="color:var(--grn)">Response:</b> '+o.response;
+  h += '</div></div>';
+ });
+
+ h += '</div>';
+
+ document.getElementById('p3').innerHTML = h;
+}
+
+
+// ═══════════════════════════════════════════════════
 // TAB 2: ANNUITY VS ANNUITY COMPARISON
 // ═══════════════════════════════════════════════════
 
@@ -729,8 +1089,7 @@ var avaDefaultRates = {
  'MM Landmark 5 External (ages 0-75)': [0.76, 6.74, 6.76, 6.78, 0.72],
  'Platinum Bonus 5 (AAA Life)': [6.25, 4.25, 4.25, 4.25, 4.25]
 };
-var avaIllustrationRates = JSON.parse(localStorage.getItem('ava_illustration_rates') || '{}');
-Object.keys(avaDefaultRates).forEach(function(k){ if(!avaIllustrationRates[k]) avaIllustrationRates[k] = avaDefaultRates[k]; });
+var avaIllustrationRates = {}; // populated by loadAgentData() after login
 
 var defaultAnnuityFeatures = {
  'MM Landmark 5 External (ages 0-75)': {
@@ -764,8 +1123,7 @@ var defaultAnnuityFeatures = {
   illustration: '$50K → $62,748 after 5 years (current), $95,140 after 15 years'
  }
 };
-var annuityFeatures = JSON.parse(localStorage.getItem('annuity_features') || '{}');
-Object.keys(defaultAnnuityFeatures).forEach(function(k){ if(!annuityFeatures[k]) annuityFeatures[k] = defaultAnnuityFeatures[k]; });
+var annuityFeatures = {}; // populated by loadAgentData() after login
 
 function saveAvaInputs(){
  avaInputs.amount = document.getElementById('ava_amount')?.value || '100000';
@@ -789,7 +1147,10 @@ function saveAvaRates(which){
   rates.push(parseFloat(el?.value) || 0);
  }
  avaIllustrationRates[prod] = rates;
- localStorage.setItem('ava_illustration_rates', JSON.stringify(avaIllustrationRates));
+ if(currentAgent){
+  localStorage.setItem('doi_ava_rates_' + currentAgent.id, JSON.stringify(avaIllustrationRates));
+  fbSave('ava_illustration_rates', avaIllustrationRates);
+ }
  showToast('Rates saved for '+prod, 2000);
 }
 
@@ -797,7 +1158,10 @@ function saveAnnuityFeature(prod, field){
  if(!annuityFeatures[prod]) annuityFeatures[prod] = {};
  var el = document.getElementById('avf_'+field.replace(/\s/g,'_'));
  if(el) annuityFeatures[prod][field] = el.value;
- localStorage.setItem('annuity_features', JSON.stringify(annuityFeatures));
+ if(currentAgent){
+  localStorage.setItem('doi_annuity_features_' + currentAgent.id, JSON.stringify(annuityFeatures));
+  fbSave('annuity_features', annuityFeatures);
+ }
 }
 
 function renderAnnuityVsAnnuity(){
@@ -1112,10 +1476,10 @@ function emailAnnuityComparison(){
  }
 
  eh += '<div style="background:#FFF5F5;padding:10px;border-left:4px solid #c0392b;margin:12px 0;font-size:11px;color:#666"><b>Important:</b> This comparison is for educational purposes. Features, rates, and guarantees vary. Please review specific product details before making decisions.</div>';
- eh += '<div style="margin-top:16px;padding-top:10px;border-top:1px solid #ddd;font-size:11px;color:#999">Steve Maxim | AAA Life Specialist | Branch Venice/Sarasota<br>'+settings.agentEmail+'</div>';
+ eh += '<div style="margin-top:16px;padding-top:10px;border-top:1px solid #ddd;font-size:11px;color:#999">'+(currentAgent?currentAgent.name:'Agent')+' | AAA Life Specialist | Branch '+(currentAgent?currentAgent.branch:'')+'<br>'+settings.agentEmail+'</div>';
  eh += '</div></div>';
 
- var plainText = 'Annuity Comparison: '+prodA+' vs '+prodB+'\nDeposit: '+fmtN(amt)+'\nPrepared by Steve Maxim | AAA Life Specialist';
+ var plainText = 'Annuity Comparison: '+prodA+' vs '+prodB+'\nDeposit: '+fmtN(amt)+'\nPrepared by '+(currentAgent?currentAgent.name:'Agent')+' | AAA Life Specialist';
 
  var blob = new Blob([eh], {type:'text/html'});
  var item = new ClipboardItem({'text/html': blob, 'text/plain': new Blob([plainText], {type:'text/plain'})});
@@ -1149,9 +1513,8 @@ var SP_RETURNS = {
  2023:{sp:0.2629,bond:0.055},2024:{sp:0.2502,bond:0.0125},2025:{sp:0.1788,bond:0.0712}
 };
 
-var idxInputs;
-try { idxInputs = JSON.parse(localStorage.getItem('duet_idx_inputs2')); } catch(e){}
-if(!idxInputs) idxInputs = {clientName:'',age:65,amount:200000,mgmtFee:1,capRate:8.5,capBonus:0,parRate:50,startYear:2005,aSpPct:60,aBondPct:40,aWdRate:4,bSpPct:30,bBondPct:30,bAnnPct:40,bWdRate:5};
+// idxInputs starts with defaults; loadAgentData() may overwrite after login
+var idxInputs = {clientName:'',age:65,amount:200000,mgmtFee:1,capRate:8.5,capBonus:0,parRate:50,startYear:2005,aSpPct:60,aBondPct:40,aWdRate:4,bSpPct:30,bBondPct:30,bAnnPct:40,bWdRate:5};
 
 function saveIdxInputs(){
  var fields = {clientName:'idx_name',age:'idx_age',amount:'idx_amount',mgmtFee:'idx_fee',capRate:'idx_cap_rate',capBonus:'idx_cap_bonus',parRate:'idx_par_rate',startYear:'idx_start_year',aSpPct:'idx_a_sp',aBondPct:'idx_a_bond',aWdRate:'idx_a_wd',bSpPct:'idx_b_sp',bBondPct:'idx_b_bond',bAnnPct:'idx_b_ann',bWdRate:'idx_b_wd'};
@@ -1159,7 +1522,10 @@ function saveIdxInputs(){
   var el = document.getElementById(fields[k]);
   if(el) idxInputs[k] = k==='clientName' ? el.value : parseFloat(el.value)||0;
  });
- try { localStorage.setItem('duet_idx_inputs2', JSON.stringify(idxInputs)); } catch(e){}
+ if(currentAgent){
+  try { localStorage.setItem('doi_idx_inputs_' + currentAgent.id, JSON.stringify(idxInputs)); } catch(e){}
+  fbSave('duet_idx_inputs2', idxInputs);
+ }
 }
 
 function renderIndexingTool(){
@@ -1590,7 +1956,7 @@ function emailIndexReport(){
  if(diff>=0) plain += '✅ Scenario B produces '+fmtK(diff)+' MORE than all-market\n';
  else plain += 'Scenario A produces '+fmtK(Math.abs(diff))+' more — but with 100% market risk\n';
  plain += '🛡️ '+sB.protectedYears+' down years where the annuity floor protected your money (0% vs market losses)\n';
- plain += '\n— Steve Maxim | AAA Life Specialist\nGenerated by DuetIncome';
+ plain += '\n— '+(currentAgent?currentAgent.name:'Agent')+' | AAA Life Specialist\nGenerated by DuetIncome';
 
  var subject = encodeURIComponent('S&P vs Annuity Comparison — '+(d.clientName||'Client'));
  var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&su='+subject+'&body='+encodeURIComponent(plain.substring(0,1500));
@@ -1651,7 +2017,7 @@ function copyIndexHtml(){
  eh += '</table>';
 
  eh += '<div style="background:#FFF5F5;padding:8px 12px;border-left:4px solid #c0392b;font-size:10px;color:#666;margin:12px 0"><b>Disclaimer:</b> For illustrative purposes only using historical S&P 500 Total Return data. Past performance does not guarantee future results.</div>';
- eh += '<div style="margin-top:12px;padding-top:8px;border-top:1px solid #ddd;font-size:11px;color:#999">Steve Maxim | AAA Life Specialist | Branch Venice/Sarasota<br>'+(settings.agentEmail||'')+'</div>';
+ eh += '<div style="margin-top:12px;padding-top:8px;border-top:1px solid #ddd;font-size:11px;color:#999">'+(currentAgent?currentAgent.name:'Agent')+' | AAA Life Specialist | Branch '+(currentAgent?currentAgent.branch:'')+'<br>'+(settings.agentEmail||'')+'</div>';
  eh += '</div>';
 
  var blob = new Blob([eh], {type:'text/html'});
@@ -1688,7 +2054,25 @@ function copyTalkingPoints(){
 }
 
 // ═══ INIT ═══
-renderCDConversion();
+(async function(){
+ // Prefill login name field with most recently remembered agent
+ try {
+  var remembered = JSON.parse(localStorage.getItem('doi_remembered_agents') || '[]');
+  if(remembered.length && document.getElementById('login_name')){
+   document.getElementById('login_name').value = remembered[remembered.length-1].name;
+  }
+ } catch(e){}
+
+ // If a session exists, try to restore it and skip the login screen
+ var savedSession = null;
+ try { savedSession = JSON.parse(sessionStorage.getItem('doi_agent') || 'null'); } catch(e){}
+ if(savedSession && savedSession.id){
+  currentAgent = savedSession;
+  try { await loadAgentData(); } catch(e){ console.error('Session restore failed:', e); }
+  enterApp();
+ }
+ // Otherwise the login screen is already visible (default state)
+})();
 </script>
 </body>
 </html>
