@@ -1,0 +1,1694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DuetIncome — Smart Retirement Comparison Tools</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="manifest" href="data:application/json,{%22name%22:%22Do%20It%20Income%22,%22short_name%22:%22DuetIncome%22,%22start_url%22:%22.%22,%22display%22:%22standalone%22,%22theme_color%22:%22%23534AB7%22,%22background_color%22:%22%23f5f5f3%22}">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--pri:#534AB7;--grn:#1D9E75;--amb:#EF9F27;--dgrn:#0F6E56;--bg:#f5f5f3;--card:#fff;--ptint:#EEEDFE;--gtint:#F0FBF7;--atint:#FFFCF5;--txt:#222;--muted:#666;--border:#ddd;--radius:8px;--shadow:0 1px 3px rgba(0,0,0,.08)}
+body.dark-mode{--pri:#7B73E0;--grn:#2BC48E;--amb:#F5B74A;--dgrn:#25B88A;--bg:#1a1a2e;--card:#242440;--ptint:#3d3659;--gtint:#1a3a30;--atint:#3a3020;--txt:#e8e8f0;--muted:#9999aa;--border:#3a3a55;--shadow:0 1px 3px rgba(0,0,0,.3)}
+body.dark-mode .topbar{background:#2d2b5e}
+body.dark-mode .tabs{background:#242440;border-color:var(--border)}
+body.dark-mode .tab{color:var(--muted)}
+body.dark-mode .tab:hover{color:var(--pri);background:var(--ptint)}
+body.dark-mode .tab.active{color:var(--pri)}
+body.dark-mode input,body.dark-mode select,body.dark-mode textarea{background:#2e2e4a;color:var(--txt);border-color:var(--border)}
+body.dark-mode table{color:var(--txt)}
+body.dark-mode th{background:#2e2e4a!important;color:var(--txt)!important}
+body.dark-mode tr:nth-child(even){background:#2a2a44}
+body.dark-mode .btn-outline{color:var(--txt);border-color:var(--border)}
+body.dark-mode .toast{background:#2e2e4a}
+body.dark-mode td{border-bottom-color:var(--border)}
+body.dark-mode tr:hover td{background:#2e2e4a}
+body.dark-mode [style*="background:#fff"]{background:var(--card)!important}
+body.dark-mode [style*="background: #fff"]{background:var(--card)!important}
+body.dark-mode [style*="background:#f9f9f9"]{background:#2a2a44!important}
+body.dark-mode [style*="background:#f5f5f3"]{background:#2a2a44!important}
+body.dark-mode [style*="background:#fafafa"]{background:#2a2a44!important}
+body.dark-mode [style*="background:#eee"]{background:#2e2e4a!important}
+body.dark-mode [style*="background:#f5f5f5"]{background:#2a2a3a!important}
+body.dark-mode [style*="background:#F0FBF7"]{background:#1a3a30!important}
+body.dark-mode [style*="background:#EEEDFE"]{background:#3d3659!important}
+body.dark-mode [style*="background:#FFF5F5"]{background:#3a1a1a!important}
+body.dark-mode [style*="background:#fff5f5"]{background:#3a1a1a!important}
+body.dark-mode [style*="background:#FFF8F0"]{background:#3a3020!important}
+body.dark-mode [style*="background:#e8f5e9"]{background:#1a3a30!important}
+body.dark-mode [style*="background:#fff3e0"]{background:#3a3020!important}
+body.dark-mode [style*="background:#e3f2fd"]{background:#1a2a3a!important}
+body.dark-mode [style*="background:#fce4ec"]{background:#3a1a1a!important}
+body.dark-mode [style*="color:#333"]{color:var(--txt)!important}
+body.dark-mode [style*="color:#444"]{color:var(--txt)!important}
+body.dark-mode [style*="color:#555"]{color:var(--muted)!important}
+body.dark-mode [style*="color:#666"]{color:var(--muted)!important}
+body.dark-mode [style*="color:#999"]{color:#777788!important}
+body.dark-mode [style*="border:1px solid #eee"]{border-color:var(--border)!important}
+body.dark-mode [style*="border:1px solid #ddd"]{border-color:var(--border)!important}
+
+html{font-family:'Inter',system-ui,-apple-system,sans-serif;font-size:14px;background:var(--bg);color:var(--txt)}
+body{background:var(--bg);min-height:100vh}
+
+/* ── Topbar ── */
+.topbar{background:linear-gradient(135deg,#534AB7 0%,#3a32a0 100%);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100}
+.topbar h1{font-size:18px;font-weight:700;letter-spacing:-0.5px}
+.topbar-sub{font-size:11px;opacity:.7;margin-top:2px}
+.topbar-right{display:flex;gap:10px;align-items:center}
+.topbar-btn{background:rgba(255,255,255,.15);border:none;color:#fff;padding:6px 12px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;transition:.2s}
+.topbar-btn:hover{background:rgba(255,255,255,.25)}
+
+/* ── Tabs ── */
+.tabs{display:flex;background:var(--card);border-bottom:2px solid var(--border);overflow-x:auto;padding:0 8px;position:sticky;top:52px;z-index:90}
+.tab{padding:10px 16px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:.2s}
+.tab:hover{color:var(--pri);background:var(--ptint)}
+.tab.active{color:var(--pri);border-bottom-color:var(--pri)}
+
+/* ── Cards, Forms ── */
+.card{background:var(--card);border-radius:var(--radius);padding:16px;margin-bottom:16px;box-shadow:var(--shadow)}
+.form-group{margin-bottom:10px}
+.form-group label{display:block;font-size:11px;font-weight:600;color:var(--muted);margin-bottom:3px;text-transform:uppercase;letter-spacing:.5px}
+input,select,textarea{border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:13px;width:100%;outline:none;transition:.2s;font-family:inherit;background:var(--card);color:var(--txt)}
+input:focus,select:focus,textarea:focus{border-color:var(--pri);box-shadow:0 0 0 3px rgba(83,74,183,.15)}
+
+/* ── Buttons ── */
+.btn{display:inline-flex;align-items:center;gap:4px;padding:8px 14px;border-radius:6px;font-size:13px;font-weight:600;border:none;cursor:pointer;transition:.2s}
+.btn-pri{background:var(--pri);color:#fff}.btn-pri:hover{filter:brightness(1.1)}
+.btn-grn{background:var(--grn);color:#fff}.btn-grn:hover{filter:brightness(1.1)}
+.btn-dgrn{background:var(--dgrn);color:#fff}.btn-dgrn:hover{filter:brightness(1.1)}
+.btn-amb{background:var(--amb);color:#fff}.btn-amb:hover{filter:brightness(1.1)}
+.btn-outline{background:transparent;border:1px solid var(--border);color:var(--txt)}.btn-outline:hover{border-color:var(--pri);color:var(--pri)}
+.btn-sm{padding:4px 10px;font-size:11px}
+
+/* ── Tables ── */
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--ptint);font-weight:700;text-align:left;padding:8px 10px;border-bottom:2px solid var(--border);font-size:11px;text-transform:uppercase;letter-spacing:.5px}
+td{padding:7px 10px;border-bottom:1px solid #eee;vertical-align:middle}
+tr:hover td{background:rgba(83,74,183,.03)}
+
+/* ── Stat Cards ── */
+.stat-card{background:var(--card);border-radius:var(--radius);padding:12px;text-align:center;box-shadow:var(--shadow)}
+.stat-card .val{font-size:20px;font-weight:800;color:var(--pri)}
+.stat-card .lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+
+/* ── Toast ── */
+#toastBox{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--card);color:var(--txt);padding:12px 18px;border-radius:var(--radius);box-shadow:0 4px 20px rgba(0,0,0,.15);font-size:13px;max-width:380px;transition:opacity .3s;border-left:4px solid var(--grn)}
+
+/* ── Panels ── */
+.panel{display:none;padding:16px;max-width:1100px;margin:0 auto}
+.panel.active{display:block}
+
+/* ── Mobile ── */
+@media(max-width:700px){
+ .topbar{padding:10px 14px}
+ .topbar h1{font-size:15px}
+ .tabs{top:44px}
+ .tab{padding:8px 12px;font-size:11px}
+ .panel{padding:10px}
+ table{font-size:11px}
+ th,td{padding:5px 6px}
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ TOPBAR ═══ -->
+<div class="topbar">
+ <div>
+  <h1>DuetIncome</h1>
+  <div class="topbar-sub">Smart Retirement Comparison Tools — Steve Maxim | AAA Life Specialist</div>
+ </div>
+ <div class="topbar-right">
+  <button class="topbar-btn" onclick="toggleDarkMode()" id="darkBtn">🌙</button>
+ </div>
+</div>
+
+<!-- ═══ TABS ═══ -->
+<div class="tabs">
+ <div class="tab active" onclick="showTab(0)">CD → Annuity</div>
+ <div class="tab" onclick="showTab(1)">Annuity vs Annuity</div>
+ <div class="tab" onclick="showTab(2)">S&P vs Annuity</div>
+</div>
+
+<!-- ═══ PANELS ═══ -->
+<div id="p0" class="panel active"></div>
+<div id="p1" class="panel"></div>
+<div id="p2" class="panel"></div>
+
+<div id="toastBox"></div>
+
+<script>
+// ═══ CORE UTILITIES ═══
+function $(s){ return document.querySelectorAll(s); }
+function $1(s){ return document.querySelector(s); }
+function fmt(n){ var v = Number(n); if(v < 0) return '<span style="color:#c0392b">-$' + Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}) + '</span>'; return '$' + v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtPlain(n){ var v = Number(n); return (v < 0 ? '-' : '') + '$' + Math.abs(v).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function fmtInt(n){ return '$' + Number(n).toLocaleString('en-US',{minimumFractionDigits:0,maximumFractionDigits:0}); }
+
+function showToast(msg, dur){
+ dur = dur || 10000;
+ var d = document.createElement('div');
+ d.className = 'toast';
+ d.onclick = function(e){e.stopPropagation();};
+ d.innerHTML = msg;
+ document.getElementById('toastBox').appendChild(d);
+ setTimeout(function(){ d.style.opacity='0'; setTimeout(function(){ d.remove(); },300); }, dur);
+}
+
+// ═══ DARK MODE ═══
+function toggleDarkMode(){
+ document.body.classList.toggle('dark-mode');
+ var isDark = document.body.classList.contains('dark-mode');
+ localStorage.setItem('doi_dark_mode', isDark ? '1' : '0');
+ document.getElementById('darkBtn').textContent = isDark ? '☀️' : '🌙';
+}
+(function(){
+ if(localStorage.getItem('doi_dark_mode') === '1'){
+  document.body.classList.add('dark-mode');
+  document.getElementById('darkBtn').textContent = '☀️';
+ }
+})();
+
+// ═══ TAB SYSTEM ═══
+function showTab(i){
+ var panels = document.querySelectorAll('.panel');
+ var tabs = document.querySelectorAll('.tab');
+ panels.forEach(function(p,idx){ p.classList.toggle('active', idx===i); });
+ tabs.forEach(function(t,idx){ t.classList.toggle('active', idx===i); });
+ if(i===0) renderCDConversion();
+ if(i===1) renderAnnuityVsAnnuity();
+ if(i===2) renderIndexingTool();
+}
+
+// ═══ SETTINGS ═══
+var settings = {
+ agentName: 'Steve Maxim',
+ branch: 'Venice/Sarasota',
+ agentEmail: 'smaxim@maximent.com',
+ yourShare: 80,
+ partnerShare: 20
+};
+
+// ═══ PRODUCTS ═══
+var products = [
+ {name:'AAA Accumulator IUL',cat:'IUL / Universal Life',rate:105,basis:'target premium',pct:true},
+ {name:'AAA LifeTime UL (age 79 and under)',cat:'IUL / Universal Life',rate:105,basis:'target premium',pct:true},
+ {name:'AAA LifeTime UL (age 80+)',cat:'IUL / Universal Life',rate:100,basis:'target premium',pct:true},
+ {name:'Securian Eclipse UL (brokered)',cat:'IUL / Universal Life',rate:70,basis:'target/planned prem',pct:true},
+ {name:'Platinum Annuity 5 External (ages 0-79)',cat:'Annuities',rate:2.85,basis:'deposit',pct:true},
+ {name:'Platinum Annuity 5 Internal (ages 0-79)',cat:'Annuities',rate:1.85,basis:'deposit',pct:true},
+ {name:'Elite3 Guarantee External',cat:'Annuities',rate:1.25,basis:'deposit',pct:true},
+ {name:'MM GIA External Funds (ages 0-79)',cat:'Annuities',rate:2.80,basis:'deposit',pct:true},
+ {name:'MM GIA Internal Funds (ages 0-79)',cat:'Annuities',rate:1.80,basis:'deposit',pct:true},
+ {name:'MM American Legend 7 External (ages 0-75)',cat:'Annuities',rate:2.85,basis:'deposit',pct:true},
+ {name:'MM Safe Return External (ages 0-75)',cat:'Annuities',rate:2.85,basis:'deposit',pct:true},
+ {name:'MM Landmark 3 External (ages 0-75)',cat:'Annuities',rate:2.75,basis:'deposit',pct:true},
+ {name:'MM Landmark 5 External (ages 0-75)',cat:'Annuities',rate:2.85,basis:'deposit',pct:true},
+ {name:'MM Premier Bonus External (ages 0-75)',cat:'Annuities',rate:2.85,basis:'deposit',pct:true},
+ {name:'MM Premier Income Bonus External (ages 0-75)',cat:'Annuities',rate:2.85,basis:'deposit',pct:true},
+ {name:'Platinum Bonus 5 (AAA Life)',cat:'Annuities',rate:2.85,basis:'deposit',pct:true}
+];
+function findProd(n){ return products.find(function(p){return p.name===n}) || products[0]; }
+
+
+// ═══════════════════════════════════════════════════
+// TAB 1: CD → ANNUITY CONVERSION TOOL
+// ═══════════════════════════════════════════════════
+
+var cdConvAnswers = {};
+var cdIllustrationRates = JSON.parse(localStorage.getItem('cd_illustration_rates') || '{}');
+var cdInputs = {amount:'100000', rate:'4', term:'1', product:'Platinum Annuity 5 External (ages 0-79)'};
+
+function saveCDInputs(){
+ cdInputs.amount = document.getElementById('cd_amount')?.value || '100000';
+ cdInputs.rate = document.getElementById('cd_rate')?.value || '4.5';
+ cdInputs.term = document.getElementById('cd_term')?.value || '1';
+ cdInputs.product = document.getElementById('cd_annuity')?.value || cdInputs.product;
+}
+
+function saveIllustrationRates(){
+ var sel = document.getElementById('cd_annuity')?.value || '';
+ if(!sel) return;
+ var termYears = parseInt(sel.match(/\d+/)) || 5;
+ var rates = [];
+ for(var y=1;y<=termYears;y++){
+  var el = document.getElementById('illus_rate_'+y);
+  rates.push(parseFloat(el?.value) || 0);
+ }
+ cdIllustrationRates[sel] = rates;
+ localStorage.setItem('cd_illustration_rates', JSON.stringify(cdIllustrationRates));
+}
+
+function renderCDConversion(){
+ var h = '<h2 style="margin-bottom:4px;color:var(--pri)">CD → Annuity Conversion Tool</h2>';
+ h += '<p style="font-size:12px;color:var(--muted);margin-bottom:16px">Walk clients through a guided comparison using NEPQ questioning to help them see the advantages of annuities over CDs.</p>';
+
+ // ═══ SIDE-BY-SIDE COMPARISON ═══
+ h += '<div class="card" style="border:2px solid var(--pri)">';
+ h += '<h3 style="color:var(--pri)">CD vs Annuity — Feature Comparison</h3>';
+
+ h += '<div style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;align-items:end">';
+ h += '<div class="form-group"><label>CD Term</label><select id="cd_term" onchange="saveCDInputs();renderCDConversion()">';
+ [{v:'0.5',l:'6 months'},{v:'0.75',l:'9 months'},{v:'1',l:'12 months'},{v:'1.5',l:'18 months'}].forEach(function(t){
+  h += '<option value="'+t.v+'"'+(cdInputs.term===t.v?' selected':'')+'>'+t.l+'</option>';
+ });
+ h += '</select></div>';
+ h += '<div class="form-group"><label>Deposit Amount</label><input id="cd_amount" type="number" value="'+cdInputs.amount+'" onchange="saveCDInputs();renderCDConversion()" placeholder="$100,000" style="width:120px"></div>';
+ h += '<div class="form-group"><label>CD Rate (APY %)</label><input id="cd_rate" type="number" value="'+cdInputs.rate+'" step="0.1" onchange="saveCDInputs();renderCDConversion()" style="width:80px"></div>';
+ h += '<div class="form-group"><label>Annuity Product</label><select id="cd_annuity" onchange="saveCDInputs();renderCDConversion()">';
+ products.filter(function(p){return p.cat==='Annuities'}).forEach(function(p){
+  h += '<option value="'+p.name+'"'+(cdInputs.product===p.name?' selected':'')+'>'+p.name+'</option>';
+ });
+ h += '</select></div>';
+ h += '</div>';
+
+ var amt = parseFloat(document.getElementById('cd_amount')?.value) || 100000;
+ var cdRate = parseFloat(document.getElementById('cd_rate')?.value) || 4.5;
+ var cdTerm = parseFloat(document.getElementById('cd_term')?.value) || 1;
+ var selAnnuity = document.getElementById('cd_annuity')?.value || 'Platinum Annuity 5 External (ages 0-79)';
+ var annProd = products.find(function(p){return p.name===selAnnuity});
+ var annRate = annProd ? annProd.rate : 2.85;
+
+ var termMatch = selAnnuity.match(/\d+/);
+ var termYears = termMatch ? parseInt(termMatch[0]) : 5;
+ if(termYears > 10) termYears = 5;
+
+ // Illustration rates
+ var savedRates = cdIllustrationRates[selAnnuity] || [];
+ h += '<div style="margin-bottom:12px;padding:10px;background:var(--gtint);border-radius:var(--radius)">';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">';
+ h += '<b style="font-size:12px;color:var(--dgrn)">Illustration Rates — '+selAnnuity+' ('+termYears+' year term)</b>';
+ h += '<button class="btn btn-grn btn-sm" onclick="saveIllustrationRates();renderCDConversion()" style="font-size:10px;padding:2px 8px">Save Rates</button>';
+ h += '</div>';
+ h += '<div style="display:flex;gap:6px;flex-wrap:wrap;align-items:end">';
+ for(var yr=1;yr<=termYears;yr++){
+  var savedRate = savedRates[yr-1] || '';
+  h += '<div class="form-group" style="margin:0;min-width:60px"><label style="font-size:9px">Year '+yr+'</label><input id="illus_rate_'+yr+'" type="number" step="0.01" value="'+savedRate+'" placeholder="%" style="width:65px;font-size:11px;padding:3px"></div>';
+ }
+ h += '</div></div>';
+
+ // Calculate returns using illustration rates
+ var illusRates = [];
+ for(var iy=1;iy<=termYears;iy++){
+  var el = document.getElementById('illus_rate_'+iy);
+  illusRates.push(parseFloat(el?.value) || (savedRates[iy-1] || 0));
+ }
+ var hasIllusRates = illusRates.some(function(r){return r > 0});
+
+ // Year-by-year growth comparison table
+ if(hasIllusRates){
+  h += '<div style="margin-bottom:12px">';
+  h += '<b style="font-size:12px;color:var(--pri)">Year-by-Year Growth Comparison</b>';
+  h += '<table><tr><th>Year</th><th style="background:#1565c0;color:#fff">CD Rate</th><th style="background:#1565c0;color:#fff">CD Balance</th><th style="background:#1565c0;color:#fff">CD Earnings (taxed)</th><th style="background:var(--grn);color:#fff">Annuity Rate</th><th style="background:var(--grn);color:#fff">Annuity Balance</th><th style="background:var(--grn);color:#fff">Annuity Earnings (tax-deferred)</th></tr>';
+  var cdBal = amt, annBal = amt, totalCdEarnings = 0, totalAnnEarnings = 0;
+  for(var y=1;y<=termYears;y++){
+   var cdEarn = cdBal * (cdRate/100);
+   var cdTaxHit = cdEarn * 0.24;
+   cdBal += cdEarn;
+   totalCdEarnings += cdEarn - cdTaxHit;
+   var aRate = illusRates[y-1] || 0;
+   var annEarn = annBal * (aRate/100);
+   annBal += annEarn;
+   totalAnnEarnings += annEarn;
+   var winner = annBal > cdBal;
+   h += '<tr>';
+   h += '<td style="font-weight:700">Year '+y+'</td>';
+   h += '<td style="text-align:center">'+cdRate+'%</td>';
+   h += '<td style="text-align:center">'+fmt(cdBal)+'</td>';
+   h += '<td style="text-align:center;color:var(--muted)">'+fmt(cdEarn-cdTaxHit)+' <span style="font-size:9px">(after tax)</span></td>';
+   h += '<td style="text-align:center;font-weight:600;color:var(--dgrn)">'+aRate+'%</td>';
+   h += '<td style="text-align:center;font-weight:600;color:'+(winner?'var(--grn)':'')+'">'+fmt(annBal)+'</td>';
+   h += '<td style="text-align:center;color:var(--grn)">'+fmt(annEarn)+' <span style="font-size:9px">(no tax)</span></td>';
+   h += '</tr>';
+  }
+  h += '<tr style="font-weight:700;background:var(--gtint)"><td>TOTAL</td><td colspan="2" style="text-align:center">'+fmt(cdBal)+'</td><td style="text-align:center">'+fmt(totalCdEarnings)+' net</td><td colspan="2" style="text-align:center;color:var(--grn)">'+fmt(annBal)+'</td><td style="text-align:center;color:var(--grn)">'+fmt(totalAnnEarnings)+' (tax-deferred)</td></tr>';
+  h += '</table>';
+  var cdNetValue = amt + totalCdEarnings;
+  var diff = annBal - cdNetValue;
+  if(diff > 0){
+   h += '<div style="padding:8px;background:var(--gtint);border-radius:var(--radius);font-size:12px;text-align:center"><b style="color:var(--grn)">Annuity wins by '+fmt(diff)+'</b> after '+termYears+' years — and the annuity earnings haven\'t been taxed yet!</div>';
+  }
+  h += '</div>';
+ }
+
+ // Feature table
+ var annAvgRate = hasIllusRates ? illusRates.reduce(function(s,r){return s+r},0)/illusRates.length : 4.0;
+ var cdReturn1 = amt * (cdRate/100);
+ var cdReturn5 = amt * Math.pow(1 + cdRate/100, termYears) - amt;
+ var cdTax1 = cdReturn1 * 0.24;
+ var cdNet1 = cdReturn1 - cdTax1;
+ var annReturn5 = hasIllusRates ? (annBal - amt) : amt * Math.pow(1 + 4.0/100, 5) - amt;
+ var annTax5 = 0;
+ var commAmt = amt * (annRate/100);
+ var shareRate = settings.yourShare / 100;
+
+ h += '<table style="width:100%">';
+ h += '<tr><th style="width:35%">Feature</th><th style="width:30%;background:#e3f2fd;color:#1565c0;text-align:center">Certificate of Deposit</th><th style="width:35%;background:var(--gtint);color:var(--dgrn);text-align:center">Fixed Annuity ✓</th></tr>';
+
+ var rows = [
+  ['Current Rate',cdRate+'% APY',(hasIllusRates?illusRates[0]+'% Year 1 (illustrated)':'3.5% - 5.5% (varies by product)'),'grn'],
+  ['Earnings on '+fmt(amt)+' (Year 1)',fmt(cdReturn1),fmt(amt*(hasIllusRates&&illusRates[0]?illusRates[0]:4.5)/100),'grn'],
+  ['Earnings over '+termYears+' Years',fmt(cdReturn5),fmt(annReturn5),'grn'],
+  ['Taxes on Earnings','Taxed annually at ordinary income rate','Tax-deferred until withdrawal','grn'],
+  ['Estimated Tax Hit (Year 1)',fmt(cdTax1)+' (at 24% bracket)','$0 — grows tax-free','grn'],
+  ['Net After Tax (Year 1)',fmt(cdNet1),fmt(amt*0.045)+' (no tax yet)','grn'],
+  ['FDIC / State Guarantee','FDIC insured up to $250K','State guarantee fund (varies by state)','—'],
+  ['Early Withdrawal Penalty','Forfeit 3-6 months interest','Surrender charge (decreasing over 3-5 yrs)','—'],
+  ['Minimum Deposit','Varies ($1K-$10K typical)','$5,000 - $10,000 typical','—'],
+  ['Guaranteed Minimum Rate','No — rate resets at maturity','Yes — contractual floor rate','grn'],
+  ['Lifetime Income Option','No','Yes — optional income rider','grn'],
+  ['Death Benefit','Paid to estate (may go through probate)','Named beneficiary (avoids probate)','grn'],
+  ['Probate','Subject to probate','Bypasses probate','grn'],
+  ['Required Minimum Distributions','N/A','Required after 73 (if qualified)','—'],
+  ['Liquidity','Full access at maturity','10% free withdrawal annually','cd'],
+  ['Interest Compounding','Simple or compound (varies)','Tax-deferred compounding (more growth)','grn'],
+  ['FL Medicaid Asset Protection','No protection — fully countable asset','Can be structured as Medicaid-compliant — protects assets from spend-down','grn'],
+  ['Assisted Living / Nursing Home','CD balance counts against Medicaid eligibility','Properly structured annuity is NOT counted as an asset under FL law','grn'],
+  ['5-Year Look-Back','Gifting triggers penalty period','Medicaid-compliant annuity is NOT treated as a gift','grn']
+ ];
+
+ rows.forEach(function(r){
+  var highlight = r[3];
+  var cdStyle = highlight==='cd' ? 'font-weight:700;color:#1565c0' : '';
+  var annStyle = highlight==='grn' ? 'font-weight:700;color:var(--dgrn)' : '';
+  h += '<tr><td style="font-weight:600;font-size:12px">'+r[0]+'</td>';
+  h += '<td style="text-align:center;font-size:12px;'+cdStyle+'">'+r[1]+'</td>';
+  h += '<td style="text-align:center;font-size:12px;'+annStyle+'">'+r[2]+'</td></tr>';
+ });
+ h += '</table>';
+
+ // Email button
+ h += '<div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">';
+ h += '<button class="btn btn-pri" onclick="generateClientComparison()" style="font-size:13px;padding:8px 16px">📧 Email Comparison to Client</button>';
+ h += '<div class="form-group" style="margin:0"><input id="cd_client_email" placeholder="Client email (optional)" style="font-size:11px;width:200px;padding:6px"></div>';
+ h += '</div>';
+
+ h += '</div>';
+
+ // ═══ NEPQ GUIDED CONVERSATION ═══
+ h += '<div class="card" style="margin-top:16px;border:2px solid #1abc9c">';
+ h += '<h3 style="color:#1abc9c">NEPQ Guided Conversation</h3>';
+ h += '<p style="font-size:11px;color:var(--muted);margin-bottom:12px">Use these questions in order during the conversation. Each builds on the last to help the client see the value of converting.</p>';
+
+ var nepqSteps = [
+  {phase:'Situation',color:'#3498db',questions:[
+   {q:'How long have you been doing CDs?',note:'Establishes history — most say years/decades. This builds the pattern.'},
+   {q:'What made you start putting money into CDs originally?',note:'Safety, simplicity. Acknowledge their smart decision at the time.'},
+   {q:'What rate are you currently getting on your CD?',note:'Document this — you\'ll compare it later.'},
+   {q:'When your CD matures, what do you typically do with the money?',note:'Most say "roll it over." This reveals they don\'t actually need the liquidity.'},
+   {q:'How much total do you have in CDs right now?',note:'Size the opportunity.'}
+  ]},
+  {phase:'Problem Awareness',color:'#e67e22',questions:[
+   {q:'Are you happy with the rate you\'re getting, or do you feel like your money could be working harder?',note:'Opens the door to dissatisfaction without being pushy.'},
+   {q:'When you look at what you\'ve earned on CDs over the years versus inflation, do you feel like you\'re actually getting ahead?',note:'Plants the seed — CD rates often barely beat inflation after taxes.'},
+   {q:'Did you know that CD interest is taxed as ordinary income every year — even if you don\'t withdraw it?',note:'Most people don\'t realize this. Let it sink in.'},
+   {q:'How much did you pay in taxes on your CD interest last year?',note:'Makes the tax hit real and personal.'},
+   {q:'When was the last time your CD matured and you actually spent all of that money within the next year?',note:'KEY QUESTION — reveals they never need the full liquidity they think they do.'}
+  ]},
+  {phase:'Solution Awareness',color:'#1abc9c',questions:[
+   {q:'What if there was a way to get a similar or better rate, but not pay taxes on the growth until you actually use the money?',note:'Introduces tax-deferred advantage without naming the product yet.'},
+   {q:'Would it be helpful if your money was protected from market downturns but still had the potential to earn more than a CD?',note:'Introduces the guarantee + upside concept.'},
+   {q:'If you could keep the same safety but add a guaranteed income stream for retirement — would that be worth looking at?',note:'Introduces the income rider benefit.'},
+   {q:'What if instead of your earnings going through probate, they went directly to your beneficiaries — tax-efficiently?',note:'Introduces probate avoidance benefit.'}
+  ]},
+  {phase:'Consequence',color:'#c0392b',questions:[
+   {q:'If you keep rolling CDs for the next 5-10 years, and rates drop back to 1-2% like they were a few years ago — how would that affect your retirement plans?',note:'Creates urgency — rates won\'t stay high forever. Lock in now.'},
+   {q:'How much have you lost to taxes on CD interest over the past 5 years? What could that money be worth if it had been growing tax-deferred?',note:'Quantifies the cost of inaction.'},
+   {q:'If something happened to you, would your family have to go through probate to access this money?',note:'Emotional trigger — protecting family.'}
+  ]},
+  {phase:'Commitment',color:'var(--grn)',questions:[
+   {q:'Based on what we\'ve discussed, it sounds like the annuity would give you everything your CD does — plus tax-deferred growth, probate avoidance, and a guaranteed income option. Does that make sense?',note:'Summary close — get agreement on the value.'},
+   {q:'You mentioned your CD matures on [DATE]. Would it make sense to have the annuity application ready so we can make a smooth transition — no gap in your earnings?',note:'Tie to a specific date — creates a natural action step.'},
+   {q:'Would you like to move the full amount, or start with a portion to see how it works?',note:'Assumptive close with a safety valve. Either answer is a yes.'}
+  ]}
+ ];
+
+ nepqSteps.forEach(function(step, si){
+  h += '<div style="margin-bottom:16px;border-left:4px solid '+step.color+';padding-left:12px">';
+  h += '<div style="display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="var el=document.getElementById(\'nepq_'+si+'\');el.style.display=el.style.display===\'none\'?\'block\':\'none\'">';
+  h += '<h4 style="margin:0;color:'+step.color+';font-size:14px">Phase '+(si+1)+': '+step.phase+'</h4>';
+  h += '<span style="font-size:11px;color:var(--muted)">'+step.questions.length+' questions ▾</span>';
+  h += '</div>';
+  h += '<div id="nepq_'+si+'" style="'+(si===0?'':'display:none')+'">';
+  step.questions.forEach(function(q, qi){
+   h += '<div style="margin:8px 0;padding:8px 12px;background:'+(qi%2===0?'#fff':'#f9f9f9')+';border-radius:6px;border:1px solid #eee">';
+   h += '<div style="font-size:13px;font-weight:600;color:#333;margin-bottom:4px">"'+q.q+'"</div>';
+   h += '<div style="font-size:10px;color:var(--amb);font-style:italic">💡 '+q.note+'</div>';
+   h += '</div>';
+  });
+  h += '</div></div>';
+ });
+
+ h += '</div>';
+
+ // ═══ OBJECTION HANDLING ═══
+ h += '<div class="card" style="margin-top:16px;border:2px solid var(--amb)">';
+ h += '<h3 style="color:var(--amb)">Handling: "It Ties Up My Money"</h3>';
+ h += '<p style="font-size:12px;color:var(--muted);margin-bottom:12px">This is the #1 objection. Here\'s how to reframe it:</p>';
+
+ var objections = [
+  {obj:'It ties up my money for too long.',
+   response:'I understand that concern. Let me ask you — how long have you been doing CDs? [They say years]. And in all that time, have you ever taken out the full amount and spent it all within a year? [They say no]. So really, your money has been "tied up" in CDs this whole time — you\'ve just been rolling it over. The annuity does the same thing, but with better tax treatment and a guaranteed floor rate.',
+   tag:'Reframe the pattern'},
+  {obj:'What if I need the money?',
+   response:'Great question. Most annuities allow you to withdraw up to 10% per year with no penalty — that\'s '+fmt(amt*0.10)+' on your deposit. When was the last time you needed more than '+fmt(amt*0.10)+' from your CD in a single year? Plus, many have nursing home and terminal illness waivers for full access if something unexpected happens.',
+   tag:'10% free withdrawal'},
+  {obj:'CD rates are really good right now.',
+   response:'They are — and that\'s exactly why now is the time to lock in. CD rates were 0.5% just 3 years ago. When your CD matures in '+cdTerm+' year'+(cdTerm>1?'s':'')+', rates could be anywhere. With the annuity, you lock in a guaranteed minimum rate — so even if market rates drop, your floor is protected.',
+   tag:'Lock in now'},
+  {obj:'I don\'t want to pay a surrender charge.',
+   response:'I get it — nobody wants fees. But think about it this way: your CD also has an early withdrawal penalty. The difference is the annuity\'s surrender charge decreases every year and disappears completely after 3-5 years. And during that time, your money is growing tax-deferred — so the net benefit far outweighs the surrender period.',
+   tag:'CD has penalties too'},
+  {obj:'I need to think about it / talk to my spouse.',
+   response:'Absolutely, this is an important decision. What specifically would you want to think through? [Let them answer]. That way I can get you the exact information you need so you and [spouse] can make a confident decision. Also — when does your current CD mature? I\'d hate for you to miss the window and have it auto-renew at whatever rate the bank decides.',
+   tag:'Isolate the concern'}
+ ];
+
+ objections.forEach(function(o, i){
+  h += '<div style="margin-bottom:12px;padding:12px;background:#fff;border-radius:8px;border:1px solid #eee">';
+  h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">';
+  h += '<div style="font-weight:700;color:#c0392b;font-size:13px">"'+o.obj+'"</div>';
+  h += '<span style="background:var(--atint);color:var(--amb);padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600">'+o.tag+'</span>';
+  h += '</div>';
+  h += '<div style="font-size:12px;color:#333;line-height:1.5;padding:8px;background:var(--gtint);border-radius:6px;border-left:3px solid var(--grn)">';
+  h += '<b style="color:var(--grn)">Response:</b> '+o.response;
+  h += '</div></div>';
+ });
+
+ h += '</div>';
+
+ // ═══ QUICK REFERENCE ═══
+ h += '<div class="card" style="margin-top:16px">';
+ h += '<h3>Quick Reference: Why Annuity Wins</h3>';
+ h += '<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:8px">';
+ var advantages = [
+  {icon:'🛡️',title:'Tax-Deferred Growth',desc:'No taxes on earnings until withdrawal — your money compounds faster.'},
+  {icon:'📈',title:'Guaranteed Minimum Rate',desc:'Floor rate protects you even if market rates drop to 1%.'},
+  {icon:'💰',title:'Lifetime Income Option',desc:'Convert to guaranteed income you can\'t outlive.'},
+  {icon:'👨‍👩‍👧',title:'Probate Avoidance',desc:'Goes directly to named beneficiaries — no court, no delays.'},
+  {icon:'🔒',title:'Principal Protection',desc:'Your deposit is protected — no market risk.'},
+  {icon:'📊',title:'Higher Net Returns',desc:'After-tax returns typically beat CDs over 3+ years.'},
+  {icon:'🏥',title:'Hardship Waivers',desc:'Many policies allow full access for nursing home or terminal illness.'},
+  {icon:'💵',title:'10% Annual Free Withdrawal',desc:'Access up to 10% per year penalty-free for any reason.'},
+  {icon:'🏛️',title:'FL Medicaid Asset Protection',desc:'In Florida, a Medicaid-compliant annuity can protect assets from being counted — helping qualify for assisted living/nursing care while preserving family wealth.'},
+  {icon:'⚖️',title:'Not Treated as a Gift',desc:'Unlike giving money away (5-year look-back penalty), a properly structured annuity is NOT treated as a gift under Florida Medicaid rules.'}
+ ];
+ advantages.forEach(function(a){
+  h += '<div style="padding:10px;background:var(--gtint);border-radius:8px;text-align:center">';
+  h += '<div style="font-size:20px;margin-bottom:4px">'+a.icon+'</div>';
+  h += '<div style="font-weight:700;font-size:12px;color:var(--dgrn);margin-bottom:4px">'+a.title+'</div>';
+  h += '<div style="font-size:10px;color:var(--muted)">'+a.desc+'</div>';
+  h += '</div>';
+ });
+ h += '</div></div>';
+
+ // ═══ FLORIDA MEDICAID ═══
+ h += '<div class="card" style="margin-top:16px;border:2px solid #1565c0">';
+ h += '<h3 style="color:#1565c0">Florida Medicaid Asset Protection — Why This Matters</h3>';
+ h += '<p style="font-size:12px;color:var(--muted);margin-bottom:12px">In Florida, annuities can be a powerful tool for protecting assets when a client or their spouse needs assisted living or nursing home care.</p>';
+
+ h += '<div style="background:#e3f2fd;padding:12px;border-radius:8px;margin-bottom:12px">';
+ h += '<h4 style="color:#1565c0;margin-bottom:6px;font-size:13px">The Problem with CDs</h4>';
+ h += '<p style="font-size:12px;margin:0">When someone applies for Florida Medicaid to cover assisted living or nursing home costs, <b>CDs are fully countable assets</b>. The 2026 asset limit is just <b>$2,000</b> for a single applicant. This means a client with $100K+ in CDs would need to spend almost all of it before qualifying for Medicaid assistance.</p>';
+ h += '</div>';
+
+ h += '<div style="background:var(--gtint);padding:12px;border-radius:8px;margin-bottom:12px">';
+ h += '<h4 style="color:var(--dgrn);margin-bottom:6px;font-size:13px">The Annuity Solution</h4>';
+ h += '<p style="font-size:12px;margin-bottom:8px">A <b>Medicaid-compliant annuity</b> converts countable assets into an income stream that is <b>not counted</b> against Medicaid eligibility. This protects family wealth while still qualifying for care coverage.</p>';
+ h += '<p style="font-size:12px;margin:0"><b>Key requirements for FL Medicaid compliance:</b></p>';
+ h += '<ul style="font-size:11px;margin:6px 0;padding-left:20px">';
+ h += '<li><b>Irrevocable</b> — cannot be cashed out or transferred</li>';
+ h += '<li><b>Non-assignable</b> — only the annuitant receives payments</li>';
+ h += '<li><b>Equal payments</b> — same amount each month, no deferrals</li>';
+ h += '<li><b>Within life expectancy</b> — term must be less than Medicaid life expectancy tables</li>';
+ h += '<li><b>State as beneficiary</b> — Florida Medicaid must be named as remainder beneficiary</li>';
+ h += '</ul>';
+ h += '</div>';
+
+ h += '<div style="background:#fff5f5;padding:12px;border-radius:8px;margin-bottom:12px">';
+ h += '<h4 style="color:#c0392b;margin-bottom:6px;font-size:13px">Important Disclaimers</h4>';
+ h += '<ul style="font-size:11px;margin:0;padding-left:20px">';
+ h += '<li>Not all annuities are Medicaid-compliant — structure matters</li>';
+ h += '<li>This strategy primarily applies to <b>married couples</b> (community spouse protection)</li>';
+ h += '<li>Always recommend clients consult a <b>Florida elder law attorney</b> for their specific situation</li>';
+ h += '<li>Florida has a <b>5-year look-back</b> period — but properly structured annuities are NOT treated as gifts</li>';
+ h += '<li>Medicaid rules can change — always verify current requirements</li>';
+ h += '</ul>';
+ h += '</div>';
+
+ h += '<div style="padding:10px;background:var(--ptint);border-radius:8px">';
+ h += '<h4 style="color:var(--pri);margin-bottom:6px;font-size:13px">NEPQ Talking Point</h4>';
+ h += '<p style="font-size:12px;margin:0;font-style:italic">"One thing most people don\'t realize is that in Florida, if you or your spouse ever need assisted living or nursing home care, your CD is considered a countable asset — meaning you\'d have to spend it down to $2,000 before Medicaid would help. But a properly structured annuity can protect that money. It\'s not something you hope you\'ll need, but it\'s one more layer of protection that a CD simply can\'t provide."</p>';
+ h += '</div>';
+
+ h += '</div>';
+
+ $1('#p0').innerHTML = h;
+}
+
+function generateClientComparison(){
+ var amt = parseFloat(document.getElementById('cd_amount')?.value) || 100000;
+ var cdRate = parseFloat(document.getElementById('cd_rate')?.value) || 4;
+ var selAnnuity = document.getElementById('cd_annuity')?.value || 'Platinum Annuity 5 External (ages 0-79)';
+ var clientEmail = document.getElementById('cd_client_email')?.value || '';
+ var termMatch = selAnnuity.match(/\d+/);
+ var termYears = termMatch ? parseInt(termMatch[0]) : 5;
+ if(termYears > 10) termYears = 5;
+ var ilRates = cdIllustrationRates[selAnnuity] || [];
+ var hasIL = ilRates.some(function(r){return r > 0});
+ var fmtN = function(n){return '$'+Math.round(n).toLocaleString()};
+
+ var cdReturn1 = amt * (cdRate/100);
+ var cdTax1 = cdReturn1 * 0.24;
+ var cdNet1 = cdReturn1 - cdTax1;
+ var annRate1 = hasIL && ilRates[0] ? ilRates[0] : 4.5;
+ var annReturn1 = amt * (annRate1/100);
+
+ var b = 'CD vs Fixed Annuity Comparison\n';
+ b += 'Based on your '+fmtN(amt)+' deposit\n';
+ b += 'Prepared by Steve Maxim | AAA Life Specialist\n';
+ b += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
+
+ b += 'FEATURE COMPARISON\n';
+ b += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
+ var rows = [
+  ['Current Rate', cdRate+'% APY', (hasIL ? annRate1+'% (illustrated)' : '3.5% - 5.5%')],
+  ['Year 1 Earnings', fmtN(cdReturn1), fmtN(annReturn1)],
+  ['Taxes on Earnings', 'Taxed annually', 'Tax-deferred until withdrawal'],
+  ['Tax Impact (Year 1)', fmtN(cdTax1)+' (at 24%)', '$0 — grows tax-free'],
+  ['Net After Tax (Year 1)', fmtN(cdNet1), fmtN(annReturn1)+' (no tax yet)'],
+  ['FDIC / Guarantee', 'FDIC up to $250K', 'State guarantee fund'],
+  ['Guaranteed Min Rate', 'No — resets at maturity', 'Yes — contractual floor'],
+  ['Lifetime Income', 'No', 'Yes — optional rider'],
+  ['Death Benefit', 'Goes through probate', 'Named beneficiary — avoids probate'],
+  ['Liquidity', 'Full at maturity', '10% free withdrawal ('+fmtN(amt*0.10)+'/yr)'],
+  ['FL Medicaid', 'Fully countable asset', 'Can be Medicaid-compliant'],
+  ['Assisted Living', 'Counts against $2K limit', 'NOT counted if structured properly']
+ ];
+ rows.forEach(function(r){
+  b += '\n'+r[0]+':\n  CD: '+r[1]+'\n  Annuity: '+r[2]+'\n';
+ });
+
+ if(hasIL){
+  b += '\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
+  b += 'YEAR-BY-YEAR GROWTH — '+selAnnuity+'\n';
+  b += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
+  var eCdBal = amt, eAnnBal = amt;
+  for(var y=1;y<=termYears;y++){
+   var eCdEarn = eCdBal*(cdRate/100);
+   var eCdTax = eCdEarn*0.24;
+   eCdBal += eCdEarn;
+   var eARate = ilRates[y-1]||0;
+   var eAnnEarn = eAnnBal*(eARate/100);
+   eAnnBal += eAnnEarn;
+   b += 'Year '+y+':\n';
+   b += '  CD: '+cdRate+'% → Balance '+fmtN(eCdBal)+' ('+fmtN(eCdEarn-eCdTax)+' after tax)\n';
+   b += '  Annuity: '+eARate+'% → Balance '+fmtN(eAnnBal)+' ('+fmtN(eAnnEarn)+' tax-deferred)\n\n';
+  }
+  var eDiff = eAnnBal - eCdBal;
+  if(eDiff > 0) b += 'After '+termYears+' years, the annuity produces '+fmtN(eDiff)+' MORE — and earnings are still tax-deferred!\n';
+ }
+
+ b += '\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
+ b += 'KEY ADVANTAGES OF THE FIXED ANNUITY\n';
+ b += '━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n';
+ b += '• Tax-Deferred Growth — no annual taxes, money compounds faster\n';
+ b += '• Guaranteed Minimum Rate — protected even if market rates drop\n';
+ b += '• Lifetime Income Option — guaranteed income you cannot outlive\n';
+ b += '• Probate Avoidance — goes directly to your beneficiaries\n';
+ b += '• Principal Protection — no market risk\n';
+ b += '• 10% Annual Access — '+fmtN(amt*0.10)+'/year penalty-free\n';
+ b += '• FL Medicaid Protection — can protect assets for assisted living\n';
+ b += '• Higher Net Returns — after-tax returns beat CDs over 3+ years\n';
+
+ b += '\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n';
+ b += 'This comparison is for educational purposes. Annuity features, rates,\n';
+ b += 'and guarantees vary by product. Please review the specific product\n';
+ b += 'details before making any decisions.\n\n';
+ b += 'Steve Maxim | AAA Life Specialist | Branch Venice/Sarasota\n';
+ b += settings.agentEmail+'\n';
+
+ // HTML email
+ var eh = '<div style="font-family:Arial,sans-serif;max-width:700px;margin:0 auto;color:#333">';
+ eh += '<div style="background:#0F6E56;color:#fff;padding:20px;border-radius:8px 8px 0 0;text-align:center">';
+ eh += '<h1 style="margin:0;font-size:22px">CD vs Fixed Annuity</h1>';
+ eh += '<p style="margin:4px 0 0;opacity:0.85;font-size:14px">Personalized comparison based on your '+fmtN(amt)+' deposit</p>';
+ eh += '</div>';
+ eh += '<div style="padding:20px;border:1px solid #ddd;border-top:none">';
+
+ eh += '<h2 style="color:#534AB7;font-size:16px;border-bottom:2px solid #534AB7;padding-bottom:6px">Feature Comparison</h2>';
+ eh += '<table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse">';
+ eh += '<tr><th style="padding:8px;background:#0F6E56;color:#fff;text-align:left;font-size:12px">Feature</th><th style="padding:8px;background:#1565c0;color:#fff;text-align:center;font-size:12px">Certificate of Deposit</th><th style="padding:8px;background:#0F6E56;color:#fff;text-align:center;font-size:12px">Fixed Annuity ✓</th></tr>';
+ rows.forEach(function(r,i){
+  var bg = i%2===0?'#fff':'#f9f9f9';
+  eh += '<tr style="background:'+bg+'"><td style="padding:6px 8px;border:1px solid #eee;font-weight:600;font-size:12px">'+r[0]+'</td>';
+  eh += '<td style="padding:6px 8px;border:1px solid #eee;text-align:center;font-size:12px">'+r[1]+'</td>';
+  eh += '<td style="padding:6px 8px;border:1px solid #eee;text-align:center;font-size:12px;color:#0F6E56;font-weight:600">'+r[2]+'</td></tr>';
+ });
+ eh += '</table>';
+
+ if(hasIL){
+  eh += '<h2 style="color:#534AB7;font-size:16px;border-bottom:2px solid #534AB7;padding-bottom:6px;margin-top:20px">Year-by-Year Growth — '+selAnnuity+'</h2>';
+  eh += '<table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse">';
+  eh += '<tr><th style="padding:6px;background:#333;color:#fff;font-size:11px">Year</th><th style="padding:6px;background:#1565c0;color:#fff;font-size:11px">CD Rate</th><th style="padding:6px;background:#1565c0;color:#fff;font-size:11px">CD Balance</th><th style="padding:6px;background:#1565c0;color:#fff;font-size:11px">CD Net Earnings</th><th style="padding:6px;background:#0F6E56;color:#fff;font-size:11px">Annuity Rate</th><th style="padding:6px;background:#0F6E56;color:#fff;font-size:11px">Annuity Balance</th><th style="padding:6px;background:#0F6E56;color:#fff;font-size:11px">Annuity Earnings</th></tr>';
+  var hCdBal = amt, hAnnBal = amt;
+  for(var hy=1;hy<=termYears;hy++){
+   var hCdE = hCdBal*(cdRate/100); var hCdT = hCdE*0.24; hCdBal += hCdE;
+   var hAR = ilRates[hy-1]||0; var hAE = hAnnBal*(hAR/100); hAnnBal += hAE;
+   var hBg = hy%2===0?'#f9f9f9':'#fff';
+   eh += '<tr style="background:'+hBg+'"><td style="padding:5px;border:1px solid #eee;font-weight:700;font-size:11px;text-align:center">Year '+hy+'</td>';
+   eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px">'+cdRate+'%</td>';
+   eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px">'+fmtN(hCdBal)+'</td>';
+   eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px;color:#999">'+fmtN(hCdE-hCdT)+'</td>';
+   eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px;color:#0F6E56;font-weight:600">'+hAR+'%</td>';
+   eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px;color:#0F6E56;font-weight:600">'+fmtN(hAnnBal)+'</td>';
+   eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px;color:#0F6E56">'+fmtN(hAE)+'</td></tr>';
+  }
+  eh += '<tr style="background:#F0FBF7;font-weight:700"><td style="padding:6px;border:1px solid #eee;text-align:center;font-size:11px">After '+termYears+' Yrs</td><td colspan="2" style="padding:6px;border:1px solid #eee;text-align:center;font-size:12px">'+fmtN(hCdBal)+'</td><td style="padding:6px;border:1px solid #eee;text-align:center;font-size:11px">'+fmtN(hCdBal-amt)+'</td><td colspan="2" style="padding:6px;border:1px solid #eee;text-align:center;font-size:12px;color:#0F6E56">'+fmtN(hAnnBal)+'</td><td style="padding:6px;border:1px solid #eee;text-align:center;font-size:11px;color:#0F6E56">'+fmtN(hAnnBal-amt)+'</td></tr>';
+  eh += '</table>';
+  var hDiff = hAnnBal - hCdBal;
+  if(hDiff > 0) eh += '<div style="background:#F0FBF7;padding:10px;border-left:4px solid #0F6E56;margin:12px 0;font-size:13px"><b>The annuity produces '+fmtN(hDiff)+' more</b> after '+termYears+' years — and earnings are still tax-deferred!</div>';
+ }
+
+ eh += '<h2 style="color:#534AB7;font-size:16px;border-bottom:2px solid #534AB7;padding-bottom:6px;margin-top:20px">Key Advantages</h2>';
+ var advItems = [
+  ['🛡️','Tax-Deferred Growth','No annual taxes — money compounds faster'],
+  ['📈','Guaranteed Min Rate','Protected even if rates drop to 1%'],
+  ['💰','Lifetime Income','Guaranteed income you cannot outlive'],
+  ['👨‍👩‍👧','Probate Avoidance','Direct to beneficiaries — no court'],
+  ['🔒','Principal Protection','No market risk on your deposit'],
+  ['💵','10% Annual Access',fmtN(amt*0.10)+'/year penalty-free'],
+  ['🏛️','FL Medicaid Protection','Can protect assets for assisted living'],
+  ['📊','Higher Net Returns','After-tax returns beat CDs over 3+ years']
+ ];
+ eh += '<table cellpadding="0" cellspacing="6" style="width:100%"><tr>';
+ advItems.forEach(function(a,i){
+  if(i>0 && i%2===0) eh += '</tr><tr>';
+  eh += '<td style="background:#F0FBF7;padding:10px;border-radius:6px;text-align:center;width:50%">';
+  eh += '<div style="font-size:18px">'+a[0]+'</div>';
+  eh += '<div style="font-weight:700;color:#0F6E56;font-size:12px">'+a[1]+'</div>';
+  eh += '<div style="font-size:11px;color:#666">'+a[2]+'</div></td>';
+ });
+ eh += '</tr></table>';
+
+ eh += '<div style="background:#F0FBF7;padding:12px;border-left:4px solid #0F6E56;margin:16px 0;font-size:12px"><b>Florida Medicaid Asset Protection:</b> CDs are fully countable assets for Medicaid (2026 limit: $2,000). A Medicaid-compliant annuity can protect these assets — preserving family wealth. Consult a Florida elder law attorney for your situation.</div>';
+
+ eh += '<div style="background:#FFF5F5;padding:10px;border-left:4px solid #c0392b;margin:12px 0;font-size:11px;color:#666"><b>Important:</b> This comparison is for educational purposes. Features, rates, and guarantees vary by product. Please review specific product details before making decisions.</div>';
+
+ eh += '<div style="margin-top:20px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999">Steve Maxim | AAA Life Specialist | Branch Venice/Sarasota<br>'+settings.agentEmail+'</div>';
+ eh += '</div></div>';
+
+ var blob = new Blob([eh], {type:'text/html'});
+ var item = new ClipboardItem({'text/html': blob, 'text/plain': new Blob([b], {type:'text/plain'})});
+ navigator.clipboard.write([item]).then(function(){
+  var subject = encodeURIComponent('CD vs Annuity Comparison — '+fmtN(amt)+' Deposit');
+  var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1'
+   +(clientEmail?'&to='+encodeURIComponent(clientEmail):'')
+   +'&su='+subject;
+  window.open(gmailUrl, '_blank');
+  showToast('HTML comparison copied to clipboard! Paste (Cmd+V) into the Gmail compose window.', 8000);
+ }).catch(function(){
+  var subject = encodeURIComponent('CD vs Annuity Comparison — '+fmtN(amt)+' Deposit');
+  var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1'
+   +(clientEmail?'&to='+encodeURIComponent(clientEmail):'')
+   +'&su='+subject+'&body='+encodeURIComponent(b);
+  window.open(gmailUrl, '_blank');
+  showToast('Gmail opened with comparison!', 4000);
+ });
+}
+
+
+// ═══════════════════════════════════════════════════
+// TAB 2: ANNUITY VS ANNUITY COMPARISON
+// ═══════════════════════════════════════════════════
+
+var avaInputs = {amount:'100000', age:'65', risk:'Conservative', source:'New Money', goal:'Growth', productA:'MM Landmark 5 External (ages 0-75)', productB:'Platinum Bonus 5 (AAA Life)'};
+var avaDefaultRates = {
+ 'MM Landmark 5 External (ages 0-75)': [0.76, 6.74, 6.76, 6.78, 0.72],
+ 'Platinum Bonus 5 (AAA Life)': [6.25, 4.25, 4.25, 4.25, 4.25]
+};
+var avaIllustrationRates = JSON.parse(localStorage.getItem('ava_illustration_rates') || '{}');
+Object.keys(avaDefaultRates).forEach(function(k){ if(!avaIllustrationRates[k]) avaIllustrationRates[k] = avaDefaultRates[k]; });
+
+var defaultAnnuityFeatures = {
+ 'MM Landmark 5 External (ages 0-75)': {
+  type: 'Fixed Indexed Annuity (FIA)',
+  term: '5 years',
+  strategies: 'S&P 500 PtP (7.5% cap), Declared Rate (3.80%), + 4 other index options',
+  guaranteedMin: '0% indexed floor + 2.40% declared rate guaranteed',
+  bonus: 'None',
+  freeWithdrawal: '10% annually',
+  surrenderSchedule: 'Yr1: 10%, Yr2: 9%, Yr3: 8%, Yr4: 7%, Yr5: 6%, Yr6+: 0%',
+  deathBenefit: 'Greater of account value or guaranteed value',
+  mva: 'Yes — Market Value Adjustment in first 5 years',
+  issuer: 'MassMutual Ascend (AM Best A++)',
+  bestFor: 'Clients who want market-linked upside with downside protection. Good for moderate risk tolerance.',
+  ageLimit: '0-79',
+  illustration: '$50K → $61,742 after 5 years (sample), $106,121 after 15 years'
+ },
+ 'Platinum Bonus 5 (AAA Life)': {
+  type: 'Fixed Annuity',
+  term: '5 years',
+  strategies: 'Fixed rate only — 6.25% Year 1, 4.25% Years 2-5 (current)',
+  guaranteedMin: '6.25% Year 1, 2.40% Years 2-5, 1.00% after Year 5',
+  bonus: 'Yes — Premium bonus built into Year 1 rate (6.25%)',
+  freeWithdrawal: '10% annually',
+  surrenderSchedule: 'Yr1: 10%, Yr2: 9%, Yr3: 8%, Yr4: 7%, Yr5: 6%, Yr6+: 0%',
+  deathBenefit: 'Accumulated value to beneficiary',
+  mva: 'No',
+  issuer: 'AAA Life Insurance Company',
+  bestFor: 'Conservative clients who want guaranteed predictable returns. Great for CD conversions — simple to understand.',
+  ageLimit: 'No age limit',
+  illustration: '$50K → $62,748 after 5 years (current), $95,140 after 15 years'
+ }
+};
+var annuityFeatures = JSON.parse(localStorage.getItem('annuity_features') || '{}');
+Object.keys(defaultAnnuityFeatures).forEach(function(k){ if(!annuityFeatures[k]) annuityFeatures[k] = defaultAnnuityFeatures[k]; });
+
+function saveAvaInputs(){
+ avaInputs.amount = document.getElementById('ava_amount')?.value || '100000';
+ avaInputs.age = document.getElementById('ava_age')?.value || '65';
+ avaInputs.risk = document.getElementById('ava_risk')?.value || 'Conservative';
+ avaInputs.source = document.getElementById('ava_source')?.value || 'New Money';
+ avaInputs.goal = document.getElementById('ava_goal')?.value || 'Growth';
+ avaInputs.productA = document.getElementById('ava_prodA')?.value || '';
+ avaInputs.productB = document.getElementById('ava_prodB')?.value || '';
+}
+
+function saveAvaRates(which){
+ saveAvaInputs();
+ var prod = which === 'A' ? avaInputs.productA : avaInputs.productB;
+ if(!prod){ showToast('Select a product first', 3000); return; }
+ var termYears = parseInt(prod.match(/\d+/)) || 5;
+ if(termYears > 10) termYears = 5;
+ var rates = [];
+ for(var y=1;y<=termYears;y++){
+  var el = document.getElementById('ava_rate_'+which+'_'+y);
+  rates.push(parseFloat(el?.value) || 0);
+ }
+ avaIllustrationRates[prod] = rates;
+ localStorage.setItem('ava_illustration_rates', JSON.stringify(avaIllustrationRates));
+ showToast('Rates saved for '+prod, 2000);
+}
+
+function saveAnnuityFeature(prod, field){
+ if(!annuityFeatures[prod]) annuityFeatures[prod] = {};
+ var el = document.getElementById('avf_'+field.replace(/\s/g,'_'));
+ if(el) annuityFeatures[prod][field] = el.value;
+ localStorage.setItem('annuity_features', JSON.stringify(annuityFeatures));
+}
+
+function renderAnnuityVsAnnuity(){
+ var annProducts = products.filter(function(p){return p.cat==='Annuities'});
+ var h = '<h2 style="margin-bottom:4px;color:var(--pri)">Annuity vs Annuity Comparison</h2>';
+ h += '<p style="font-size:12px;color:var(--muted);margin-bottom:16px">Compare two annuity products side by side based on client profile and illustration rates.</p>';
+
+ h += '<div class="card" style="border:2px solid var(--pri)">';
+ h += '<h3 style="color:var(--pri)">Client Profile</h3>';
+ h += '<div style="display:flex;gap:8px;flex-wrap:wrap;align-items:end;margin-bottom:12px">';
+ h += '<div class="form-group"><label>Deposit Amount</label><input id="ava_amount" type="number" value="'+avaInputs.amount+'" onchange="saveAvaInputs();renderAnnuityVsAnnuity()" style="width:120px"></div>';
+ h += '<div class="form-group"><label>Client Age</label><input id="ava_age" type="number" value="'+avaInputs.age+'" onchange="saveAvaInputs();renderAnnuityVsAnnuity()" style="width:70px"></div>';
+ h += '<div class="form-group"><label>Risk Tolerance</label><select id="ava_risk" onchange="saveAvaInputs();renderAnnuityVsAnnuity()">';
+ ['Conservative','Moderate','Aggressive'].forEach(function(r){h += '<option'+(avaInputs.risk===r?' selected':'')+'>'+r+'</option>'});
+ h += '</select></div>';
+ h += '<div class="form-group"><label>Money Source</label><select id="ava_source" onchange="saveAvaInputs();renderAnnuityVsAnnuity()">';
+ ['New Money','401k Rollover','IRA Rollover','CD Maturity','Combination'].forEach(function(s){h += '<option'+(avaInputs.source===s?' selected':'')+'>'+s+'</option>'});
+ h += '</select></div>';
+ h += '<div class="form-group"><label>Primary Goal</label><select id="ava_goal" onchange="saveAvaInputs();renderAnnuityVsAnnuity()">';
+ ['Growth','Income','Safety','Tax Deferral','Legacy/Estate'].forEach(function(g){h += '<option'+(avaInputs.goal===g?' selected':'')+'>'+g+'</option>'});
+ h += '</select></div>';
+ h += '</div>';
+
+ h += '<div style="display:flex;gap:16px;flex-wrap:wrap">';
+ h += '<div style="flex:1;min-width:250px"><div class="form-group"><label style="font-weight:700;color:#1565c0">Annuity A</label><select id="ava_prodA" onchange="saveAvaInputs();renderAnnuityVsAnnuity()" style="border-color:#1565c0">';
+ h += '<option value="">— Select Product A —</option>';
+ annProducts.forEach(function(p){h += '<option value="'+p.name+'"'+(avaInputs.productA===p.name?' selected':'')+'>'+p.name+'</option>'});
+ h += '</select></div></div>';
+ h += '<div style="flex:1;min-width:250px"><div class="form-group"><label style="font-weight:700;color:var(--grn)">Annuity B</label><select id="ava_prodB" onchange="saveAvaInputs();renderAnnuityVsAnnuity()" style="border-color:var(--grn)">';
+ h += '<option value="">— Select Product B —</option>';
+ annProducts.forEach(function(p){h += '<option value="'+p.name+'"'+(avaInputs.productB===p.name?' selected':'')+'>'+p.name+'</option>'});
+ h += '</select></div></div>';
+ h += '</div>';
+ h += '</div>';
+
+ var prodA = avaInputs.productA;
+ var prodB = avaInputs.productB;
+ var amt = parseFloat(avaInputs.amount) || 100000;
+ var age = parseInt(avaInputs.age) || 65;
+
+ if(!prodA || !prodB){
+  h += '<div class="card" style="text-align:center;padding:40px;color:var(--muted)"><p>Select two annuity products above to compare.</p></div>';
+  $1('#p1').innerHTML = h;
+  return;
+ }
+
+ var pA = products.find(function(p){return p.name===prodA});
+ var pB = products.find(function(p){return p.name===prodB});
+ var termA = parseInt(prodA.match(/\d+/)) || 5; if(termA>10) termA=5;
+ var termB = parseInt(prodB.match(/\d+/)) || 5; if(termB>10) termB=5;
+ var maxTerm = Math.max(termA, termB);
+
+ // Illustration rates
+ h += '<div class="card">';
+ h += '<h3>Illustration Rates</h3>';
+ h += '<div style="display:flex;gap:16px;flex-wrap:wrap">';
+
+ var ratesA = avaIllustrationRates[prodA] || [];
+ h += '<div style="flex:1;min-width:250px;padding:10px;background:#e3f2fd;border-radius:8px">';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><b style="font-size:12px;color:#1565c0">'+prodA+' ('+termA+' yr)</b>';
+ h += '<button class="btn btn-sm btn-outline" onclick="saveAvaInputs();saveAvaRates(\'A\');renderAnnuityVsAnnuity()" style="font-size:9px;padding:2px 6px">Save</button></div>';
+ h += '<div style="display:flex;gap:4px;flex-wrap:wrap">';
+ for(var ya=1;ya<=termA;ya++){
+  h += '<div class="form-group" style="margin:0"><label style="font-size:8px">Yr '+ya+'</label><input id="ava_rate_A_'+ya+'" type="number" step="0.01" value="'+(ratesA[ya-1]||'')+'" placeholder="%" style="width:55px;font-size:10px;padding:2px"></div>';
+ }
+ h += '</div></div>';
+
+ var ratesB = avaIllustrationRates[prodB] || [];
+ h += '<div style="flex:1;min-width:250px;padding:10px;background:var(--gtint);border-radius:8px">';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><b style="font-size:12px;color:var(--dgrn)">'+prodB+' ('+termB+' yr)</b>';
+ h += '<button class="btn btn-sm btn-outline" onclick="saveAvaInputs();saveAvaRates(\'B\');renderAnnuityVsAnnuity()" style="font-size:9px;padding:2px 6px">Save</button></div>';
+ h += '<div style="display:flex;gap:4px;flex-wrap:wrap">';
+ for(var yb=1;yb<=termB;yb++){
+  h += '<div class="form-group" style="margin:0"><label style="font-size:8px">Yr '+yb+'</label><input id="ava_rate_B_'+yb+'" type="number" step="0.01" value="'+(ratesB[yb-1]||'')+'" placeholder="%" style="width:55px;font-size:10px;padding:2px"></div>';
+ }
+ h += '</div></div>';
+ h += '</div></div>';
+
+ var hasRatesA = ratesA.some(function(r){return r>0});
+ var hasRatesB = ratesB.some(function(r){return r>0});
+
+ // Feature comparison
+ h += '<div class="card">';
+ h += '<h3>Feature Comparison</h3>';
+
+ var ageLimitA = prodA.match(/ages?\s*(\d+)-(\d+)/i);
+ var ageLimitB = prodB.match(/ages?\s*(\d+)-(\d+)/i);
+ var aQualifies = !ageLimitA || (age >= parseInt(ageLimitA[1]) && age <= parseInt(ageLimitA[2]));
+ var bQualifies = !ageLimitB || (age >= parseInt(ageLimitB[1]) && age <= parseInt(ageLimitB[2]));
+
+ h += '<table style="width:100%">';
+ h += '<tr><th style="width:30%">Feature</th><th style="width:35%;background:#1565c0;color:#fff;text-align:center">'+prodA+'</th><th style="width:35%;background:var(--grn);color:#fff;text-align:center">'+prodB+'</th></tr>';
+
+ var fA = annuityFeatures[prodA] || {};
+ var fB = annuityFeatures[prodB] || {};
+
+ var avgRateA = hasRatesA ? ratesA.reduce(function(s,r){return s+r},0)/ratesA.length : 0;
+ var avgRateB = hasRatesB ? ratesB.reduce(function(s,r){return s+r},0)/ratesB.length : 0;
+ var yr1A = hasRatesA ? ratesA[0] : 0;
+ var yr1B = hasRatesB ? ratesB[0] : 0;
+
+ var features = [
+  ['Product Type', fA.type||'Fixed Annuity', fB.type||'Fixed Annuity', null],
+  ['Issuer', fA.issuer||'—', fB.issuer||'—', null],
+  ['Term', fA.term||(termA+' years'), fB.term||(termB+' years'), age>=70?(termA<=termB?'A':'B'):(termA>=termB?'A':'B')],
+  ['Age Qualification', aQualifies?'✅ Qualifies (age '+age+')':'❌ Does NOT qualify', bQualifies?'✅ Qualifies (age '+age+')':'❌ Does NOT qualify', !aQualifies&&bQualifies?'B':aQualifies&&!bQualifies?'A':null],
+  ['Strategies', fA.strategies||'Fixed rate', fB.strategies||'Fixed rate', null],
+  ['Year 1 Rate', hasRatesA?yr1A+'%':'Enter rates', hasRatesB?yr1B+'%':'Enter rates', yr1A>yr1B?'A':yr1B>yr1A?'B':null],
+  ['Avg Illustrated Rate', hasRatesA?avgRateA.toFixed(2)+'%':'—', hasRatesB?avgRateB.toFixed(2)+'%':'—', avgRateA>avgRateB?'A':avgRateB>avgRateA?'B':null],
+  ['Guaranteed Minimum', fA.guaranteedMin||'—', fB.guaranteedMin||'—', null],
+  ['Bonus', fA.bonus||'None', fB.bonus||'None', (fA.bonus||'').indexOf('Yes')>=0&&(fB.bonus||'').indexOf('Yes')<0?'A':(fB.bonus||'').indexOf('Yes')>=0&&(fA.bonus||'').indexOf('Yes')<0?'B':null],
+  ['Free Withdrawal', fA.freeWithdrawal||'10% annually', fB.freeWithdrawal||'10% annually', null],
+  ['Surrender Schedule', fA.surrenderSchedule||'—', fB.surrenderSchedule||'—', null],
+  ['Market Value Adjustment', fA.mva||'No', fB.mva||'No', (fA.mva||'')=='No'&&(fB.mva||'')!='No'?'A':(fB.mva||'')=='No'&&(fA.mva||'')!='No'?'B':null],
+  ['Death Benefit', fA.deathBenefit||'Account value', fB.deathBenefit||'Account value', null],
+  ['Illustration', fA.illustration||'—', fB.illustration||'—', null],
+  ['Best For', fA.bestFor||'—', fB.bestFor||'—', null],
+  ['Probate', 'Bypasses probate', 'Bypasses probate', null],
+  ['FL Medicaid', 'Can be Medicaid-compliant', 'Can be Medicaid-compliant', null]
+ ];
+
+ features.forEach(function(r){
+  var bgA = r[3]==='A' ? 'background:rgba(21,101,198,0.08)' : '';
+  var bgB = r[3]==='B' ? 'background:rgba(29,158,117,0.08)' : '';
+  var fwA = r[3]==='A' ? ';font-weight:700;color:#1565c0' : '';
+  var fwB = r[3]==='B' ? ';font-weight:700;color:var(--dgrn)' : '';
+  h += '<tr><td style="font-weight:600;font-size:12px">'+r[0]+'</td>';
+  h += '<td style="text-align:center;font-size:12px;'+bgA+fwA+'">'+r[1]+'</td>';
+  h += '<td style="text-align:center;font-size:12px;'+bgB+fwB+'">'+r[2]+'</td></tr>';
+ });
+ h += '</table>';
+ h += '</div>';
+
+ // Year-by-year
+ if(hasRatesA && hasRatesB){
+  h += '<div class="card">';
+  h += '<h3>Year-by-Year Growth Comparison</h3>';
+  h += '<table style="width:100%"><tr><th>Year</th><th style="background:#1565c0;color:#fff">A Rate</th><th style="background:#1565c0;color:#fff">A Balance</th><th style="background:#1565c0;color:#fff">A Earnings</th><th style="background:var(--grn);color:#fff">B Rate</th><th style="background:var(--grn);color:#fff">B Balance</th><th style="background:var(--grn);color:#fff">B Earnings</th></tr>';
+  var balA = amt, balB = amt, totalEarnA = 0, totalEarnB = 0;
+  for(var y=1;y<=maxTerm;y++){
+   var rA = y<=termA ? (ratesA[y-1]||0) : 0;
+   var rB = y<=termB ? (ratesB[y-1]||0) : 0;
+   var earnA = balA*(rA/100); balA += earnA; totalEarnA += earnA;
+   var earnB = balB*(rB/100); balB += earnB; totalEarnB += earnB;
+   var winnerA = balA > balB;
+   var winnerB = balB > balA;
+   h += '<tr>';
+   h += '<td style="font-weight:700;text-align:center">Year '+y+'</td>';
+   h += '<td style="text-align:center;font-size:12px">'+(rA>0?rA+'%':'—')+'</td>';
+   h += '<td style="text-align:center;font-size:12px;'+(winnerA?'font-weight:700;color:#1565c0':'')+'">'+fmt(balA)+'</td>';
+   h += '<td style="text-align:center;font-size:11px;color:#999">'+fmt(earnA)+'</td>';
+   h += '<td style="text-align:center;font-size:12px">'+(rB>0?rB+'%':'—')+'</td>';
+   h += '<td style="text-align:center;font-size:12px;'+(winnerB?'font-weight:700;color:var(--grn)':'')+'">'+fmt(balB)+'</td>';
+   h += '<td style="text-align:center;font-size:11px;color:#999">'+fmt(earnB)+'</td>';
+   h += '</tr>';
+  }
+  h += '<tr style="font-weight:700;background:var(--gtint)"><td style="text-align:center">TOTAL</td><td></td><td style="text-align:center;color:#1565c0">'+fmt(balA)+'</td><td style="text-align:center">'+fmt(totalEarnA)+'</td><td></td><td style="text-align:center;color:var(--grn)">'+fmt(balB)+'</td><td style="text-align:center">'+fmt(totalEarnB)+'</td></tr>';
+  h += '</table>';
+
+  var diff = balA - balB;
+  if(diff !== 0){
+   var winner = diff > 0 ? prodA : prodB;
+   var winColor = diff > 0 ? '#1565c0' : 'var(--grn)';
+   h += '<div style="padding:10px;background:var(--gtint);border-radius:var(--radius);margin-top:10px;text-align:center;font-size:13px"><b style="color:'+winColor+'">'+winner+' produces '+fmt(Math.abs(diff))+' more</b> after '+maxTerm+' years on a '+fmt(amt)+' deposit</div>';
+  }
+  h += '</div>';
+ }
+
+ // Recommendation
+ h += '<div class="card" style="border:2px solid var(--amb)">';
+ h += '<h3 style="color:var(--amb)">Recommendation — Based on Client Profile</h3>';
+ var reasons = [];
+ var recProd = '';
+
+ if(!aQualifies && bQualifies){ reasons.push('Client age '+age+' does NOT qualify for '+prodA); recProd = prodB; }
+ else if(aQualifies && !bQualifies){ reasons.push('Client age '+age+' does NOT qualify for '+prodB); recProd = prodA; }
+
+ if(age >= 70 && termA < termB && !recProd){ reasons.push('Shorter term ('+termA+' yr) better for age '+age+' — less time commitment'); recProd = prodA; }
+ else if(age >= 70 && termB < termA && !recProd){ reasons.push('Shorter term ('+termB+' yr) better for age '+age+' — less time commitment'); recProd = prodB; }
+ else if(age < 65 && termA > termB && !recProd){ reasons.push('Longer term ('+termA+' yr) gives more growth time for younger client'); recProd = prodA; }
+ else if(age < 65 && termB > termA && !recProd){ reasons.push('Longer term ('+termB+' yr) gives more growth time for younger client'); recProd = prodB; }
+
+ if(hasRatesA && hasRatesB){
+  var avgA = ratesA.reduce(function(s,r){return s+r},0)/ratesA.length;
+  var avgB = ratesB.reduce(function(s,r){return s+r},0)/ratesB.length;
+  if(avgA > avgB) reasons.push(prodA+' has higher avg illustrated rate ('+avgA.toFixed(2)+'% vs '+avgB.toFixed(2)+'%)');
+  else if(avgB > avgA) reasons.push(prodB+' has higher avg illustrated rate ('+avgB.toFixed(2)+'% vs '+avgA.toFixed(2)+'%)');
+  if(balA > balB) reasons.push(prodA+' produces '+fmt(balA-balB)+' more over the term');
+  else if(balB > balA) reasons.push(prodB+' produces '+fmt(balB-balA)+' more over the term');
+ }
+
+ if(avaInputs.goal === 'Income'){
+  if(prodA.toLowerCase().indexOf('income')>=0 && prodB.toLowerCase().indexOf('income')<0){ reasons.push(prodA+' has income focus — better for income goal'); if(!recProd) recProd = prodA; }
+  else if(prodB.toLowerCase().indexOf('income')>=0 && prodA.toLowerCase().indexOf('income')<0){ reasons.push(prodB+' has income focus — better for income goal'); if(!recProd) recProd = prodB; }
+ }
+ if(avaInputs.goal === 'Safety'){
+  if(termA <= termB){ reasons.push('Shorter term = less commitment for safety-focused client'); if(!recProd) recProd = prodA; }
+  else { reasons.push('Shorter term = less commitment for safety-focused client'); if(!recProd) recProd = prodB; }
+ }
+
+ if(prodA.toLowerCase().indexOf('bonus')>=0 && prodB.toLowerCase().indexOf('bonus')<0){
+  reasons.push(prodA+' includes a premium bonus — extra value upfront');
+ }
+ if(prodB.toLowerCase().indexOf('bonus')>=0 && prodA.toLowerCase().indexOf('bonus')<0){
+  reasons.push(prodB+' includes a premium bonus — extra value upfront');
+ }
+
+ if(!recProd && hasRatesA && hasRatesB) recProd = balA >= balB ? prodA : prodB;
+
+ if(recProd){
+  var recColor = recProd === prodA ? '#1565c0' : 'var(--grn)';
+  h += '<div style="padding:12px;background:'+(recProd===prodA?'#e3f2fd':'var(--gtint)')+';border-radius:8px;margin-bottom:10px;text-align:center">';
+  h += '<div style="font-size:18px;font-weight:800;color:'+recColor+'">Recommended: '+recProd+'</div>';
+  h += '<div style="font-size:12px;color:var(--muted);margin-top:4px">For a '+age+'-year-old, '+avaInputs.risk.toLowerCase()+' risk, '+avaInputs.goal.toLowerCase()+' goal, '+fmt(amt)+' deposit</div>';
+  h += '</div>';
+ }
+
+ if(reasons.length > 0){
+  h += '<div style="font-size:12px">';
+  reasons.forEach(function(r){
+   h += '<div style="padding:4px 0;border-bottom:1px solid #eee">• '+r+'</div>';
+  });
+  h += '</div>';
+ } else {
+  h += '<p style="color:var(--muted);font-size:12px">Enter illustration rates for both products to get a detailed recommendation.</p>';
+ }
+ h += '</div>';
+
+ // Email button
+ h += '<div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;align-items:end">';
+ h += '<button class="btn btn-pri" onclick="emailAnnuityComparison()" style="font-size:13px;padding:8px 16px">📧 Email Comparison to Client</button>';
+ h += '<div class="form-group" style="margin:0"><input id="ava_client_email" placeholder="Client email (optional)" style="font-size:11px;width:200px;padding:6px"></div>';
+ h += '</div>';
+
+ $1('#p1').innerHTML = h;
+}
+
+function emailAnnuityComparison(){
+ var prodA = avaInputs.productA, prodB = avaInputs.productB;
+ var amt = parseFloat(avaInputs.amount)||100000;
+ var age = parseInt(avaInputs.age)||65;
+ var clientEmail = document.getElementById('ava_client_email')?.value || '';
+ var ratesA = avaIllustrationRates[prodA]||[];
+ var ratesB = avaIllustrationRates[prodB]||[];
+ var termA = parseInt(prodA.match(/\d+/))||5; if(termA>10)termA=5;
+ var termB = parseInt(prodB.match(/\d+/))||5; if(termB>10)termB=5;
+ var maxTerm = Math.max(termA,termB);
+ var fmtN = function(n){return '$'+Math.round(n).toLocaleString()};
+ var efA = annuityFeatures[prodA]||{};
+ var efB = annuityFeatures[prodB]||{};
+ var eAvgA = ratesA.length>0 ? ratesA.reduce(function(s,r){return s+r},0)/ratesA.length : 0;
+ var eAvgB = ratesB.length>0 ? ratesB.reduce(function(s,r){return s+r},0)/ratesB.length : 0;
+
+ var eh = '<div style="font-family:Arial,sans-serif;max-width:700px;margin:0 auto;color:#333">';
+ eh += '<div style="background:#534AB7;color:#fff;padding:20px;border-radius:8px 8px 0 0;text-align:center">';
+ eh += '<h1 style="margin:0;font-size:20px">Annuity Comparison</h1>';
+ eh += '<p style="margin:4px 0 0;opacity:0.85;font-size:13px">'+prodA+' vs '+prodB+' | '+fmtN(amt)+' deposit</p>';
+ eh += '</div>';
+ eh += '<div style="padding:20px;border:1px solid #ddd;border-top:none">';
+
+ eh += '<h2 style="color:#534AB7;font-size:15px;border-bottom:2px solid #534AB7;padding-bottom:6px">Feature Comparison</h2>';
+ eh += '<table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse">';
+ eh += '<tr><th style="padding:6px;background:#333;color:#fff;text-align:left;font-size:11px">Feature</th><th style="padding:6px;background:#1565c0;color:#fff;text-align:center;font-size:11px">'+prodA+'</th><th style="padding:6px;background:#0F6E56;color:#fff;text-align:center;font-size:11px">'+prodB+'</th></tr>';
+ var eFeats = [
+  ['Product Type', efA.type||'Fixed Annuity', efB.type||'Fixed Annuity', null],
+  ['Term', efA.term||(termA+' yr'), efB.term||(termB+' yr'), null],
+  ['Strategies', efA.strategies||'Fixed rate', efB.strategies||'Fixed rate', null],
+  ['Year 1 Rate', ratesA[0]?ratesA[0]+'%':'—', ratesB[0]?ratesB[0]+'%':'—', (ratesA[0]||0)>(ratesB[0]||0)?'A':(ratesB[0]||0)>(ratesA[0]||0)?'B':null],
+  ['Avg Illustrated Rate', eAvgA?eAvgA.toFixed(2)+'%':'—', eAvgB?eAvgB.toFixed(2)+'%':'—', eAvgA>eAvgB?'A':eAvgB>eAvgA?'B':null],
+  ['Guaranteed Minimum', efA.guaranteedMin||'—', efB.guaranteedMin||'—', null],
+  ['Bonus', efA.bonus||'None', efB.bonus||'None', (efA.bonus||'').indexOf('Yes')>=0&&(efB.bonus||'').indexOf('Yes')<0?'A':(efB.bonus||'').indexOf('Yes')>=0&&(efA.bonus||'').indexOf('Yes')<0?'B':null],
+  ['Free Withdrawal', efA.freeWithdrawal||'10%', efB.freeWithdrawal||'10%', null],
+  ['Surrender Schedule', efA.surrenderSchedule||'—', efB.surrenderSchedule||'—', null],
+  ['Market Value Adj.', efA.mva||'No', efB.mva||'No', (efA.mva||'')=='No'&&(efB.mva||'')!='No'?'A':(efB.mva||'')=='No'&&(efA.mva||'')!='No'?'B':null],
+  ['Death Benefit', efA.deathBenefit||'Account value', efB.deathBenefit||'Account value', null],
+  ['Probate', 'Bypasses probate', 'Bypasses probate', null],
+  ['FL Medicaid', 'Can be Medicaid-compliant', 'Can be Medicaid-compliant', null]
+ ];
+ eFeats.forEach(function(r,i){
+  var rowBg = i%2===0?'#fff':'#f9f9f9';
+  var aBg = r[3]==='A'?'background:rgba(21,101,198,0.12)':('background:'+rowBg);
+  var bBg = r[3]==='B'?'background:rgba(29,158,117,0.12)':('background:'+rowBg);
+  var aFw = r[3]==='A'?';font-weight:700;color:#1565c0':'';
+  var bFw = r[3]==='B'?';font-weight:700;color:#0F6E56':'';
+  eh += '<tr style="background:'+rowBg+'"><td style="padding:5px 6px;border:1px solid #eee;font-weight:600;font-size:11px">'+r[0]+'</td>';
+  eh += '<td style="padding:5px 6px;border:1px solid #eee;text-align:center;font-size:11px;'+aBg+aFw+'">'+r[1]+'</td>';
+  eh += '<td style="padding:5px 6px;border:1px solid #eee;text-align:center;font-size:11px;'+bBg+bFw+'">'+r[2]+'</td></tr>';
+ });
+ eh += '</table>';
+
+ if(ratesA.length>0 && ratesB.length>0){
+  eh += '<h2 style="color:#534AB7;font-size:15px">Year-by-Year Growth</h2>';
+  eh += '<table cellpadding="0" cellspacing="0" style="width:100%;border-collapse:collapse">';
+  eh += '<tr><th style="padding:6px;background:#333;color:#fff;font-size:11px">Year</th><th style="padding:6px;background:#1565c0;color:#fff;font-size:11px">'+prodA+'</th><th style="padding:6px;background:#1565c0;color:#fff;font-size:11px">Balance A</th><th style="padding:6px;background:#0F6E56;color:#fff;font-size:11px">'+prodB+'</th><th style="padding:6px;background:#0F6E56;color:#fff;font-size:11px">Balance B</th></tr>';
+  var eBalA=amt, eBalB=amt;
+  for(var ey=1;ey<=maxTerm;ey++){
+   var erA=ey<=termA?(ratesA[ey-1]||0):0; eBalA+=eBalA*(erA/100);
+   var erB=ey<=termB?(ratesB[ey-1]||0):0; eBalB+=eBalB*(erB/100);
+   var eBg=ey%2===0?'#f9f9f9':'#fff';
+   eh += '<tr style="background:'+eBg+'"><td style="padding:5px;border:1px solid #eee;text-align:center;font-weight:700;font-size:11px">Yr '+ey+'</td>';
+   eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px">'+erA+'%</td>';
+   eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px;'+(eBalA>=eBalB?'font-weight:700;color:#1565c0':'')+'">'+fmtN(eBalA)+'</td>';
+   eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px">'+erB+'%</td>';
+   eh += '<td style="padding:5px;border:1px solid #eee;text-align:center;font-size:11px;'+(eBalB>=eBalA?'font-weight:700;color:#0F6E56':'')+'">'+fmtN(eBalB)+'</td></tr>';
+  }
+  eh += '</table>';
+  var eDiff=eBalA-eBalB;
+  if(eDiff!==0){
+   var eWinner=eDiff>0?prodA:prodB;
+   eh += '<div style="background:#F0FBF7;padding:10px;border-left:4px solid #0F6E56;margin:12px 0;font-size:13px"><b>'+eWinner+' produces '+fmtN(Math.abs(eDiff))+' more</b> after '+maxTerm+' years</div>';
+  }
+ }
+
+ eh += '<div style="background:#FFF5F5;padding:10px;border-left:4px solid #c0392b;margin:12px 0;font-size:11px;color:#666"><b>Important:</b> This comparison is for educational purposes. Features, rates, and guarantees vary. Please review specific product details before making decisions.</div>';
+ eh += '<div style="margin-top:16px;padding-top:10px;border-top:1px solid #ddd;font-size:11px;color:#999">Steve Maxim | AAA Life Specialist | Branch Venice/Sarasota<br>'+settings.agentEmail+'</div>';
+ eh += '</div></div>';
+
+ var plainText = 'Annuity Comparison: '+prodA+' vs '+prodB+'\nDeposit: '+fmtN(amt)+'\nPrepared by Steve Maxim | AAA Life Specialist';
+
+ var blob = new Blob([eh], {type:'text/html'});
+ var item = new ClipboardItem({'text/html': blob, 'text/plain': new Blob([plainText], {type:'text/plain'})});
+ navigator.clipboard.write([item]).then(function(){
+  var subject = encodeURIComponent('Annuity Comparison: '+prodA+' vs '+prodB);
+  var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1'+(clientEmail?'&to='+encodeURIComponent(clientEmail):'')+'&su='+subject;
+  window.open(gmailUrl, '_blank');
+  showToast('HTML comparison copied! Paste (Cmd+V) into Gmail.', 8000);
+ }).catch(function(){
+  showToast('Could not copy — try again', 3000);
+ });
+}
+
+
+// ═══════════════════════════════════════════════════
+// TAB 3: S&P vs ANNUITY INDEXING TOOL
+// ═══════════════════════════════════════════════════
+
+var SP_RETURNS = {
+ 1990:{sp:-0.031048,bond:0.089602},1991:{sp:0.304654,bond:0.160031},1992:{sp:0.076205,bond:0.074021},
+ 1993:{sp:0.100779,bond:0.097492},1994:{sp:0.0132,bond:-0.029162},1995:{sp:0.375786,bond:0.184738},
+ 1996:{sp:0.22961,bond:0.036306},1997:{sp:0.333628,bond:0.09654},1998:{sp:0.28579,bond:0.086865},
+ 1999:{sp:0.210412,bond:-0.008213},2000:{sp:-0.091041,bond:0.116261},2001:{sp:-0.11886,bond:0.084435},
+ 2002:{sp:-0.221003,bond:0.10255},2003:{sp:0.286842,bond:0.041044},2004:{sp:0.108821,bond:0.043388},
+ 2005:{sp:0.049118,bond:0.024285},2006:{sp:0.157945,bond:0.043338},2007:{sp:0.054937,bond:0.069666},
+ 2008:{sp:-0.369976,bond:0.052402},2009:{sp:0.264642,bond:0.059304},2010:{sp:0.150634,bond:0.065417},
+ 2011:{sp:0.021118,bond:0.078418},2012:{sp:0.160032,bond:0.042148},2013:{sp:0.323885,bond:-0.020237},
+ 2014:{sp:0.136884,bond:0.059657},2015:{sp:0.013838,bond:0.0055},2016:{sp:0.119599,bond:0.026475},
+ 2017:{sp:0.218316,bond:0.035418},2018:{sp:-0.043842,bond:0.000114},2019:{sp:0.314864,bond:0.087167},
+ 2020:{sp:0.183988,bond:0.075066},2021:{sp:0.287054,bond:-0.015419},2022:{sp:-0.181109,bond:-0.130103},
+ 2023:{sp:0.2629,bond:0.055},2024:{sp:0.2502,bond:0.0125},2025:{sp:0.1788,bond:0.0712}
+};
+
+var idxInputs;
+try { idxInputs = JSON.parse(localStorage.getItem('duet_idx_inputs2')); } catch(e){}
+if(!idxInputs) idxInputs = {clientName:'',age:65,amount:200000,mgmtFee:1,capRate:8.5,capBonus:0,parRate:50,startYear:2005,aSpPct:60,aBondPct:40,aWdRate:4,bSpPct:30,bBondPct:30,bAnnPct:40,bWdRate:5};
+
+function saveIdxInputs(){
+ var fields = {clientName:'idx_name',age:'idx_age',amount:'idx_amount',mgmtFee:'idx_fee',capRate:'idx_cap_rate',capBonus:'idx_cap_bonus',parRate:'idx_par_rate',startYear:'idx_start_year',aSpPct:'idx_a_sp',aBondPct:'idx_a_bond',aWdRate:'idx_a_wd',bSpPct:'idx_b_sp',bBondPct:'idx_b_bond',bAnnPct:'idx_b_ann',bWdRate:'idx_b_wd'};
+ Object.keys(fields).forEach(function(k){
+  var el = document.getElementById(fields[k]);
+  if(el) idxInputs[k] = k==='clientName' ? el.value : parseFloat(el.value)||0;
+ });
+ try { localStorage.setItem('duet_idx_inputs2', JSON.stringify(idxInputs)); } catch(e){}
+}
+
+function renderIndexingTool(){
+ var d = idxInputs;
+ var h = '<h2 style="margin-bottom:4px;color:var(--pri)">📊 S&P vs Annuity — Two-Scenario Comparison</h2>';
+ h += '<p style="font-size:12px;color:var(--muted);margin-bottom:16px">Compare keeping all money in the market vs. moving a portion into an index annuity — using <b>actual S&P 500 returns (1990–2025)</b>.</p>';
+
+ // ═══ CLIENT INPUTS ═══
+ h += '<div class="card"><h3 style="color:var(--pri)">Client Info</h3>';
+ h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">';
+ h += '<div class="form-group"><label>Client Name</label><input id="idx_name" value="'+(d.clientName||'')+'" placeholder="Client name" style="width:160px"></div>';
+ h += '<div class="form-group"><label>Age</label><input id="idx_age" type="number" value="'+d.age+'" style="width:60px"></div>';
+ h += '<div class="form-group"><label>Total Investment</label><input id="idx_amount" type="number" value="'+d.amount+'" style="width:140px"></div>';
+ h += '<div class="form-group"><label>Mgmt Fee %</label><input id="idx_fee" type="number" step="0.1" value="'+d.mgmtFee+'" style="width:70px"></div>';
+ h += '<div class="form-group"><label>Starting Year</label><select id="idx_start_year" style="width:100px">';
+ for(var y=1990;y<=2006;y++) h += '<option value="'+y+'"'+(d.startYear===y?' selected':'')+'>'+y+'</option>';
+ h += '</select></div>';
+ h += '</div></div>';
+
+ // ═══ TWO SCENARIO CARDS ═══
+ h += '<div style="display:flex;gap:16px;flex-wrap:wrap">';
+
+ // Scenario A
+ h += '<div class="card" style="flex:1;min-width:280px;border:2px solid #e74c3c">';
+ h += '<h3 style="color:#e74c3c;margin-bottom:8px">Scenario A — All Market</h3>';
+ h += '<p style="font-size:11px;color:var(--muted);margin-bottom:10px">Client keeps all '+fmt(d.amount)+' in the market.</p>';
+ h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px">';
+ h += '<div class="form-group"><label>S&P 500 %</label><input id="idx_a_sp" type="number" value="'+d.aSpPct+'" style="width:70px;border-color:#e74c3c"></div>';
+ h += '<div class="form-group"><label>Bonds %</label><input id="idx_a_bond" type="number" value="'+d.aBondPct+'" style="width:70px;border-color:#2980b9"></div>';
+ h += '</div>';
+ var aWdAmt = d.amount * (d.aWdRate/100);
+ h += '<div style="display:flex;gap:10px;align-items:end;flex-wrap:wrap">';
+ h += '<div class="form-group"><label>Withdrawal Rate %</label><input id="idx_a_wd" type="number" step="0.5" value="'+d.aWdRate+'" style="width:80px"></div>';
+ h += '<div style="font-size:11px;color:var(--muted);padding-bottom:12px">= <b>'+fmt(aWdAmt)+'</b>/yr</div>';
+ h += '</div>';
+ h += '</div>';
+
+ // Scenario B
+ h += '<div class="card" style="flex:1;min-width:280px;border:2px solid var(--grn)">';
+ h += '<h3 style="color:var(--dgrn);margin-bottom:8px">Scenario B — Market + Annuity</h3>';
+ h += '<p style="font-size:11px;color:var(--muted);margin-bottom:10px">Client splits '+fmt(d.amount)+' between market and annuity.</p>';
+ h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:8px">';
+ h += '<div class="form-group"><label>S&P 500 %</label><input id="idx_b_sp" type="number" value="'+d.bSpPct+'" style="width:70px;border-color:#e74c3c"></div>';
+ h += '<div class="form-group"><label>Bonds %</label><input id="idx_b_bond" type="number" value="'+d.bBondPct+'" style="width:70px;border-color:#2980b9"></div>';
+ h += '<div class="form-group"><label>Annuity %</label><input id="idx_b_ann" type="number" value="'+d.bAnnPct+'" style="width:70px;border-color:var(--grn)"></div>';
+ h += '</div>';
+ var bWdAmt = d.amount * (d.bWdRate/100);
+ h += '<div style="display:flex;gap:10px;align-items:end;flex-wrap:wrap">';
+ h += '<div class="form-group"><label>Withdrawal Rate %</label><input id="idx_b_wd" type="number" step="0.5" value="'+d.bWdRate+'" style="width:80px"></div>';
+ h += '<div style="font-size:11px;color:var(--muted);padding-bottom:12px">= <b>'+fmt(bWdAmt)+'</b>/yr</div>';
+ h += '</div>';
+ h += '</div>';
+
+ h += '</div>'; // end two-scenario flex
+
+ // ═══ ANNUITY PARAMETERS + PIE + RUN ═══
+ h += '<div class="card">';
+ h += '<div style="display:flex;gap:20px;flex-wrap:wrap">';
+ h += '<div style="flex:1;min-width:280px">';
+ h += '<h3 style="color:var(--pri);margin-bottom:8px">Annuity Parameters</h3>';
+ h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">';
+ h += '<div class="form-group"><label>Cap Rate %</label><input id="idx_cap_rate" type="number" step="0.25" value="'+d.capRate+'" style="width:80px"></div>';
+ h += '<div class="form-group"><label>Cap Bonus %</label><input id="idx_cap_bonus" type="number" step="0.5" value="'+d.capBonus+'" style="width:80px"></div>';
+ h += '<div class="form-group"><label>Par Rate %</label><input id="idx_par_rate" type="number" step="5" value="'+d.parRate+'" style="width:80px"></div>';
+ h += '</div>';
+ h += '<button class="btn btn-pri" onclick="saveIdxInputs();runIndexProjection()" style="height:36px;font-size:14px;padding:8px 24px">Run 20-Year Comparison</button>';
+ h += '</div>';
+ h += '</div>'; // end left col
+ h += '</div>'; // end flex
+ h += '<div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-top:12px">';
+ h += '<div id="idxPieAreaA" style="flex:1;min-width:220px;display:flex;flex-direction:column;align-items:center"></div>';
+ h += '<div id="idxPieAreaB" style="flex:1;min-width:220px;display:flex;flex-direction:column;align-items:center"></div>';
+ h += '</div>';
+ h += '</div>'; // end card
+
+ h += '<div id="idxResultArea"></div>';
+ $1('#p2').innerHTML = h;
+}
+
+function runScenario(amt, spPct, bondPct, annPct, wdRate, fee, capRate, capBonus, parRate, startYear, startAge){
+ var spBal = amt*(spPct/100), bondBal = amt*(bondPct/100), annBal = amt*(annPct/100);
+ annBal = annBal * (1 + capBonus);
+ var wdAmt = amt*(wdRate/100);
+ var rows = [];
+ var protectedYears = 0, totalLoss = 0;
+ rows.push({year:0,calYear:startYear,age:startAge,spBal:spBal,bondBal:bondBal,annBal:annBal,total:spBal+bondBal+annBal,spRate:0,bondRate:0,annCredited:0,wd:0});
+ for(var i=1;i<=20;i++){
+  var calYear = startYear+i;
+  var data = SP_RETURNS[calYear];
+  if(!data) break;
+  var spR = data.sp, bondR = data.bond;
+  // S&P bucket
+  spBal = spBal*(1+spR-fee);
+  // Bond bucket
+  bondBal = bondBal*(1+bondR-fee);
+  // Annuity bucket: cap
+  var annCredited = Math.min(Math.max(spR,0),capRate);
+  annBal = annBal*(1+annCredited);
+  // Withdrawal proportionally
+  var total = spBal+bondBal+annBal;
+  if(total > 0 && wdAmt > 0){
+   var wdActual = Math.min(wdAmt, total);
+   var ratio = wdActual/total;
+   spBal -= spBal*ratio;
+   bondBal -= bondBal*ratio;
+   annBal -= annBal*ratio;
+  }
+  if(spBal<0) spBal=0; if(bondBal<0) bondBal=0; if(annBal<0) annBal=0;
+  if(spR<0){ protectedYears++; totalLoss+=spR; }
+  rows.push({year:i,calYear:calYear,age:startAge+i,spBal:spBal,bondBal:bondBal,annBal:annBal,total:spBal+bondBal+annBal,spRate:spR,bondRate:bondR,annCredited:annCredited,wd:wdAmt});
+ }
+ return {rows:rows, protectedYears:protectedYears, totalLoss:totalLoss};
+}
+
+function runIndexProjection(){
+ saveIdxInputs();
+ var d = idxInputs;
+ var amt = d.amount;
+ var fee = d.mgmtFee/100;
+ var capRate = d.capRate/100;
+ var capBonus = d.capBonus/100;
+ var parRate = d.parRate/100;
+ var startYear = d.startYear;
+
+ // Run both scenarios
+ var scenA = runScenario(amt, d.aSpPct, d.aBondPct, 0, d.aWdRate, fee, capRate, 0, parRate, startYear, d.age);
+ var scenB = runScenario(amt, d.bSpPct, d.bBondPct, d.bAnnPct, d.bWdRate, fee, capRate, capBonus, parRate, startYear, d.age);
+ var rowsA = scenA.rows, rowsB = scenB.rows;
+ var lastA = rowsA[rowsA.length-1], lastB = rowsB[rowsB.length-1];
+ var projYears = rowsA.length-1;
+ var diff = lastB.total - lastA.total;
+ var fmtK = function(n){return '$'+Math.round(n).toLocaleString()};
+
+ // ═══ BUILD RESULTS HTML ═══
+ var h = '';
+
+ // Summary cards
+ h += '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:16px 0">';
+ h += '<div class="stat-card"><div class="val" style="font-size:16px">'+fmt(amt)+'</div><div class="lbl">Total Investment</div></div>';
+ h += '<div class="stat-card" style="border:2px solid #e74c3c"><div class="val" style="font-size:16px;color:#e74c3c">'+fmt(lastA.total)+'</div><div class="lbl">Scenario A — All Market</div></div>';
+ h += '<div class="stat-card" style="border:2px solid var(--grn)"><div class="val" style="font-size:16px;color:var(--grn)">'+fmt(lastB.total)+'</div><div class="lbl">Scenario B — Market + Annuity</div></div>';
+ var diffColor = diff >= 0 ? 'var(--grn)' : '#e74c3c';
+ var diffLabel = diff >= 0 ? 'B wins by' : 'A wins by';
+ h += '<div class="stat-card"><div class="val" style="font-size:16px;color:'+diffColor+'">'+fmt(Math.abs(diff))+'</div><div class="lbl">'+diffLabel+'</div></div>';
+ h += '<div class="stat-card"><div class="val" style="font-size:16px;color:#e74c3c">'+scenB.protectedYears+'</div><div class="lbl">Down Years Protected</div></div>';
+ h += '</div>';
+
+ // Winner callout
+ if(diff > 0){
+  h += '<div style="background:var(--gtint);border-left:4px solid var(--grn);padding:12px 16px;border-radius:var(--radius);margin-bottom:16px;font-size:13px">';
+  h += '<b style="color:var(--grn)">✅ Scenario B produces '+fmt(diff)+' more</b> than keeping everything in the market — ';
+  h += 'and the annuity portion was <b>protected from all '+scenB.protectedYears+' down years</b>.';
+  h += '</div>';
+ } else if(diff < 0){
+  h += '<div style="background:var(--atint);border-left:4px solid var(--amb);padding:12px 16px;border-radius:var(--radius);margin-bottom:16px;font-size:13px">';
+  h += '<b style="color:var(--amb)">Scenario A produced '+fmt(Math.abs(diff))+' more</b> — but with <b>100% market risk</b>. ';
+  h += 'Scenario B protected '+fmtK(lastB.annBal)+' from '+scenB.protectedYears+' down years with zero losses.';
+  h += '</div>';
+ }
+
+ // Protection callout
+ if(scenB.protectedYears > 0){
+  h += '<div style="background:var(--gtint);border-left:4px solid var(--grn);padding:10px 14px;border-radius:var(--radius);margin-bottom:16px;font-size:12px">';
+  h += '<b style="color:var(--grn)">🛡️ Annuity Floor Protection:</b> In <b>'+scenB.protectedYears+' down year'+(scenB.protectedYears>1?'s':'')+'</b>, the S&P lost a combined <b>'+(scenB.totalLoss*100).toFixed(1)+'%</b>. ';
+  h += 'The index annuity credited <b>0%</b> in those years — no losses, no recovery needed.';
+  h += '</div>';
+ }
+
+ // ═══ COLLAPSIBLE YEAR-BY-YEAR ═══
+ h += '<div style="margin-top:16px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden">';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:var(--ptint);cursor:pointer" onclick="var el=document.getElementById(\'idxDetailTable\');var arr=document.getElementById(\'idxDetailArrow\');if(el.style.display===\'none\'){el.style.display=\'block\';arr.textContent=\'▾\'}else{el.style.display=\'none\';arr.textContent=\'▸\'}">';
+ h += '<span style="font-weight:700;font-size:13px;color:var(--pri)">📊 Year-by-Year Detail</span>';
+ h += '<span id="idxDetailArrow" style="font-size:14px;color:var(--muted)">▸</span>';
+ h += '</div>';
+ h += '<div id="idxDetailTable" style="display:none">';
+ h += '<div style="overflow-x:auto"><table><thead><tr>';
+ h += '<th>Year</th><th>Age</th><th>S&P Return</th>';
+ h += '<th style="background:#e74c3c;color:#fff">A: Balance</th>';
+ h += '<th style="background:var(--grn);color:#fff">B: Market</th>';
+ h += '<th style="background:var(--grn);color:#fff">B: Annuity</th>';
+ h += '<th style="background:var(--grn);color:#fff">B: Total</th>';
+ h += '<th>Difference</th>';
+ h += '</tr></thead><tbody>';
+ for(var ti=0;ti<rowsA.length;ti++){
+  var rA = rowsA[ti], rB = rowsB[ti];
+  var isDown = rA.spRate < 0 && rA.year > 0;
+  var rowBg = isDown ? 'background:rgba(231,76,60,0.08)' : '';
+  var rowDiff = rB.total - rA.total;
+  h += '<tr style="'+rowBg+'">';
+  h += '<td>'+rA.calYear+'</td><td>'+rA.age+'</td>';
+  h += '<td style="font-weight:600;color:'+(rA.spRate<0?'#e74c3c':'var(--grn)')+'">'+(rA.year===0?'—':(rA.spRate*100).toFixed(1)+'%')+'</td>';
+  h += '<td style="color:#e74c3c;font-weight:600">'+fmt(rA.total)+'</td>';
+  h += '<td>'+fmt(rB.spBal+rB.bondBal)+'</td>';
+  h += '<td style="color:var(--grn);font-weight:600">'+(isDown&&rA.year>0?'<span style="color:var(--grn)">'+fmt(rB.annBal)+' 🛡️</span>':fmt(rB.annBal))+'</td>';
+  h += '<td style="color:var(--dgrn);font-weight:700">'+fmt(rB.total)+'</td>';
+  h += '<td style="font-weight:600;color:'+(rowDiff>=0?'var(--grn)':'#e74c3c')+'">'+fmt(rowDiff)+'</td>';
+  h += '</tr>';
+ }
+ h += '</tbody></table></div></div></div>';
+
+ // ═══ COLLAPSIBLE TALKING POINTS ═══
+ var firstName = (d.clientName||'Client').split(' ')[0];
+ var downYearsList = [];
+ var worstYear = null, worstLoss = 0;
+ rowsB.forEach(function(r){
+  if(r.year>0 && r.spRate<0){
+   downYearsList.push({year:r.calYear, loss:(r.spRate*100).toFixed(1)});
+   if(r.spRate<worstLoss){ worstLoss=r.spRate; worstYear=r.calYear; }
+  }
+ });
+
+ // Recovery time for Scenario A
+ var recoveryYears = 0;
+ if(worstYear){
+  var preWorstBal = 0;
+  for(var ri=0;ri<rowsA.length;ri++){
+   if(rowsA[ri].calYear===worstYear && ri>0){ preWorstBal=rowsA[ri-1].total; break; }
+  }
+  if(preWorstBal>0){
+   for(var rj=0;rj<rowsA.length;rj++){
+    if(rowsA[rj].calYear>worstYear && rowsA[rj].total>=preWorstBal){ recoveryYears=rowsA[rj].calYear-worstYear; break; }
+   }
+   if(recoveryYears===0) recoveryYears=-1;
+  }
+ }
+
+ h += '<div style="margin-top:16px;border:2px solid var(--grn);border-radius:var(--radius);overflow:hidden">';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--gtint);cursor:pointer" onclick="var el=document.getElementById(\'idxTalkingPts\');var arr=document.getElementById(\'idxTalkArrow\');if(el.style.display===\'none\'){el.style.display=\'block\';arr.textContent=\'▾\'}else{el.style.display=\'none\';arr.textContent=\'▸\'}">';
+ h += '<span style="font-weight:700;font-size:14px;color:var(--dgrn)">💬 Client Talking Points</span>';
+ h += '<span id="idxTalkArrow" style="font-size:14px;color:var(--muted)">▸</span>';
+ h += '</div>';
+ h += '<div id="idxTalkingPts" style="display:none;padding:16px">';
+ h += '<p style="font-size:11px;color:var(--muted);margin-bottom:14px">Personalized for '+(d.clientName||'your client')+'\'s scenario.</p>';
+
+ // 1. SIMPLE STORY
+ h += '<div style="margin-bottom:16px;padding:12px;background:var(--gtint);border-radius:8px">';
+ h += '<div style="font-weight:700;font-size:14px;color:var(--dgrn);margin-bottom:6px">📖 The Simple Story</div>';
+ h += '<p style="font-size:13px;line-height:1.6;color:var(--txt)">';
+ h += '"'+firstName+', you have '+fmtK(amt)+'. Right now it\'s all in the market — '+d.aSpPct+'% S&P and '+d.aBondPct+'% bonds. ';
+ h += 'I ran the numbers using <b>actual stock market history</b> from '+rowsA[0].calYear+' to '+lastA.calYear+'. ';
+ h += 'If you kept everything in the market, you\'d end up with <b style="color:#e74c3c">'+fmtK(lastA.total)+'</b>. ';
+ h += 'But if you moved '+d.bAnnPct+'% into a protected index annuity, you\'d have <b style="color:var(--grn)">'+fmtK(lastB.total)+'</b>. ';
+ if(diff>0) h += 'That\'s <b style="color:var(--grn)">'+fmtK(diff)+' more</b> — with less risk."';
+ else h += 'That\'s only '+fmtK(Math.abs(diff))+' less — but with <b style="color:var(--grn)">dramatically less risk</b>."';
+ h += '</p></div>';
+
+ // 2. PROTECTION STORY
+ if(downYearsList.length>0){
+  h += '<div style="margin-bottom:16px;padding:12px;background:var(--gtint);border-radius:8px">';
+  h += '<div style="font-weight:700;font-size:14px;color:var(--dgrn);margin-bottom:6px">🛡️ The Protection Story</div>';
+  h += '<p style="font-size:13px;line-height:1.6;color:var(--txt)">';
+  h += '"During these '+projYears+' years, the stock market went <b style="color:#e74c3c">DOWN '+downYearsList.length+' times</b>:';
+  h += '</p><div style="display:flex;gap:6px;flex-wrap:wrap;margin:8px 0">';
+  downYearsList.forEach(function(dy){
+   h += '<span style="background:#3a1a1a;color:#e87474;padding:4px 10px;border-radius:12px;font-size:12px;font-weight:600">'+dy.year+': '+dy.loss+'%</span>';
+  });
+  h += '</div><p style="font-size:13px;line-height:1.6;color:var(--txt)">';
+  if(worstYear){
+   h += '"The worst was <b style="color:#e74c3c">'+worstYear+'</b> — the S&P dropped <b style="color:#e74c3c">'+(worstLoss*100).toFixed(1)+'%</b>. ';
+   // Find dollar loss in scenario A that year
+   var worstRowA = rowsA.find(function(r){return r.calYear===worstYear});
+   var preWorstRowA = rowsA.find(function(r){return r.calYear===worstYear-1});
+   if(worstRowA && preWorstRowA){
+    var dollarLoss = preWorstRowA.total - worstRowA.total;
+    if(dollarLoss>0) h += 'In Scenario A, your portfolio lost <b style="color:#e74c3c">'+fmtK(dollarLoss)+'</b> in that single year. ';
+   }
+   h += 'In Scenario B, your annuity portion credited <b style="color:var(--grn)">0%</b> — not negative, zero. Completely protected."';
+  }
+  h += '</p></div>';
+ }
+
+ // 3. RECOVERY PROBLEM
+ if(worstYear && recoveryYears!==0){
+  h += '<div style="margin-bottom:16px;padding:12px;background:var(--ptint);border-radius:8px">';
+  h += '<div style="font-weight:700;font-size:14px;color:var(--pri);margin-bottom:6px">⏱️ The Recovery Problem</div>';
+  h += '<p style="font-size:13px;line-height:1.6;color:var(--txt)">';
+  var recoveryNeeded = ((1/(1+worstLoss)-1)*100).toFixed(0);
+  h += '"If you lose '+(Math.abs(worstLoss)*100).toFixed(0)+'%, you don\'t just need '+(Math.abs(worstLoss)*100).toFixed(0)+'% to get back to even — you need <b style="color:#e74c3c">'+Math.abs(recoveryNeeded)+'%</b>. ';
+  if(recoveryYears>0){
+   h += 'In Scenario A, it took <b>'+recoveryYears+' years</b> just to recover from '+worstYear+'. ';
+   h += 'That\'s '+recoveryYears+' years of your retirement treading water. ';
+  } else {
+   h += 'In Scenario A, the portfolio <b>never fully recovered</b> within this window. ';
+  }
+  h += 'In Scenario B, the annuity portion never went down — <b style="color:var(--grn)">nothing to recover from</b>."';
+  h += '</p></div>';
+ }
+
+ // 4. SIDE BY SIDE
+ h += '<div style="margin-bottom:16px;padding:12px;background:var(--gtint);border-radius:8px">';
+ h += '<div style="font-weight:700;font-size:14px;color:var(--dgrn);margin-bottom:6px">⚖️ The Real Comparison</div>';
+ h += '<p style="font-size:13px;line-height:1.6;color:var(--txt)">';
+ h += '"Let me put it side by side:<br><br>';
+ h += '• <b style="color:#e74c3c">Scenario A (All Market):</b> '+fmtK(amt)+' → <b>'+fmtK(lastA.total)+'</b> — took ALL the risk, felt EVERY crash<br>';
+ h += '• <b style="color:var(--grn)">Scenario B (Market + Annuity):</b> '+fmtK(amt)+' → <b>'+fmtK(lastB.total)+'</b> — annuity portion never lost a dime<br><br>';
+ if(diff>=0){
+  h += 'Scenario B didn\'t just protect you — it actually produced <b style="color:var(--grn)">'+fmtK(diff)+' more</b>. More money AND less risk."';
+ } else {
+  h += 'Scenario A made '+fmtK(Math.abs(diff))+' more. But '+firstName+', is that extra money worth the stress of watching your entire portfolio drop '+(Math.abs(worstLoss)*100).toFixed(0)+'% in a single year? The annuity gave you peace of mind through every crash."';
+ }
+ h += '</p></div>';
+
+ // 5. WITHDRAWAL STORY
+ var aWd = amt*(d.aWdRate/100), bWd = amt*(d.bWdRate/100);
+ if(aWd>0 || bWd>0){
+  h += '<div style="margin-bottom:16px;padding:12px;background:var(--atint);border-radius:8px">';
+  h += '<div style="font-weight:700;font-size:14px;color:var(--amb);margin-bottom:6px">💸 The Withdrawal Reality</div>';
+  h += '<p style="font-size:13px;line-height:1.6;color:var(--txt)">';
+  h += '"'+firstName+', in Scenario A you\'re withdrawing '+fmtK(aWd)+'/year ('+d.aWdRate+'%). ';
+  if(bWd>aWd){
+   h += 'In Scenario B, the annuity lets you take <b style="color:var(--grn)">'+fmtK(bWd)+'/year ('+d.bWdRate+'%)</b> — that\'s <b>'+fmtK(bWd-aWd)+' more per year</b> in your pocket. ';
+  } else {
+   h += 'In Scenario B you\'re taking '+fmtK(bWd)+'/year ('+d.bWdRate+'%). ';
+  }
+  h += 'But here\'s the real difference: when the market crashes and you\'re pulling money out of Scenario A, you\'re <b>locking in losses</b>. ';
+  h += 'In Scenario B, your annuity portion <b style="color:var(--grn)">never went down</b>, so withdrawals come from a stable base."';
+  h += '</p></div>';
+ }
+
+ // 6. BOTTOM LINE
+ h += '<div style="margin-bottom:12px;padding:14px;background:linear-gradient(135deg,var(--gtint) 0%,var(--ptint) 100%);border-radius:8px;border:2px solid var(--grn)">';
+ h += '<div style="font-weight:700;font-size:14px;color:var(--dgrn);margin-bottom:6px">✅ The Bottom Line</div>';
+ h += '<p style="font-size:14px;line-height:1.7;color:var(--txt);font-weight:500">';
+ h += '"'+firstName+', by moving '+d.bAnnPct+'% of your '+fmtK(amt)+' into a protected index annuity, ';
+ h += 'you end up with <b style="color:var(--grn)">'+fmtK(lastB.total)+'</b>';
+ if(diff>=0) h += ' — <b style="color:var(--grn)">'+fmtK(diff)+' MORE</b> than keeping it all in the market';
+ h += '. Through <b>'+downYearsList.length+' market crashes</b>, your annuity never lost a dime. ';
+ var annAvg = lastB.annBal > 0 ? ((Math.pow(lastB.annBal/(amt*(d.bAnnPct/100)*(1+capBonus)), 1/projYears)-1)*100).toFixed(1) : '0';
+ h += 'That safe money averaged <b style="color:var(--grn)">'+annAvg+'% per year</b> and grew to <b style="color:var(--grn)">'+fmtK(lastB.annBal)+'</b>. ';
+ h += 'No stress. No panic. No recovery needed."';
+ h += '</p></div>';
+
+ h += '<div style="margin-top:8px"><button class="btn btn-dgrn btn-sm" onclick="copyTalkingPoints()">📋 Copy Talking Points</button></div>';
+ h += '</div></div>';
+
+ // Disclaimer
+ h += '<div style="background:var(--atint);border-left:4px solid var(--amb);padding:10px 14px;border-radius:var(--radius);margin-top:16px;font-size:11px;color:var(--muted)">';
+ h += '<b>Disclaimer:</b> This is for illustrative purposes only using historical S&P 500 Total Return data. Past performance does not guarantee future results. This does not represent any specific product. Consult a licensed professional before making investment decisions.';
+ h += '</div>';
+
+ h += '<div style="margin-top:16px;display:flex;gap:10px;flex-wrap:wrap">';
+ h += '<button class="btn btn-pri" onclick="emailIndexReport()">✉️ Email to Client</button>';
+ h += '<button class="btn btn-dgrn" onclick="copyIndexHtml()">Copy HTML for Gmail</button>';
+ h += '</div>';
+
+ // Store for email/copy
+ window._scenA = scenA; window._scenB = scenB;
+
+ $1('#idxResultArea').innerHTML = h;
+
+ // ═══ PIE CHARTS — Both Scenarios ═══
+ function drawDonut(areaId, title, titleColor, slices){
+  setTimeout(function(){
+   var area = document.getElementById(areaId);
+   if(!area || slices.length===0) return;
+   var canvasId = areaId+'_canvas', legendId = areaId+'_legend';
+   var ph = '<div style="font-size:11px;font-weight:700;color:'+titleColor+';margin-bottom:6px;text-align:center">'+title+'</div>';
+   ph += '<canvas id="'+canvasId+'" width="180" height="180" style="max-width:180px"></canvas>';
+   ph += '<div id="'+legendId+'" style="font-size:11px;line-height:1.9;margin-top:6px"></div>';
+   area.innerHTML = ph;
+   var canvas = document.getElementById(canvasId);
+   if(!canvas) return;
+   var ctx = canvas.getContext('2d');
+   var total = slices.reduce(function(s,sl){return s+sl.value},0);
+   var cx=90,cy=90,radius=78,startAngle=-Math.PI/2;
+   slices.forEach(function(sl){
+    var sliceAngle=(sl.value/total)*Math.PI*2;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.arc(cx,cy,radius,startAngle,startAngle+sliceAngle); ctx.closePath();
+    ctx.fillStyle=sl.color; ctx.fill(); ctx.strokeStyle='#fff'; ctx.lineWidth=2; ctx.stroke();
+    var midAngle=startAngle+sliceAngle/2; var pct=((sl.value/total)*100).toFixed(0);
+    if(pct>=10){
+     ctx.fillStyle='#fff'; ctx.font='bold 12px system-ui,sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+     ctx.fillText(pct+'%',cx+Math.cos(midAngle)*(radius*0.6),cy+Math.sin(midAngle)*(radius*0.6));
+    }
+    startAngle+=sliceAngle;
+   });
+   ctx.beginPath(); ctx.arc(cx,cy,36,0,Math.PI*2);
+   var isDark=document.body.classList.contains('dark-mode');
+   ctx.fillStyle=isDark?'#242440':'#fff'; ctx.fill();
+   ctx.fillStyle=isDark?'#e8e8f0':'#222'; ctx.font='bold 12px system-ui,sans-serif'; ctx.textAlign='center'; ctx.textBaseline='middle';
+   ctx.fillText(fmtK(total),cx,cy-5);
+   ctx.font='8px system-ui,sans-serif'; ctx.fillStyle=isDark?'#9999aa':'#666'; ctx.fillText('TOTAL',cx,cy+8);
+   var lh='';
+   slices.forEach(function(sl){
+    lh+='<div style="display:flex;align-items:center;gap:6px"><div style="width:12px;height:12px;border-radius:3px;background:'+sl.color+';flex-shrink:0"></div>';
+    lh+='<span><b style="color:'+sl.color+'">'+fmtK(sl.value)+'</b> <span style="color:var(--muted)">('+((sl.value/total)*100).toFixed(1)+'%)</span> '+sl.label+'</span></div>';
+   });
+   document.getElementById(legendId).innerHTML=lh;
+  },0);
+ }
+
+ // Scenario A slices
+ var slicesA = [];
+ if(lastA.spBal>0) slicesA.push({label:'S&P 500',value:lastA.spBal,color:'#e74c3c'});
+ if(lastA.bondBal>0) slicesA.push({label:'Bonds',value:lastA.bondBal,color:'#2980b9'});
+ drawDonut('idxPieAreaA','Scenario A Breakdown','#e74c3c',slicesA);
+
+ // Scenario B slices
+ var slicesB = [];
+ if(lastB.spBal>0) slicesB.push({label:'S&P 500',value:lastB.spBal,color:'#e74c3c'});
+ if(lastB.bondBal>0) slicesB.push({label:'Bonds',value:lastB.bondBal,color:'#2980b9'});
+ if(lastB.annBal>0) slicesB.push({label:'Annuity',value:lastB.annBal,color:'#1D9E75'});
+ drawDonut('idxPieAreaB','Scenario B Breakdown','#1D9E75',slicesB);
+}
+
+
+
+
+
+function emailIndexReport(){
+ var d = idxInputs;
+ var sA = window._scenA, sB = window._scenB;
+ if(!sA||!sB){ showToast('Run the projection first'); return; }
+ var lastA = sA.rows[sA.rows.length-1], lastB = sB.rows[sB.rows.length-1];
+ var projYears = sA.rows.length-1;
+ var diff = lastB.total - lastA.total;
+ var fmtK = function(n){return '$'+Math.round(n).toLocaleString()};
+
+ var plain = 'S&P vs Annuity — Two-Scenario Comparison\nPrepared for: '+(d.clientName||'Client')+'\n\n';
+ plain += 'Total Investment: '+fmtK(d.amount)+' | '+d.startYear+'–'+(d.startYear+projYears)+' ('+projYears+' years, actual historical data)\n\n';
+ plain += '━━ Scenario A — All Market ━━\n';
+ plain += 'Allocation: '+d.aSpPct+'% S&P / '+d.aBondPct+'% Bonds | Withdrawal: '+d.aWdRate+'%/yr\n';
+ plain += 'Ending Balance: '+fmtK(lastA.total)+'\n\n';
+ plain += '━━ Scenario B — Market + Annuity ━━\n';
+ plain += 'Allocation: '+d.bSpPct+'% S&P / '+d.bBondPct+'% Bonds / '+d.bAnnPct+'% Annuity | Withdrawal: '+d.bWdRate+'%/yr\n';
+ plain += 'Cap Rate: '+d.capRate+'% | Mgmt Fee: '+d.mgmtFee+'%\n';
+ plain += 'Ending Balance: '+fmtK(lastB.total)+'\n\n';
+ if(diff>=0) plain += '✅ Scenario B produces '+fmtK(diff)+' MORE than all-market\n';
+ else plain += 'Scenario A produces '+fmtK(Math.abs(diff))+' more — but with 100% market risk\n';
+ plain += '🛡️ '+sB.protectedYears+' down years where the annuity floor protected your money (0% vs market losses)\n';
+ plain += '\n— Steve Maxim | AAA Life Specialist\nGenerated by DuetIncome';
+
+ var subject = encodeURIComponent('S&P vs Annuity Comparison — '+(d.clientName||'Client'));
+ var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&su='+subject+'&body='+encodeURIComponent(plain.substring(0,1500));
+ window.open(gmailUrl, '_blank');
+}
+
+function copyIndexHtml(){
+ var d = idxInputs;
+ var sA = window._scenA, sB = window._scenB;
+ if(!sA||!sB){ showToast('Run the projection first'); return; }
+ var rowsA = sA.rows, rowsB = sB.rows;
+ var lastA = rowsA[rowsA.length-1], lastB = rowsB[rowsB.length-1];
+ var projYears = rowsA.length-1;
+ var diff = lastB.total - lastA.total;
+ var fmtK = function(n){return '$'+Math.round(n).toLocaleString()};
+
+ var eh = '<div style="font-family:system-ui,sans-serif;font-size:13px;color:#222;max-width:750px">';
+ eh += '<h2 style="color:#534AB7;margin-bottom:4px">S&P 500 vs Index Annuity — Two-Scenario Comparison</h2>';
+ eh += '<p style="color:#666;font-size:12px">Prepared for <b>'+(d.clientName||'Client')+'</b> | Investment: <b>'+fmtK(d.amount)+'</b> | '+d.startYear+'–'+(d.startYear+projYears)+' (actual historical returns)</p>';
+
+ // Summary cards
+ eh += '<table cellpadding="8" cellspacing="0" style="margin:12px 0"><tr>';
+ eh += '<td style="background:#FFF5F5;border:2px solid #e74c3c;border-radius:6px;text-align:center;padding:12px 18px"><div style="font-size:18px;font-weight:700;color:#e74c3c">'+fmtK(lastA.total)+'</div><div style="font-size:10px;color:#666">Scenario A — All Market<br>'+d.aSpPct+'% S&P / '+d.aBondPct+'% Bonds | WD '+d.aWdRate+'%</div></td>';
+ eh += '<td style="width:8px"></td>';
+ eh += '<td style="background:#F0FBF7;border:2px solid #1D9E75;border-radius:6px;text-align:center;padding:12px 18px"><div style="font-size:18px;font-weight:700;color:#1D9E75">'+fmtK(lastB.total)+'</div><div style="font-size:10px;color:#666">Scenario B — Market + Annuity<br>'+d.bSpPct+'% S&P / '+d.bBondPct+'% Bonds / '+d.bAnnPct+'% Annuity | WD '+d.bWdRate+'%</div></td>';
+ eh += '<td style="width:8px"></td>';
+ eh += '<td style="background:#EEEDFE;border-radius:6px;text-align:center;padding:12px 18px"><div style="font-size:18px;font-weight:700;color:'+(diff>=0?'#1D9E75':'#e74c3c')+'">'+fmtK(Math.abs(diff))+'</div><div style="font-size:10px;color:#666">'+(diff>=0?'B wins by':'A wins by')+'</div></td>';
+ eh += '</tr></table>';
+
+ // Protection callout
+ eh += '<div style="background:#F0FBF7;border-left:4px solid #1D9E75;padding:10px 14px;margin:12px 0;font-size:12px">';
+ eh += '<b>🛡️ In '+sB.protectedYears+' down years</b>, the S&P lost a combined '+(sB.totalLoss*100).toFixed(1)+'%. The index annuity credited <b>0%</b> — no losses, no recovery needed.</div>';
+
+ // Year-by-year table
+ eh += '<table cellpadding="4" cellspacing="0" style="width:100%;border-collapse:collapse;font-size:11px;border:1px solid #ddd;margin:12px 0">';
+ eh += '<tr style="background:#EEEDFE"><th style="padding:6px;border:1px solid #ddd">Year</th><th style="padding:6px;border:1px solid #ddd">S&P Return</th>';
+ eh += '<th style="padding:6px;border:1px solid #ddd;color:#e74c3c">A: Balance</th>';
+ eh += '<th style="padding:6px;border:1px solid #ddd;color:#1D9E75">B: Market</th>';
+ eh += '<th style="padding:6px;border:1px solid #ddd;color:#1D9E75">B: Annuity</th>';
+ eh += '<th style="padding:6px;border:1px solid #ddd;color:#1D9E75">B: Total</th>';
+ eh += '<th style="padding:6px;border:1px solid #ddd">Difference</th></tr>';
+ for(var ti=0;ti<rowsA.length;ti++){
+  var rA = rowsA[ti], rB = rowsB[ti];
+  var isDown = rA.spRate < 0 && rA.year > 0;
+  var bg = ti%2===0?'#fff':'#f9f9f9';
+  if(isDown) bg = '#FFF5F5';
+  var rowDiff = rB.total - rA.total;
+  eh += '<tr style="background:'+bg+'">';
+  eh += '<td style="padding:4px 6px;border:1px solid #ddd">'+rA.calYear+'</td>';
+  eh += '<td style="padding:4px 6px;border:1px solid #ddd;color:'+(rA.spRate<0?'#c0392b':'#1D9E75')+'">'+(rA.year===0?'—':(rA.spRate*100).toFixed(1)+'%')+'</td>';
+  eh += '<td style="padding:4px 6px;border:1px solid #ddd;color:#e74c3c;font-weight:600">'+fmtK(rA.total)+'</td>';
+  eh += '<td style="padding:4px 6px;border:1px solid #ddd">'+fmtK(rB.spBal+rB.bondBal)+'</td>';
+  eh += '<td style="padding:4px 6px;border:1px solid #ddd;color:#1D9E75;font-weight:600">'+(isDown?fmtK(rB.annBal)+' 🛡️':fmtK(rB.annBal))+'</td>';
+  eh += '<td style="padding:4px 6px;border:1px solid #ddd;font-weight:700">'+fmtK(rB.total)+'</td>';
+  eh += '<td style="padding:4px 6px;border:1px solid #ddd;color:'+(rowDiff>=0?'#1D9E75':'#c0392b')+'">'+fmtK(rowDiff)+'</td>';
+  eh += '</tr>';
+ }
+ eh += '</table>';
+
+ eh += '<div style="background:#FFF5F5;padding:8px 12px;border-left:4px solid #c0392b;font-size:10px;color:#666;margin:12px 0"><b>Disclaimer:</b> For illustrative purposes only using historical S&P 500 Total Return data. Past performance does not guarantee future results.</div>';
+ eh += '<div style="margin-top:12px;padding-top:8px;border-top:1px solid #ddd;font-size:11px;color:#999">Steve Maxim | AAA Life Specialist | Branch Venice/Sarasota<br>'+(settings.agentEmail||'')+'</div>';
+ eh += '</div>';
+
+ var blob = new Blob([eh], {type:'text/html'});
+ var item = new ClipboardItem({'text/html': blob, 'text/plain': new Blob([eh], {type:'text/plain'})});
+ navigator.clipboard.write([item]).then(function(){
+  showToast('✅ HTML copied! Open Gmail, compose, and paste (Cmd+V).', 8000);
+ }).catch(function(){
+  showToast('Could not copy — try again', 3000);
+ });
+}
+
+function copyTalkingPoints(){
+ var el = document.getElementById('idxTalkingPts');
+ if(!el){ showToast('Run the projection first', 3000); return; }
+ // Extract just the text content from the talking points
+ var cloned = el.cloneNode(true);
+ // Remove the copy button itself
+ var btns = cloned.querySelectorAll('button');
+ btns.forEach(function(b){b.remove()});
+ // Get clean text
+ var text = cloned.innerText.replace(/\n{3,}/g,'\n\n').trim();
+ // Also build HTML version
+ var htmlContent = cloned.innerHTML;
+ var blob = new Blob([htmlContent], {type:'text/html'});
+ var item = new ClipboardItem({'text/html': blob, 'text/plain': new Blob([text], {type:'text/plain'})});
+ navigator.clipboard.write([item]).then(function(){
+  showToast('✅ Talking points copied! Paste into email or notes.', 5000);
+ }).catch(function(){
+  // Fallback to plain text
+  navigator.clipboard.writeText(text).then(function(){
+   showToast('✅ Talking points copied as text!', 5000);
+  });
+ });
+}
+
+// ═══ INIT ═══
+renderCDConversion();
+</script>
+</body>
+</html>
