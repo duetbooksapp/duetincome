@@ -118,6 +118,61 @@ body.dark-mode .login-card input{background:#1a1a2e;color:var(--txt);border-colo
 .login-error{color:#c0392b;font-size:12px;text-align:center;margin-top:12px;display:none}
 .sync-dot{width:8px;height:8px;border-radius:50%;background:var(--grn);display:inline-block;margin-right:6px;vertical-align:middle}
 
+/* ── Portfolio Manager ── */
+.pf-warning{background:#FFF5F5;border:1px solid #f5c6c6;border-left:4px solid #c0392b;color:#8a2020;padding:8px 12px;border-radius:6px;font-size:11px;margin-bottom:12px}
+body.dark-mode .pf-warning{background:#3a1a1a;border-color:#6a2a2a;color:#f5a0a0}
+.pf-layout{display:grid;grid-template-columns:260px 1fr;gap:14px;min-height:600px}
+.pf-sidebar{background:var(--card);border-radius:var(--radius);padding:12px;box-shadow:var(--shadow);max-height:80vh;overflow-y:auto}
+.pf-sidebar-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:6px}
+.pf-search{width:100%;padding:6px 10px;font-size:12px;margin-bottom:10px}
+.pf-client-item{padding:8px 10px;border-radius:6px;cursor:pointer;font-size:13px;margin-bottom:3px;border:1px solid transparent;transition:.15s}
+.pf-client-item:hover{background:var(--ptint);border-color:var(--border)}
+.pf-client-item.active{background:var(--ptint);border-color:var(--pri);color:var(--pri);font-weight:600}
+.pf-client-empty{font-size:12px;color:var(--muted);text-align:center;padding:20px 10px;font-style:italic}
+.pf-detail{background:var(--card);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow);max-height:80vh;overflow-y:auto}
+.pf-detail-empty{text-align:center;padding:60px 20px;color:var(--muted);font-size:14px}
+.pf-section{margin-bottom:16px;border:1px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--card)}
+body.dark-mode .pf-section{background:#2e2e4a}
+.pf-section-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.pf-section-head h4{font-size:13px;color:var(--pri);margin:0}
+.pf-row{display:grid;grid-template-columns:1fr auto;gap:8px;padding:8px 10px;background:var(--bg);border-radius:6px;margin-bottom:6px;font-size:12px;align-items:center}
+body.dark-mode .pf-row{background:#1a1a2e}
+.pf-row-actions{display:flex;gap:4px}
+.pf-addform{background:var(--ptint);border-radius:6px;padding:12px;margin-top:6px;display:none}
+.pf-addform.show{display:block}
+.pf-addform .pf-fields{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px}
+.pf-addform label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:2px}
+.pf-addform input,.pf-addform select{font-size:12px;padding:6px 8px}
+.pf-summary-card{background:linear-gradient(135deg,var(--ptint) 0%,var(--gtint) 100%);border-radius:var(--radius);padding:14px;margin-bottom:14px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px}
+.pf-stat .pf-stat-val{font-size:20px;font-weight:700;color:var(--pri)}
+.pf-stat .pf-stat-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px}
+.pf-basic-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px;margin-bottom:12px}
+.pf-basic-grid label{font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:2px}
+.pf-basic-grid input{font-size:13px;padding:6px 8px}
+.pf-notes-wrap{margin-bottom:12px}
+.pf-notes-wrap textarea{font-size:12px;padding:8px;min-height:50px;resize:vertical}
+.pf-plans-wrap{margin-top:16px;border:2px solid var(--pri);border-radius:var(--radius);padding:14px;background:var(--card)}
+body.dark-mode .pf-plans-wrap{background:#2e2e4a}
+.pf-plans-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.pf-plans-head h3{color:var(--pri);font-size:14px;margin:0}
+.pf-plan-tabs{display:flex;gap:4px;margin-bottom:12px;border-bottom:1px solid var(--border)}
+.pf-plan-tab{padding:8px 14px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;border-bottom:3px solid transparent;transition:.2s;background:none;border-left:none;border-right:none;border-top:none}
+.pf-plan-tab:hover:not(.disabled){color:var(--pri)}
+.pf-plan-tab.active{color:var(--pri);border-bottom-color:var(--pri)}
+.pf-plan-tab.disabled{opacity:.4;cursor:not-allowed}
+.pf-rec-item{background:var(--bg);border-radius:6px;padding:10px 12px;margin-bottom:8px;border-left:3px solid var(--pri)}
+body.dark-mode .pf-rec-item{background:#1a1a2e}
+.pf-rec-head{display:flex;justify-content:space-between;align-items:flex-start;gap:8px;margin-bottom:4px}
+.pf-rec-title{font-size:13px;font-weight:600;color:var(--txt);flex:1}
+.pf-rec-why{font-size:11px;color:var(--muted);font-style:italic;padding:6px 8px;background:var(--ptint);border-radius:4px;margin-top:6px;white-space:pre-wrap}
+.pf-rec-empty{font-size:12px;color:var(--muted);font-style:italic;padding:12px;text-align:center}
+
+/* Hide Portfolio tab on mobile */
+@media(max-width:700px){
+ .tab-portfolio{display:none!important}
+ .pf-layout{grid-template-columns:1fr}
+}
+
 /* ── Feedback Button + Modal ── */
 .fb-fab{position:fixed;bottom:24px;left:24px;width:50px;height:50px;border-radius:50%;background:var(--dgrn);color:#fff;border:none;font-size:22px;cursor:pointer;box-shadow:0 3px 12px rgba(0,0,0,.25);z-index:9000;transition:transform .2s;padding:0;display:flex;align-items:center;justify-content:center}
 .fb-fab:hover{transform:scale(1.08)}
@@ -202,6 +257,7 @@ body.dark-mode .login-card input{background:#1a1a2e;color:var(--txt);border-colo
  <div class="tab" onclick="showTab(1)">Annuity vs Annuity</div>
  <div class="tab" onclick="showTab(2)">S&P vs Annuity</div>
  <div class="tab" onclick="showTab(3)">Conversations</div>
+ <div class="tab tab-portfolio" onclick="showTab(4)">Portfolio</div>
 </div>
 
 <!-- ═══ PANELS ═══ -->
@@ -209,6 +265,7 @@ body.dark-mode .login-card input{background:#1a1a2e;color:var(--txt);border-colo
 <div id="p1" class="panel"></div>
 <div id="p2" class="panel"></div>
 <div id="p3" class="panel"></div>
+<div id="p4" class="panel"></div>
 
 <!-- ═══ FLOATING FEEDBACK BUTTON ═══ -->
 <button class="fb-fab" onclick="openFeedbackModal()" title="Submit Feedback">💡</button>
@@ -216,6 +273,11 @@ body.dark-mode .login-card input{background:#1a1a2e;color:var(--txt);border-colo
 <!-- ═══ FEEDBACK MODAL ═══ -->
 <div id="fbModal" class="fb-modal-overlay" onclick="if(event.target===this)closeFeedbackModal()">
  <div class="fb-modal-box" id="fbModalContent"></div>
+</div>
+
+<!-- ═══ PORTFOLIO RECOMMENDATION MODAL ═══ -->
+<div id="pfRecModal" class="fb-modal-overlay" onclick="if(event.target===this)pfCloseRecModal()">
+ <div class="fb-modal-box" id="pfRecModalContent"></div>
 </div>
 
 </div><!-- /appShell -->
@@ -669,9 +731,10 @@ function showTab(i){
  if(i===1) renderAnnuityVsAnnuity();
  if(i===2) renderIndexingTool();
  if(i===3) renderConversations();
+ if(i===4) renderPortfolio();
 }
 function getActiveTabName(){
- var tabNames = ['CD → Annuity','Annuity vs Annuity','S&P vs Annuity','Conversations'];
+ var tabNames = ['CD → Annuity','Annuity vs Annuity','S&P vs Annuity','Conversations','Portfolio'];
  return tabNames[activeTab] || 'Unknown';
 }
 
@@ -1163,23 +1226,74 @@ function generateClientComparison(){
  eh += '<div style="margin-top:20px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999">'+(currentAgent?currentAgent.name:'Agent')+' | AAA Life Specialist | Branch '+(currentAgent?currentAgent.branch:'')+'<br>'+settings.agentEmail+'</div>';
  eh += '</div></div>';
 
- var blob = new Blob([eh], {type:'text/html'});
- var item = new ClipboardItem({'text/html': blob, 'text/plain': new Blob([b], {type:'text/plain'})});
- navigator.clipboard.write([item]).then(function(){
-  var subject = encodeURIComponent('CD vs Annuity Comparison — '+fmtN(amt)+' Deposit');
-  var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1'
-   +(clientEmail?'&to='+encodeURIComponent(clientEmail):'')
-   +'&su='+subject;
-  window.open(gmailUrl, '_blank');
-  showToast('HTML comparison copied to clipboard! Paste (Cmd+V) into the Gmail compose window.', 8000);
- }).catch(function(){
-  var subject = encodeURIComponent('CD vs Annuity Comparison — '+fmtN(amt)+' Deposit');
-  var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1'
-   +(clientEmail?'&to='+encodeURIComponent(clientEmail):'')
-   +'&su='+subject+'&body='+encodeURIComponent(b);
-  window.open(gmailUrl, '_blank');
-  showToast('Gmail opened with comparison!', 4000);
- });
+ // Open a new tab SYNCHRONOUSLY (so popup blocker doesn't kill it), then populate it.
+ // This matches the reliable WPS Document pattern used elsewhere in this app.
+ var subject = 'CD vs Annuity Comparison — '+fmtN(amt)+' Deposit';
+ var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1'
+  +(clientEmail?'&to='+encodeURIComponent(clientEmail):'')
+  +'&su='+encodeURIComponent(subject);
+
+ var win = window.open('', '_blank');
+ if(!win){
+  showToast('Popup blocked — allow popups for localhost to generate the comparison.', 5000);
+  return;
+ }
+
+ // Build a full standalone HTML document with the comparison + action buttons
+ var doc = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+subject+'</title>';
+ doc += '<style>';
+ doc += 'body{font-family:Arial,sans-serif;color:#333;max-width:820px;margin:20px auto;padding:20px;background:#fff}';
+ doc += '.act{text-align:center;margin-bottom:20px;padding:12px;background:#f5f5f5;border-radius:8px;position:sticky;top:0;z-index:10}';
+ doc += '.act button,.act a{padding:10px 18px;margin:0 4px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #ddd;background:#fff;color:#333;text-decoration:none;display:inline-block}';
+ doc += '.act button.pri,.act a.pri{background:#534AB7;color:#fff;border-color:#534AB7}';
+ doc += '.act button.ok{background:#1D9E75;color:#fff;border-color:#1D9E75}';
+ doc += '.hint{font-size:11px;color:#666;margin-top:8px}';
+ doc += '@media print{.act{display:none}}';
+ doc += '</style></head><body>';
+
+ doc += '<div class="act">';
+ doc += '<button class="pri" onclick="copyHtml()">📋 Copy Formatted Email</button>';
+ doc += '<button onclick="copyText()">📄 Copy Plain Text</button>';
+ doc += '<a class="ok" href="'+gmailUrl+'" target="_blank">✉️ Open Gmail Compose</a>';
+ doc += '<button onclick="window.print()">🖨 Print</button>';
+ doc += '<button onclick="window.close()">Close</button>';
+ doc += '<div class="hint">Click <b>Copy Formatted Email</b> → click <b>Open Gmail Compose</b> → paste (Cmd+V) in the message body.</div>';
+ doc += '</div>';
+
+ // Hidden plain-text version used by the Copy Plain Text button
+ doc += '<pre id="plainText" style="display:none">'+b.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</pre>';
+
+ // The comparison content itself (the HTML already built in eh)
+ doc += '<div id="emailContent">'+eh+'</div>';
+
+ // Inline script for the buttons
+ doc += '<script>';
+ doc += 'function copyHtml(){';
+ doc += ' var el=document.getElementById("emailContent");';
+ doc += ' var html=el.innerHTML;';
+ doc += ' var text=el.innerText;';
+ doc += ' try{';
+ doc += '  var blob=new Blob([html],{type:"text/html"});';
+ doc += '  var item=new ClipboardItem({"text/html":blob,"text/plain":new Blob([text],{type:"text/plain"})});';
+ doc += '  navigator.clipboard.write([item]).then(function(){alert("✓ Formatted email copied! Switch to Gmail compose and paste (Cmd+V).");}).catch(function(e){';
+ doc += '   navigator.clipboard.writeText(text).then(function(){alert("Plain text copied (formatted copy unavailable in this browser).");});';
+ doc += '  });';
+ doc += ' }catch(e){';
+ doc += '  navigator.clipboard.writeText(text).then(function(){alert("Plain text copied.");});';
+ doc += ' }';
+ doc += '}';
+ doc += 'function copyText(){';
+ doc += ' var t=document.getElementById("plainText").innerText;';
+ doc += ' navigator.clipboard.writeText(t).then(function(){alert("✓ Plain text copied! Paste into any email.");});';
+ doc += '}';
+ doc += '<\/script>';
+
+ doc += '</body></html>';
+
+ win.document.open();
+ win.document.write(doc);
+ win.document.close();
+ showToast('Comparison opened in new tab — use the buttons to copy & paste into Gmail.', 5000);
 }
 
 
@@ -1692,16 +1806,68 @@ function emailAnnuityComparison(){
 
  var plainText = 'Annuity Comparison: '+prodA+' vs '+prodB+'\nDeposit: '+fmtN(amt)+'\nPrepared by '+(currentAgent?currentAgent.name:'Agent')+' | AAA Life Specialist';
 
- var blob = new Blob([eh], {type:'text/html'});
- var item = new ClipboardItem({'text/html': blob, 'text/plain': new Blob([plainText], {type:'text/plain'})});
- navigator.clipboard.write([item]).then(function(){
-  var subject = encodeURIComponent('Annuity Comparison: '+prodA+' vs '+prodB);
-  var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1'+(clientEmail?'&to='+encodeURIComponent(clientEmail):'')+'&su='+subject;
-  window.open(gmailUrl, '_blank');
-  showToast('HTML comparison copied! Paste (Cmd+V) into Gmail.', 8000);
- }).catch(function(){
-  showToast('Could not copy — try again', 3000);
- });
+ // Open a new tab SYNCHRONOUSLY (popup-blocker safe) and populate with action buttons.
+ var subject = 'Annuity Comparison: '+prodA+' vs '+prodB;
+ var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1'
+  +(clientEmail?'&to='+encodeURIComponent(clientEmail):'')
+  +'&su='+encodeURIComponent(subject);
+
+ var win = window.open('', '_blank');
+ if(!win){
+  showToast('Popup blocked — allow popups for localhost to generate the comparison.', 5000);
+  return;
+ }
+
+ var doc = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+subject+'</title>';
+ doc += '<style>';
+ doc += 'body{font-family:Arial,sans-serif;color:#333;max-width:820px;margin:20px auto;padding:20px;background:#fff}';
+ doc += '.act{text-align:center;margin-bottom:20px;padding:12px;background:#f5f5f5;border-radius:8px;position:sticky;top:0;z-index:10}';
+ doc += '.act button,.act a{padding:10px 18px;margin:0 4px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #ddd;background:#fff;color:#333;text-decoration:none;display:inline-block}';
+ doc += '.act button.pri,.act a.pri{background:#534AB7;color:#fff;border-color:#534AB7}';
+ doc += '.act button.ok{background:#1D9E75;color:#fff;border-color:#1D9E75}';
+ doc += '.hint{font-size:11px;color:#666;margin-top:8px}';
+ doc += '@media print{.act{display:none}}';
+ doc += '</style></head><body>';
+
+ doc += '<div class="act">';
+ doc += '<button class="pri" onclick="copyHtml()">📋 Copy Formatted Email</button>';
+ doc += '<button onclick="copyText()">📄 Copy Plain Text</button>';
+ doc += '<a class="ok" href="'+gmailUrl+'" target="_blank">✉️ Open Gmail Compose</a>';
+ doc += '<button onclick="window.print()">🖨 Print</button>';
+ doc += '<button onclick="window.close()">Close</button>';
+ doc += '<div class="hint">Click <b>Copy Formatted Email</b> → click <b>Open Gmail Compose</b> → paste (Cmd+V) in the message body.</div>';
+ doc += '</div>';
+
+ doc += '<pre id="plainText" style="display:none">'+plainText.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</pre>';
+ doc += '<div id="emailContent">'+eh+'</div>';
+
+ doc += '<script>';
+ doc += 'function copyHtml(){';
+ doc += ' var el=document.getElementById("emailContent");';
+ doc += ' var html=el.innerHTML;';
+ doc += ' var text=el.innerText;';
+ doc += ' try{';
+ doc += '  var blob=new Blob([html],{type:"text/html"});';
+ doc += '  var item=new ClipboardItem({"text/html":blob,"text/plain":new Blob([text],{type:"text/plain"})});';
+ doc += '  navigator.clipboard.write([item]).then(function(){alert("✓ Formatted email copied! Switch to Gmail compose and paste (Cmd+V).");}).catch(function(e){';
+ doc += '   navigator.clipboard.writeText(text).then(function(){alert("Plain text copied (formatted copy unavailable in this browser).");});';
+ doc += '  });';
+ doc += ' }catch(e){';
+ doc += '  navigator.clipboard.writeText(text).then(function(){alert("Plain text copied.");});';
+ doc += ' }';
+ doc += '}';
+ doc += 'function copyText(){';
+ doc += ' var t=document.getElementById("plainText").innerText;';
+ doc += ' navigator.clipboard.writeText(t).then(function(){alert("✓ Plain text copied! Paste into any email.");});';
+ doc += '}';
+ doc += '<\/script>';
+
+ doc += '</body></html>';
+
+ win.document.open();
+ win.document.write(doc);
+ win.document.close();
+ showToast('Comparison opened in new tab — use the buttons to copy & paste into Gmail.', 5000);
 }
 
 
@@ -1725,14 +1891,44 @@ var SP_RETURNS = {
 };
 
 // idxInputs starts with defaults; loadAgentData() may overwrite after login
-var idxInputs = {clientName:'',age:65,amount:200000,mgmtFee:1,capRate:8.5,capBonus:0,parRate:50,startYear:2005,aSpPct:60,aBondPct:40,aWdRate:4,bSpPct:30,bBondPct:30,bAnnPct:40,bWdRate:5};
+var idxInputs = {clientName:'',age:65,amount:200000,mgmtFee:1,capRate:8.5,capBonus:0,parRate:50,startYear:2005,aSpPct:60,aBondPct:40,aWdRate:4,bSpPct:30,bBondPct:30,bAnnPct:40,bWdRate:5,viewMode:'forward',projYears:10,aWdDollar:0,bWdDollar:0,useRMD:false,qualifiedPct:0};
+
+// IRS Uniform Lifetime Table (post-SECURE Act 2.0, effective 2022+)
+// Age -> life expectancy factor. RMD = balance / factor.
+var RMD_FACTORS = {
+ 73:26.5, 74:25.5, 75:24.6, 76:23.7, 77:22.9, 78:22.0, 79:21.1,
+ 80:20.2, 81:19.4, 82:18.5, 83:17.7, 84:16.8, 85:16.0, 86:15.2,
+ 87:14.4, 88:13.7, 89:12.9, 90:12.2, 91:11.5, 92:10.8, 93:10.1,
+ 94:9.5, 95:8.9, 96:8.4, 97:7.8, 98:7.3, 99:6.8, 100:6.4
+};
+function calculateRMD(age, balance){
+ if(age < 73) return 0;
+ var factor = RMD_FACTORS[age] || RMD_FACTORS[100];
+ return balance / factor;
+}
+
+function toggleWdTooltip(id){
+ var el = document.getElementById(id);
+ if(!el) return;
+ el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+// Box-Muller transform: generate random value from normal distribution
+function randomReturn(mean, stdDev){
+ var u1 = Math.random(), u2 = Math.random();
+ var z = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+ return mean + z * stdDev;
+}
 
 function saveIdxInputs(){
- var fields = {clientName:'idx_name',age:'idx_age',amount:'idx_amount',mgmtFee:'idx_fee',capRate:'idx_cap_rate',capBonus:'idx_cap_bonus',parRate:'idx_par_rate',startYear:'idx_start_year',aSpPct:'idx_a_sp',aBondPct:'idx_a_bond',aWdRate:'idx_a_wd',bSpPct:'idx_b_sp',bBondPct:'idx_b_bond',bAnnPct:'idx_b_ann',bWdRate:'idx_b_wd'};
+ var fields = {clientName:'idx_name',age:'idx_age',amount:'idx_amount',mgmtFee:'idx_fee',capRate:'idx_cap_rate',capBonus:'idx_cap_bonus',parRate:'idx_par_rate',startYear:'idx_start_year',aSpPct:'idx_a_sp',aBondPct:'idx_a_bond',aWdRate:'idx_a_wd',bSpPct:'idx_b_sp',bBondPct:'idx_b_bond',bAnnPct:'idx_b_ann',bWdRate:'idx_b_wd',projYears:'idx_proj_years',aWdDollar:'idx_a_wd_dollar',bWdDollar:'idx_b_wd_dollar',qualifiedPct:'idx_qual_pct'};
  Object.keys(fields).forEach(function(k){
   var el = document.getElementById(fields[k]);
   if(el) idxInputs[k] = k==='clientName' ? el.value : parseFloat(el.value)||0;
  });
+ // Checkbox for RMD
+ var rmdEl = document.getElementById('idx_use_rmd');
+ if(rmdEl) idxInputs.useRMD = rmdEl.checked;
  if(currentAgent){
   try { localStorage.setItem('doi_idx_inputs_' + currentAgent.id, JSON.stringify(idxInputs)); } catch(e){}
   fbSave('duet_idx_inputs2', idxInputs);
@@ -1741,20 +1937,86 @@ function saveIdxInputs(){
 
 function renderIndexingTool(){
  var d = idxInputs;
+ var isFwd = (d.viewMode || 'forward') === 'forward';
  var h = '<h2 style="margin-bottom:4px;color:var(--pri)">📊 S&P vs Annuity — Two-Scenario Comparison</h2>';
- h += '<p style="font-size:12px;color:var(--muted);margin-bottom:16px">Compare keeping all money in the market vs. moving a portion into an index annuity — using <b>actual S&P 500 returns (1990–2025)</b>.</p>';
+ h += '<p style="font-size:12px;color:var(--muted);margin-bottom:16px">Compare keeping all money in the market vs. moving a portion into an index annuity.</p>';
+
+ // ═══ VIEW MODE TOGGLE ═══
+ h += '<div style="display:flex;gap:0;margin-bottom:16px;background:#f0f0f5;padding:4px;border-radius:8px;max-width:420px">';
+ h += '<button onclick="idxInputs.viewMode=\'forward\';saveIdxInputs();renderIndexingTool()" style="flex:1;padding:10px 14px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;'+(isFwd?'background:var(--pri);color:#fff':'background:transparent;color:var(--muted)')+'">🔮 Looking Forward</button>';
+ h += '<button onclick="idxInputs.viewMode=\'back\';saveIdxInputs();renderIndexingTool()" style="flex:1;padding:10px 14px;border:none;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;'+(!isFwd?'background:var(--pri);color:#fff':'background:transparent;color:var(--muted)')+'">📜 Looking Back</button>';
+ h += '</div>';
+
+ // Sub-header describing the current mode
+ if(isFwd){
+  h += '<div style="background:var(--ptint);border-left:4px solid var(--pri);padding:10px 14px;border-radius:6px;margin-bottom:14px;font-size:12px;color:var(--txt)"><b>Forward projection:</b> Runs 1,000 simulated futures using historical S&P volatility. Shows the range of likely outcomes over the next N years — the annuity\'s cap/floor keeps its range tighter.</div>';
+ } else {
+  h += '<div style="background:var(--atint);border-left:4px solid var(--amb);padding:10px 14px;border-radius:6px;margin-bottom:14px;font-size:12px;color:var(--txt)"><b>Historical projection:</b> Uses <b>actual S&P 500 returns (1990–2025)</b>. Shows what would have happened if the client invested in the chosen start year.</div>';
+ }
 
  // ═══ CLIENT INPUTS ═══
  h += '<div class="card"><h3 style="color:var(--pri)">Client Info</h3>';
  h += '<div style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px">';
  h += '<div class="form-group"><label>Client Name</label><input id="idx_name" value="'+(d.clientName||'')+'" placeholder="Client name" style="width:160px"></div>';
- h += '<div class="form-group"><label>Age</label><input id="idx_age" type="number" value="'+d.age+'" style="width:60px"></div>';
- h += '<div class="form-group"><label>Total Investment</label><input id="idx_amount" type="number" value="'+d.amount+'" style="width:140px"></div>';
+ h += '<div class="form-group"><label>Age</label><input id="idx_age" type="number" value="'+d.age+'" onblur="saveIdxInputs();renderIndexingTool()" style="width:60px"></div>';
+ h += '<div class="form-group"><label>Total Investment</label><input id="idx_amount" type="number" value="'+d.amount+'" onblur="saveIdxInputs();renderIndexingTool()" style="width:140px"></div>';
  h += '<div class="form-group"><label>Mgmt Fee %</label><input id="idx_fee" type="number" step="0.1" value="'+d.mgmtFee+'" style="width:70px"></div>';
- h += '<div class="form-group"><label>Starting Year</label><select id="idx_start_year" style="width:100px">';
- for(var y=1990;y<=2006;y++) h += '<option value="'+y+'"'+(d.startYear===y?' selected':'')+'>'+y+'</option>';
- h += '</select></div>';
- h += '</div></div>';
+ if(isFwd){
+  h += '<div class="form-group"><label>Projection Length</label><select id="idx_proj_years" onchange="saveIdxInputs();renderIndexingTool()" style="width:100px">';
+  [5,10,15,20].forEach(function(yr){ h += '<option value="'+yr+'"'+(d.projYears===yr?' selected':'')+'>'+yr+' years</option>'; });
+  h += '</select></div>';
+ } else {
+  h += '<div class="form-group"><label>Starting Year</label><select id="idx_start_year" style="width:100px">';
+  for(var y=1990;y<=2006;y++) h += '<option value="'+y+'"'+(d.startYear===y?' selected':'')+'>'+y+'</option>';
+  h += '</select></div>';
+ }
+ h += '</div>';
+
+ // RMD calculator row (forward mode only)
+ if(isFwd){
+  h += '<div style="display:flex;gap:12px;align-items:center;padding:10px;background:var(--bg);border-radius:6px;flex-wrap:wrap">';
+  h += '<label style="display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--txt);margin:0;text-transform:none;letter-spacing:0"><input type="checkbox" id="idx_use_rmd"'+(d.useRMD?' checked':'')+' onchange="saveIdxInputs();renderIndexingTool()"> Include RMDs from qualified accounts</label>';
+  h += '<div class="form-group" style="margin:0"><label>Qualified % of portfolio</label><input id="idx_qual_pct" type="number" value="'+(d.qualifiedPct||0)+'" onblur="saveIdxInputs();renderIndexingTool()" style="width:70px"><span style="font-size:11px;color:var(--muted);margin-left:4px">% in IRA/401k (subject to RMDs)</span></div>';
+  h += '<div style="font-size:11px;color:var(--muted);flex:1 0 100%">RMDs start at age 73 using the IRS Uniform Lifetime Table. When enabled, each year\'s withdrawal = max(your manual amount, RMD amount).</div>';
+
+  // RMD schedule preview — only show when checkbox is on and qualified balance exists
+  if(d.useRMD && (d.qualifiedPct||0) > 0 && (d.amount||0) > 0 && (d.age||0) >= 73){
+   var qualBal = (d.amount||0) * ((d.qualifiedPct||0)/100);
+   var years = parseInt(d.projYears) || 10;
+   var startAge = parseInt(d.age) || 76;
+   // Simulate a 5% flat growth for the preview
+   var previewBal = qualBal;
+   var rmdRows = '';
+   var totalRMD = 0;
+   for(var pyr=1; pyr<=years; pyr++){
+    var ageAtYear = startAge + pyr;
+    var factor = RMD_FACTORS[ageAtYear] || RMD_FACTORS[100];
+    // Grow balance 5% first, then withdraw RMD
+    previewBal = previewBal * 1.05;
+    var rmdAmt = previewBal / factor;
+    previewBal -= rmdAmt;
+    totalRMD += rmdAmt;
+    var rmdPct = (1/factor*100).toFixed(2);
+    rmdRows += '<tr><td style="padding:4px 8px">Year '+pyr+'</td><td style="padding:4px 8px;text-align:center">Age '+ageAtYear+'</td><td style="padding:4px 8px;text-align:center">'+factor.toFixed(1)+'</td><td style="padding:4px 8px;text-align:right">'+rmdPct+'%</td><td style="padding:4px 8px;text-align:right;font-weight:600;color:var(--pri)">$'+Math.round(rmdAmt).toLocaleString()+'</td></tr>';
+   }
+   h += '<div style="flex:1 0 100%;margin-top:8px;padding:10px;background:var(--card);border-radius:6px;border:1px solid var(--border)">';
+   h += '<div style="font-size:11px;font-weight:700;color:var(--pri);letter-spacing:.5px;text-transform:uppercase;margin-bottom:6px">📋 Projected RMD Schedule</div>';
+   h += '<div style="font-size:10px;color:var(--muted);margin-bottom:6px">Approximate — based on $'+Math.round(qualBal).toLocaleString()+' qualified balance ('+(d.qualifiedPct||0)+'% of $'+Math.round(d.amount||0).toLocaleString()+') with 5% assumed growth. Actual RMDs depend on year-end balances.</div>';
+   h += '<table style="width:100%;border-collapse:collapse;font-size:11px">';
+   h += '<tr style="background:var(--bg);font-weight:700;color:var(--muted)"><td style="padding:4px 8px">Year</td><td style="padding:4px 8px;text-align:center">Age</td><td style="padding:4px 8px;text-align:center">Factor</td><td style="padding:4px 8px;text-align:right">RMD %</td><td style="padding:4px 8px;text-align:right">RMD $</td></tr>';
+   h += rmdRows;
+   h += '<tr style="background:var(--ptint);font-weight:700"><td colspan="4" style="padding:4px 8px">TOTAL over '+years+' years</td><td style="padding:4px 8px;text-align:right;color:var(--pri)">$'+Math.round(totalRMD).toLocaleString()+'</td></tr>';
+   h += '</table>';
+   h += '</div>';
+  } else if(d.useRMD && (d.qualifiedPct||0) > 0 && (d.age||0) < 73){
+   var yearsToRMD = 73 - (d.age||0);
+   h += '<div style="flex:1 0 100%;margin-top:8px;padding:10px;background:var(--card);border-radius:6px;border:1px solid var(--border);font-size:11px;color:var(--muted)">';
+   h += '<b style="color:var(--pri)">📋 RMD Schedule:</b> Client is under 73 — RMDs begin in <b>'+yearsToRMD+' year'+(yearsToRMD===1?'':'s')+'</b> (at age 73). Schedule will appear once projection reaches that age.';
+   h += '</div>';
+  }
+  h += '</div>';
+ }
+ h += '</div>';
 
  // ═══ TWO SCENARIO CARDS ═══
  h += '<div style="display:flex;gap:16px;flex-wrap:wrap">';
@@ -1769,8 +2031,21 @@ function renderIndexingTool(){
  h += '</div>';
  var aWdAmt = d.amount * (d.aWdRate/100);
  h += '<div style="display:flex;gap:10px;align-items:end;flex-wrap:wrap">';
- h += '<div class="form-group"><label>Withdrawal Rate %</label><input id="idx_a_wd" type="number" step="0.5" value="'+d.aWdRate+'" style="width:80px"></div>';
- h += '<div style="font-size:11px;color:var(--muted);padding-bottom:12px">= <b>'+fmt(aWdAmt)+'</b>/yr</div>';
+ if(isFwd){
+  h += '<div class="form-group" style="position:relative">';
+  h += '<label style="display:flex;align-items:center;gap:4px">Withdrawal $/yr <span onclick="toggleWdTooltip(\'tipA\')" style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--pri);color:#fff;font-size:10px;font-weight:700;cursor:pointer;user-select:none" title="Click for explanation">?</span></label>';
+  h += '<input id="idx_a_wd_dollar" type="number" step="1000" value="'+(d.aWdDollar||Math.round(aWdAmt))+'" style="width:120px">';
+  h += '<div id="tipA" style="display:none;position:absolute;top:100%;left:0;z-index:50;background:var(--card);border:2px solid var(--pri);border-radius:8px;padding:12px 14px;box-shadow:0 4px 20px rgba(0,0,0,.15);font-size:12px;color:var(--txt);line-height:1.6;width:340px;margin-top:6px">';
+  h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><b style="color:var(--pri)">How this works</b><span onclick="toggleWdTooltip(\'tipA\')" style="cursor:pointer;color:var(--muted);font-size:16px;line-height:1">×</span></div>';
+  h += '<b>RMDs unchecked:</b> The tool withdraws <b>exactly this amount</b> each year. Put whatever dollar figure you want to model.<br><br>';
+  h += '<b>RMDs checked:</b> The tool uses <b>the greater of this amount or the calculated RMD</b> — not both added together. If your RMD is $2,295 and you typed $3,000, the tool uses $3,000 (your RMD is already covered). If you typed $1,000, the tool uses $2,295 (RMDs are mandatory).';
+  h += '</div>';
+  h += '</div>';
+  h += '<div style="font-size:11px;color:var(--muted);padding-bottom:12px">Dollar amount (client-friendly)</div>';
+ } else {
+  h += '<div class="form-group"><label>Withdrawal Rate %</label><input id="idx_a_wd" type="number" step="0.5" value="'+d.aWdRate+'" style="width:80px"></div>';
+  h += '<div style="font-size:11px;color:var(--muted);padding-bottom:12px">= <b>'+fmt(aWdAmt)+'</b>/yr</div>';
+ }
  h += '</div>';
  h += '</div>';
 
@@ -1785,8 +2060,21 @@ function renderIndexingTool(){
  h += '</div>';
  var bWdAmt = d.amount * (d.bWdRate/100);
  h += '<div style="display:flex;gap:10px;align-items:end;flex-wrap:wrap">';
- h += '<div class="form-group"><label>Withdrawal Rate %</label><input id="idx_b_wd" type="number" step="0.5" value="'+d.bWdRate+'" style="width:80px"></div>';
- h += '<div style="font-size:11px;color:var(--muted);padding-bottom:12px">= <b>'+fmt(bWdAmt)+'</b>/yr</div>';
+ if(isFwd){
+  h += '<div class="form-group" style="position:relative">';
+  h += '<label style="display:flex;align-items:center;gap:4px">Withdrawal $/yr <span onclick="toggleWdTooltip(\'tipB\')" style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:var(--grn);color:#fff;font-size:10px;font-weight:700;cursor:pointer;user-select:none" title="Click for explanation">?</span></label>';
+  h += '<input id="idx_b_wd_dollar" type="number" step="1000" value="'+(d.bWdDollar||Math.round(bWdAmt))+'" style="width:120px">';
+  h += '<div id="tipB" style="display:none;position:absolute;top:100%;left:0;z-index:50;background:var(--card);border:2px solid var(--grn);border-radius:8px;padding:12px 14px;box-shadow:0 4px 20px rgba(0,0,0,.15);font-size:12px;color:var(--txt);line-height:1.6;width:340px;margin-top:6px">';
+  h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px"><b style="color:var(--dgrn)">How this works</b><span onclick="toggleWdTooltip(\'tipB\')" style="cursor:pointer;color:var(--muted);font-size:16px;line-height:1">×</span></div>';
+  h += '<b>RMDs unchecked:</b> The tool withdraws <b>exactly this amount</b> each year. Put whatever dollar figure you want to model.<br><br>';
+  h += '<b>RMDs checked:</b> The tool uses <b>the greater of this amount or the calculated RMD</b> — not both added together. If your RMD is $2,295 and you typed $3,000, the tool uses $3,000 (your RMD is already covered). If you typed $1,000, the tool uses $2,295 (RMDs are mandatory).';
+  h += '</div>';
+  h += '</div>';
+  h += '<div style="font-size:11px;color:var(--muted);padding-bottom:12px">Dollar amount (client-friendly)</div>';
+ } else {
+  h += '<div class="form-group"><label>Withdrawal Rate %</label><input id="idx_b_wd" type="number" step="0.5" value="'+d.bWdRate+'" style="width:80px"></div>';
+  h += '<div style="font-size:11px;color:var(--muted);padding-bottom:12px">= <b>'+fmt(bWdAmt)+'</b>/yr</div>';
+ }
  h += '</div>';
  h += '</div>';
 
@@ -1802,7 +2090,9 @@ function renderIndexingTool(){
  h += '<div class="form-group"><label>Cap Bonus %</label><input id="idx_cap_bonus" type="number" step="0.5" value="'+d.capBonus+'" style="width:80px"></div>';
  h += '<div class="form-group"><label>Par Rate %</label><input id="idx_par_rate" type="number" step="5" value="'+d.parRate+'" style="width:80px"></div>';
  h += '</div>';
- h += '<button class="btn btn-pri" onclick="saveIdxInputs();runIndexProjection()" style="height:36px;font-size:14px;padding:8px 24px">Run 20-Year Comparison</button>';
+ var btnLabel = isFwd ? 'Run Projections' : 'Run Historical Comparison';
+ var btnFn = isFwd ? 'runForwardProjection()' : 'runIndexProjection()';
+ h += '<button class="btn btn-pri" onclick="saveIdxInputs();'+btnFn+'" style="height:36px;font-size:14px;padding:8px 24px">'+btnLabel+'</button>';
  h += '</div>';
  h += '</div>'; // end left col
  h += '</div>'; // end flex
@@ -1849,6 +2139,405 @@ function runScenario(amt, spPct, bondPct, annPct, wdRate, fee, capRate, capBonus
   rows.push({year:i,calYear:calYear,age:startAge+i,spBal:spBal,bondBal:bondBal,annBal:annBal,total:spBal+bondBal+annBal,spRate:spR,bondRate:bondR,annCredited:annCredited,wd:wdAmt});
  }
  return {rows:rows, protectedYears:protectedYears, totalLoss:totalLoss};
+}
+
+// ═══ FORWARD MONTE CARLO SIMULATION ═══
+// Runs ONE simulation of the scenario using random returns, returns ending balance.
+function runForwardOneSim(amt, spPct, bondPct, annPct, dollarWd, fee, capRate, capBonus, startAge, years, qualifiedPct, useRMD){
+ var spBal = amt * spPct, bondBal = amt * bondPct, annBal = amt * annPct;
+ // Apply cap bonus to annuity at start
+ annBal = annBal * (1 + capBonus);
+
+ var spEverLost = false;
+ var bigEarlyLoss = false;
+ var earlyLossCum = 0;
+ var totalRMDTaken = 0; // track cumulative RMD across the simulation
+
+ for(var y=1; y<=years; y++){
+  var age = startAge + y;
+  // Random returns
+  var spR = randomReturn(0.10, 0.18); // 10% mean, 18% std dev historical
+  var bondR = randomReturn(0.04, 0.05); // 4% mean, 5% std dev
+
+  // Track early losses for sequence-of-returns analysis
+  if(y <= 3 && spR < 0){ earlyLossCum += spR; if(earlyLossCum <= -0.20) bigEarlyLoss = true; }
+  if(spR < 0) spEverLost = true;
+
+  // Grow each bucket
+  spBal = spBal * (1 + spR - fee);
+  bondBal = bondBal * (1 + bondR - fee);
+  // Annuity: floor at 0, cap at capRate
+  var annCredited = Math.min(Math.max(spR, 0), capRate);
+  annBal = annBal * (1 + annCredited);
+
+  // Floor balances at 0
+  if(spBal < 0) spBal = 0;
+  if(bondBal < 0) bondBal = 0;
+  if(annBal < 0) annBal = 0;
+
+  // Determine effective withdrawal (max of manual and RMD)
+  var total = spBal + bondBal + annBal;
+  var effectiveWd = dollarWd;
+  var rmdThisYear = 0;
+  if(useRMD && age >= 73 && qualifiedPct > 0){
+   var qualifiedBal = total * qualifiedPct;
+   rmdThisYear = calculateRMD(age, qualifiedBal);
+   if(rmdThisYear > effectiveWd) effectiveWd = rmdThisYear;
+  }
+
+  // Proportional withdrawal
+  if(total > 0 && effectiveWd > 0){
+   var wdActual = Math.min(effectiveWd, total);
+   var ratio = wdActual / total;
+   spBal -= spBal * ratio;
+   bondBal -= bondBal * ratio;
+   annBal -= annBal * ratio;
+   // The RMD portion of this withdrawal is at most the whole withdrawal, capped at the RMD amount
+   totalRMDTaken += Math.min(rmdThisYear, wdActual);
+  }
+ }
+
+ var ending = spBal + bondBal + annBal;
+ return {ending:ending, bigEarlyLoss:bigEarlyLoss, totalRMDTaken:totalRMDTaken};
+}
+
+// Runs 1,000 simulations, returns sorted ending balances + stats
+function runForwardSim(amt, spPct, bondPct, annPct, dollarWd, fee, capRate, capBonus, startAge, years, qualifiedPct, useRMD){
+ var NUM_SIMS = 1000;
+ var endings = [];
+ var rmdTotals = [];
+ var bigLossEndings = []; // only simulations with big early losses
+ for(var i=0; i<NUM_SIMS; i++){
+  var sim = runForwardOneSim(amt, spPct, bondPct, annPct, dollarWd, fee, capRate, capBonus, startAge, years, qualifiedPct, useRMD);
+  endings.push(sim.ending);
+  rmdTotals.push(sim.totalRMDTaken || 0);
+  if(sim.bigEarlyLoss) bigLossEndings.push(sim.ending);
+ }
+ endings.sort(function(a,b){ return a-b; });
+ rmdTotals.sort(function(a,b){ return a-b; });
+ var pct = function(p){ return endings[Math.floor(NUM_SIMS * p)]; };
+ var bigLossAvg = 0;
+ if(bigLossEndings.length > 0){
+  bigLossEndings.forEach(function(v){ bigLossAvg += v; });
+  bigLossAvg /= bigLossEndings.length;
+ }
+ return {
+  endings: endings,
+  p25: pct(0.25), // Bad case
+  p50: pct(0.50), // Average (median)
+  p75: pct(0.75), // Good case
+  range: pct(0.75) - pct(0.25),
+  bigLossCount: bigLossEndings.length,
+  bigLossAvg: bigLossAvg,
+  medianRMDTotal: rmdTotals[Math.floor(NUM_SIMS * 0.5)] || 0
+ };
+}
+
+function runForwardProjection(){
+ saveIdxInputs();
+ var d = idxInputs;
+ var amt = parseFloat(d.amount) || 200000;
+ var fee = (parseFloat(d.mgmtFee)||0) / 100;
+ var capRate = (parseFloat(d.capRate)||0) / 100;
+ var capBonus = (parseFloat(d.capBonus)||0) / 100;
+ var years = parseInt(d.projYears) || 10;
+ var startAge = parseInt(d.age) || 65;
+ var aSp = (parseFloat(d.aSpPct)||0) / 100;
+ var aBond = (parseFloat(d.aBondPct)||0) / 100;
+ var bSp = (parseFloat(d.bSpPct)||0) / 100;
+ var bBond = (parseFloat(d.bBondPct)||0) / 100;
+ var bAnn = (parseFloat(d.bAnnPct)||0) / 100;
+ var aWd = parseFloat(d.aWdDollar) || 0;
+ var bWd = parseFloat(d.bWdDollar) || 0;
+ var useRMD = !!d.useRMD;
+ var qualifiedPct = (parseFloat(d.qualifiedPct)||0) / 100;
+
+ // Run both scenarios
+ var scenA = runForwardSim(amt, aSp, aBond, 0, aWd, fee, capRate, 0, startAge, years, qualifiedPct, useRMD);
+ var scenB = runForwardSim(amt, bSp, bBond, bAnn, bWd, fee, capRate, capBonus, startAge, years, qualifiedPct, useRMD);
+
+ var fmtK = function(n){ return '$' + Math.round(n).toLocaleString(); };
+ var endAge = startAge + years;
+
+ var h = '';
+
+ // Header
+ h += '<div class="card" style="margin-top:14px">';
+ h += '<h3 style="color:var(--pri)">'+years+'-Year Forward Projection' + (d.clientName?' — '+escapeHtml(d.clientName):'') + '</h3>';
+ h += '<p style="font-size:12px;color:var(--muted);margin-bottom:14px">1,000 simulated futures starting at age '+startAge+', ending at age '+endAge+'. Deposit: <b>'+fmtK(amt)+'</b>.';
+ if(useRMD) h += ' RMDs included on '+(d.qualifiedPct||0)+'% of portfolio when age ≥ 73.';
+ h += '</p>';
+
+ // Two range cards side-by-side
+ h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">';
+
+ // SCENARIO A
+ h += '<div style="background:#FFF5F5;border:2px solid #e74c3c;border-radius:10px;padding:16px">';
+ h += '<div style="font-size:12px;font-weight:700;color:#e74c3c;letter-spacing:1px;margin-bottom:8px">SCENARIO A — ALL MARKET</div>';
+ h += '<div style="font-size:11px;color:var(--muted);margin-bottom:12px">'+(d.aSpPct||0)+'% S&P / '+(d.aBondPct||0)+'% Bonds · '+fmtK(aWd)+'/yr withdrawal</div>';
+ h += '<div style="display:flex;flex-direction:column;gap:8px">';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#fff;border-radius:6px"><span style="font-size:11px;color:var(--muted)"><span style="font-size:14px">🟢</span> If markets do WELL</span><span style="font-size:16px;font-weight:700;color:#1D9E75">'+fmtK(scenA.p75)+'</span></div>';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#fff;border-radius:6px"><span style="font-size:11px;color:var(--muted)"><span style="font-size:14px">🟡</span> If markets are AVERAGE</span><span style="font-size:16px;font-weight:700">'+fmtK(scenA.p50)+'</span></div>';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#fff;border-radius:6px"><span style="font-size:11px;color:var(--muted)"><span style="font-size:14px">🔴</span> If markets do POORLY</span><span style="font-size:16px;font-weight:700;color:#c0392b">'+fmtK(scenA.p25)+'</span></div>';
+ h += '</div>';
+ h += '<div style="margin-top:10px;padding-top:10px;border-top:1px dashed #e74c3c;text-align:center;font-size:11px;color:#c0392b"><b>Range: '+fmtK(scenA.range)+' spread</b> — outcome depends heavily on markets</div>';
+ h += '</div>';
+
+ // SCENARIO B
+ h += '<div style="background:#F0FBF7;border:2px solid var(--grn);border-radius:10px;padding:16px">';
+ h += '<div style="font-size:12px;font-weight:700;color:var(--dgrn);letter-spacing:1px;margin-bottom:8px">SCENARIO B — MARKET + ANNUITY</div>';
+ h += '<div style="font-size:11px;color:var(--muted);margin-bottom:12px">'+(d.bSpPct||0)+'% S&P / '+(d.bBondPct||0)+'% Bonds / '+(d.bAnnPct||0)+'% Annuity · '+fmtK(bWd)+'/yr · Cap '+(d.capRate||0)+'%</div>';
+ h += '<div style="display:flex;flex-direction:column;gap:8px">';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#fff;border-radius:6px"><span style="font-size:11px;color:var(--muted)"><span style="font-size:14px">🟢</span> If markets do WELL</span><span style="font-size:16px;font-weight:700;color:#1D9E75">'+fmtK(scenB.p75)+'</span></div>';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#fff;border-radius:6px"><span style="font-size:11px;color:var(--muted)"><span style="font-size:14px">🟡</span> If markets are AVERAGE</span><span style="font-size:16px;font-weight:700">'+fmtK(scenB.p50)+'</span></div>';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;padding:8px 10px;background:#fff;border-radius:6px"><span style="font-size:11px;color:var(--muted)"><span style="font-size:14px">🔴</span> If markets do POORLY</span><span style="font-size:16px;font-weight:700;color:var(--dgrn)">'+fmtK(scenB.p25)+'</span></div>';
+ h += '</div>';
+ var narrower = scenA.range > 0 ? Math.round(scenA.range / scenB.range) : 0;
+ h += '<div style="margin-top:10px;padding-top:10px;border-top:1px dashed var(--grn);text-align:center;font-size:11px;color:var(--dgrn)"><b>Range: '+fmtK(scenB.range)+' spread</b>' + (narrower>1 ? ' — <b>'+narrower+'× narrower</b> than all-market' : '') + '</div>';
+ h += '</div>';
+
+ h += '</div>'; // end grid
+
+ // ═══ RMD DISCLOSURE BANNER ═══
+ if(useRMD && qualifiedPct > 0){
+  var medianRMD_A = scenA.medianRMDTotal || 0;
+  var medianRMD_B = scenB.medianRMDTotal || 0;
+  h += '<div style="background:var(--atint);border:1px solid var(--amb);border-left:4px solid var(--amb);padding:14px;border-radius:6px;margin-top:14px;font-size:13px;color:var(--txt);line-height:1.6">';
+  h += '<div style="font-size:12px;font-weight:700;color:var(--amb);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px">📋 RMDs Included in These Numbers</div>';
+  h += 'The balances shown above <b>already factor in the estimated Required Minimum Distributions</b> you would have to take out of the qualified portion ('+(d.qualifiedPct||0)+'% of the portfolio) each year starting at age 73. RMDs are mandatory and were deducted alongside your manual withdrawals in every simulation.';
+  h += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px">';
+  h += '<div style="background:#fff;padding:10px;border-radius:6px;text-align:center"><div style="font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase">Scenario A — Total RMDs Taken</div><div style="font-size:16px;font-weight:700;color:#c0392b;margin-top:4px">'+fmtK(medianRMD_A)+'</div><div style="font-size:10px;color:var(--muted)">median across simulations</div></div>';
+  h += '<div style="background:#fff;padding:10px;border-radius:6px;text-align:center"><div style="font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase">Scenario B — Total RMDs Taken</div><div style="font-size:16px;font-weight:700;color:var(--dgrn);margin-top:4px">'+fmtK(medianRMD_B)+'</div><div style="font-size:10px;color:var(--muted)">median across simulations</div></div>';
+  h += '</div>';
+  h += '</div>';
+ }
+
+ // Difference summary
+ var badDiff = scenB.p25 - scenA.p25;
+ var goodDiff = scenA.p75 - scenB.p75;
+ h += '<div style="background:var(--ptint);border-left:4px solid var(--pri);padding:14px;border-radius:6px;margin-top:14px;font-size:13px;line-height:1.7">';
+ if(badDiff > 0){
+  h += '<b style="color:var(--grn)">In a BAD market</b>, Scenario B has <b>'+fmtK(badDiff)+' more</b> than A — that\'s the annuity floor at work.<br>';
+ }
+ if(goodDiff > 0){
+  h += '<b style="color:#1565c0">In a GOOD market</b>, Scenario A could win by <b>'+fmtK(goodDiff)+'</b> — that\'s the tradeoff for the cap.<br>';
+ }
+ h += '<span style="color:var(--muted)">The question is: which risk are you comfortable with — the upside you might miss, or the downside you can\'t control?</span>';
+ h += '</div>';
+
+ // Sequence-of-returns protection story
+ if(scenA.bigLossCount > 0 && scenB.bigLossCount > 0){
+  var seqDiff = scenB.bigLossAvg - scenA.bigLossAvg;
+  var pctSims = Math.round(scenA.bigLossCount / 10); // out of 1000
+  h += '<div style="background:#F0FBF7;border-left:4px solid var(--grn);padding:14px;border-radius:6px;margin-top:10px;font-size:13px;line-height:1.7">';
+  h += '<b>🛡 Sequence-of-Returns Protection:</b> In the ~'+pctSims+'% of simulations where the market lost 20%+ in the first 3 years';
+  if(seqDiff > 0){
+   h += ', Scenario B averaged <b>'+fmtK(scenB.bigLossAvg)+'</b> vs Scenario A\'s <b>'+fmtK(scenA.bigLossAvg)+'</b> — that\'s <b style="color:var(--grn)">'+fmtK(seqDiff)+' more</b> protected from the early-crash scenario retirees fear most.';
+  } else {
+   h += ' (markets recovered in both scenarios — the annuity provided stability without needing to).';
+  }
+  h += '</div>';
+ }
+
+ // Disclaimer
+ h += '<div style="background:#FFF5F5;border-left:4px solid #c0392b;padding:10px 14px;margin-top:14px;font-size:11px;color:#666;line-height:1.6">';
+ h += '<b>How this works:</b> 1,000 simulated 10-year futures using historical S&P 500 volatility (10% avg return, 18% standard deviation) and bond volatility (4% avg, 5% stdev). The annuity applies its cap ('+(d.capRate||0)+'%) and 0% floor to each simulated year. Past volatility does not guarantee future results — this is a planning illustration, not a prediction.';
+ h += '</div>';
+
+ // Email button
+ h += '<div style="display:flex;gap:10px;align-items:center;margin-top:14px;flex-wrap:wrap">';
+ h += '<button class="btn btn-pri" onclick="emailForwardReport()" style="font-size:13px;padding:8px 16px">📧 Email Comparison to Client</button>';
+ h += '<input id="idx_fwd_client_email" placeholder="Client email (optional)" style="font-size:11px;width:220px;padding:6px">';
+ h += '</div>';
+
+ h += '</div>'; // end card
+ $1('#idxResultArea').innerHTML = h;
+
+ // Store for email export
+ window._fwdA = scenA;
+ window._fwdB = scenB;
+
+ // Scroll to results
+ setTimeout(function(){ document.getElementById('idxResultArea').scrollIntoView({behavior:'smooth', block:'start'}); }, 100);
+}
+
+// ═══ EMAIL FORWARD PROJECTION TO CLIENT ═══
+function emailForwardReport(){
+ var scenA = window._fwdA, scenB = window._fwdB;
+ if(!scenA || !scenB){ showToast('Run the projection first', 3000); return; }
+ var d = idxInputs;
+ var clientEmail = (document.getElementById('idx_fwd_client_email')||{}).value || '';
+ var years = parseInt(d.projYears) || 10;
+ var startAge = parseInt(d.age) || 65;
+ var endAge = startAge + years;
+ var amt = parseFloat(d.amount) || 0;
+ var aWd = parseFloat(d.aWdDollar) || 0;
+ var bWd = parseFloat(d.bWdDollar) || 0;
+ var fmtK = function(n){ return '$' + Math.round(n).toLocaleString(); };
+ var agentName = currentAgent ? currentAgent.name : 'Agent';
+ var agentBranch = currentAgent ? currentAgent.branch : '';
+ var agentEmail = (settings && settings.agentEmail) || '';
+
+ // Build the formatted email HTML (the content clients actually see)
+ var eh = '<div style="font-family:Arial,sans-serif;color:#222;max-width:760px">';
+ eh += '<h1 style="color:#534AB7;font-size:22px;margin-bottom:4px">Your Retirement Projection — Next '+years+' Years</h1>';
+ eh += '<p style="color:#666;font-size:13px;margin-bottom:16px">Prepared for <b>'+(d.clientName?escapeHtml(d.clientName):'you')+'</b> &bull; Age '+startAge+' to '+endAge+' &bull; Starting deposit <b>'+fmtK(amt)+'</b></p>';
+
+ eh += '<div style="background:#EEEDFE;padding:12px;border-radius:6px;font-size:13px;margin-bottom:16px"><b>What this is:</b> We ran 1,000 simulated versions of the next '+years+' years to see what might happen to your money in two different strategies. Each card below shows what you\'d likely have at the end, depending on how the markets behave.</div>';
+
+ // Side-by-side cards (table for email compatibility)
+ eh += '<table cellpadding="0" cellspacing="12" style="width:100%;margin-bottom:16px"><tr>';
+
+ // SCENARIO A
+ eh += '<td style="background:#FFF5F5;border:2px solid #e74c3c;border-radius:10px;padding:16px;vertical-align:top;width:50%">';
+ eh += '<div style="font-size:12px;font-weight:700;color:#e74c3c;letter-spacing:1px;margin-bottom:8px">STRATEGY A — ALL MARKET</div>';
+ eh += '<div style="font-size:11px;color:#666;margin-bottom:12px">'+(d.aSpPct||0)+'% S&P / '+(d.aBondPct||0)+'% Bonds &bull; '+fmtK(aWd)+'/yr withdrawal</div>';
+ eh += '<table cellpadding="8" cellspacing="6" style="width:100%">';
+ eh += '<tr style="background:#fff"><td style="font-size:12px;color:#666">🟢 If markets do WELL</td><td style="font-size:15px;font-weight:700;color:#1D9E75;text-align:right">'+fmtK(scenA.p75)+'</td></tr>';
+ eh += '<tr style="background:#fff"><td style="font-size:12px;color:#666">🟡 If markets are AVERAGE</td><td style="font-size:15px;font-weight:700;text-align:right">'+fmtK(scenA.p50)+'</td></tr>';
+ eh += '<tr style="background:#fff"><td style="font-size:12px;color:#666">🔴 If markets do POORLY</td><td style="font-size:15px;font-weight:700;color:#c0392b;text-align:right">'+fmtK(scenA.p25)+'</td></tr>';
+ eh += '</table>';
+ eh += '<div style="margin-top:10px;padding-top:10px;border-top:1px dashed #e74c3c;text-align:center;font-size:11px;color:#c0392b"><b>Range: '+fmtK(scenA.range)+' spread</b> — outcome depends heavily on markets</div>';
+ eh += '</td>';
+
+ // SCENARIO B
+ eh += '<td style="background:#F0FBF7;border:2px solid #1D9E75;border-radius:10px;padding:16px;vertical-align:top;width:50%">';
+ eh += '<div style="font-size:12px;font-weight:700;color:#0F6E56;letter-spacing:1px;margin-bottom:8px">STRATEGY B — MARKET + ANNUITY</div>';
+ eh += '<div style="font-size:11px;color:#666;margin-bottom:12px">'+(d.bSpPct||0)+'% S&P / '+(d.bBondPct||0)+'% Bonds / '+(d.bAnnPct||0)+'% Annuity &bull; '+fmtK(bWd)+'/yr &bull; Cap '+(d.capRate||0)+'%</div>';
+ eh += '<table cellpadding="8" cellspacing="6" style="width:100%">';
+ eh += '<tr style="background:#fff"><td style="font-size:12px;color:#666">🟢 If markets do WELL</td><td style="font-size:15px;font-weight:700;color:#1D9E75;text-align:right">'+fmtK(scenB.p75)+'</td></tr>';
+ eh += '<tr style="background:#fff"><td style="font-size:12px;color:#666">🟡 If markets are AVERAGE</td><td style="font-size:15px;font-weight:700;text-align:right">'+fmtK(scenB.p50)+'</td></tr>';
+ eh += '<tr style="background:#fff"><td style="font-size:12px;color:#666">🔴 If markets do POORLY</td><td style="font-size:15px;font-weight:700;color:#0F6E56;text-align:right">'+fmtK(scenB.p25)+'</td></tr>';
+ eh += '</table>';
+ var narrower = scenA.range > 0 ? Math.round(scenA.range / scenB.range) : 0;
+ eh += '<div style="margin-top:10px;padding-top:10px;border-top:1px dashed #1D9E75;text-align:center;font-size:11px;color:#0F6E56"><b>Range: '+fmtK(scenB.range)+' spread</b>' + (narrower>1 ? ' — <b>'+narrower+'× narrower</b> than all-market' : '') + '</div>';
+ eh += '</td>';
+
+ eh += '</tr></table>';
+
+ // RMD disclosure in email
+ if(d.useRMD && (d.qualifiedPct||0) > 0){
+  var emRmdA = scenA.medianRMDTotal || 0;
+  var emRmdB = scenB.medianRMDTotal || 0;
+  eh += '<div style="background:#FFF8F0;border:1px solid #EF9F27;border-left:4px solid #EF9F27;padding:14px;border-radius:6px;margin-bottom:12px;font-size:13px;line-height:1.6">';
+  eh += '<b style="color:#EF9F27">📋 RMDs INCLUDED IN THESE NUMBERS</b><br>';
+  eh += 'The balances above <b>already factor in the estimated Required Minimum Distributions</b> you would have to take out of the qualified portion ('+(d.qualifiedPct||0)+'% of the portfolio) each year starting at age 73. RMDs are mandatory.<br>';
+  eh += '<table cellpadding="8" cellspacing="6" style="margin-top:8px"><tr>';
+  eh += '<td style="background:#fff;padding:10px;border-radius:6px;text-align:center"><div style="font-size:10px;color:#666">Strategy A — Total RMDs</div><div style="font-size:15px;font-weight:700;color:#c0392b">'+fmtK(emRmdA)+'</div></td>';
+  eh += '<td style="background:#fff;padding:10px;border-radius:6px;text-align:center"><div style="font-size:10px;color:#666">Strategy B — Total RMDs</div><div style="font-size:15px;font-weight:700;color:#0F6E56">'+fmtK(emRmdB)+'</div></td>';
+  eh += '</tr></table>';
+  eh += '</div>';
+ }
+
+ // Difference summary
+ var badDiff = scenB.p25 - scenA.p25;
+ var goodDiff = scenA.p75 - scenB.p75;
+ eh += '<div style="background:#EEEDFE;border-left:4px solid #534AB7;padding:14px;border-radius:6px;margin-bottom:12px;font-size:13px;line-height:1.7">';
+ eh += '<b style="color:#534AB7">THE COMPARISON</b><br>';
+ if(badDiff > 0) eh += '<b style="color:#1D9E75">In a BAD market</b>, Strategy B has <b>'+fmtK(badDiff)+' more</b> than A — that\'s the annuity floor at work.<br>';
+ if(goodDiff > 0) eh += '<b style="color:#1565c0">In a GOOD market</b>, Strategy A could win by <b>'+fmtK(goodDiff)+'</b> — that\'s the tradeoff for the cap.<br>';
+ eh += '<span style="color:#666">The question: which risk are you comfortable with — the upside you might miss, or the downside you can\'t control?</span>';
+ eh += '</div>';
+
+ // Sequence-of-returns protection callout
+ if(scenA.bigLossCount > 0){
+  var seqDiff = scenB.bigLossAvg - scenA.bigLossAvg;
+  var pctSims = Math.round(scenA.bigLossCount / 10);
+  eh += '<div style="background:#F0FBF7;border-left:4px solid #1D9E75;padding:14px;border-radius:6px;margin-bottom:12px;font-size:13px;line-height:1.7">';
+  eh += '<b style="color:#0F6E56">🛡 Sequence-of-Returns Protection</b><br>';
+  eh += 'In the ~'+pctSims+'% of simulations where the market lost 20%+ in the first 3 years';
+  if(seqDiff > 0){
+   eh += ', Strategy B averaged <b>'+fmtK(scenB.bigLossAvg)+'</b> vs Strategy A\'s <b>'+fmtK(scenA.bigLossAvg)+'</b> — <b style="color:#0F6E56">'+fmtK(seqDiff)+' more</b> protected from the early-crash scenario retirees fear most.';
+  } else {
+   eh += ' (markets recovered in both scenarios — the annuity provided stability without needing to).';
+  }
+  eh += '</div>';
+ }
+
+ eh += '<div style="background:#FFF5F5;padding:10px;border-left:4px solid #c0392b;margin-top:12px;font-size:11px;color:#666;line-height:1.5"><b>Important:</b> This is a planning illustration using 1,000 computer simulations based on historical market volatility. Past volatility does not guarantee future results. Not financial, tax, or legal advice. Please review specific product details before making decisions.</div>';
+
+ eh += '<div style="margin-top:16px;padding-top:10px;border-top:1px solid #ddd;font-size:11px;color:#999">'+escapeHtml(agentName)+' | AAA Life Specialist'+(agentBranch?' | Branch '+escapeHtml(agentBranch):'')+(agentEmail?'<br>'+escapeHtml(agentEmail):'')+'</div>';
+ eh += '</div>';
+
+ // Plain-text version
+ var plain = 'Retirement Projection — Next '+years+' Years\n';
+ plain += 'Prepared for: '+(d.clientName||'you')+' | Age '+startAge+' to '+endAge+'\n';
+ plain += 'Starting deposit: '+fmtK(amt)+'\n\n';
+ plain += '━━ STRATEGY A — ALL MARKET ━━\n';
+ plain += (d.aSpPct||0)+'% S&P / '+(d.aBondPct||0)+'% Bonds | '+fmtK(aWd)+'/yr withdrawal\n';
+ plain += 'If markets do WELL:    '+fmtK(scenA.p75)+'\n';
+ plain += 'If markets are AVERAGE: '+fmtK(scenA.p50)+'\n';
+ plain += 'If markets do POORLY:  '+fmtK(scenA.p25)+'\n';
+ plain += 'Range: '+fmtK(scenA.range)+' spread\n\n';
+ plain += '━━ STRATEGY B — MARKET + ANNUITY ━━\n';
+ plain += (d.bSpPct||0)+'% S&P / '+(d.bBondPct||0)+'% Bonds / '+(d.bAnnPct||0)+'% Annuity | '+fmtK(bWd)+'/yr | Cap '+(d.capRate||0)+'%\n';
+ plain += 'If markets do WELL:    '+fmtK(scenB.p75)+'\n';
+ plain += 'If markets are AVERAGE: '+fmtK(scenB.p50)+'\n';
+ plain += 'If markets do POORLY:  '+fmtK(scenB.p25)+'\n';
+ plain += 'Range: '+fmtK(scenB.range)+' spread'+(narrower>1?' ('+narrower+'x narrower than all-market)':'')+'\n\n';
+ if(badDiff > 0) plain += 'In a BAD market: Strategy B has '+fmtK(badDiff)+' more than A.\n';
+ if(goodDiff > 0) plain += 'In a GOOD market: Strategy A could win by '+fmtK(goodDiff)+'.\n';
+ plain += '\n— '+agentName+' | AAA Life Specialist';
+
+ // Open new tab synchronously (popup-blocker safe)
+ var subject = 'Retirement Projection — '+(d.clientName||'Client')+' ('+years+' years)';
+ var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1'
+  +(clientEmail?'&to='+encodeURIComponent(clientEmail):'')
+  +'&su='+encodeURIComponent(subject);
+
+ var win = window.open('', '_blank');
+ if(!win){ showToast('Popup blocked — allow popups for localhost.', 5000); return; }
+
+ var doc = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+subject+'</title>';
+ doc += '<style>';
+ doc += 'body{font-family:Arial,sans-serif;color:#333;max-width:820px;margin:20px auto;padding:20px;background:#fff}';
+ doc += '.act{text-align:center;margin-bottom:20px;padding:12px;background:#f5f5f5;border-radius:8px;position:sticky;top:0;z-index:10}';
+ doc += '.act button,.act a{padding:10px 18px;margin:0 4px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #ddd;background:#fff;color:#333;text-decoration:none;display:inline-block}';
+ doc += '.act button.pri,.act a.pri{background:#534AB7;color:#fff;border-color:#534AB7}';
+ doc += '.act button.ok{background:#1D9E75;color:#fff;border-color:#1D9E75}';
+ doc += '.hint{font-size:11px;color:#666;margin-top:8px}';
+ doc += '@media print{.act{display:none}}';
+ doc += '</style></head><body>';
+
+ doc += '<div class="act">';
+ doc += '<button class="pri" onclick="copyHtml()">📋 Copy Formatted Email</button>';
+ doc += '<button onclick="copyText()">📄 Copy Plain Text</button>';
+ doc += '<a class="ok" href="'+gmailUrl+'" target="_blank">✉️ Open Gmail Compose</a>';
+ doc += '<button onclick="window.print()">🖨 Print</button>';
+ doc += '<button onclick="window.close()">Close</button>';
+ doc += '<div class="hint">Click <b>Copy Formatted Email</b> → click <b>Open Gmail Compose</b> → paste (Cmd+V) in the message body.</div>';
+ doc += '</div>';
+
+ doc += '<pre id="plainText" style="display:none">'+plain.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</pre>';
+ doc += '<div id="emailContent">'+eh+'</div>';
+
+ doc += '<script>';
+ doc += 'function copyHtml(){';
+ doc += ' var el=document.getElementById("emailContent");';
+ doc += ' var html=el.innerHTML;';
+ doc += ' var text=el.innerText;';
+ doc += ' try{';
+ doc += '  var blob=new Blob([html],{type:"text/html"});';
+ doc += '  var item=new ClipboardItem({"text/html":blob,"text/plain":new Blob([text],{type:"text/plain"})});';
+ doc += '  navigator.clipboard.write([item]).then(function(){alert("✓ Formatted email copied! Switch to Gmail compose and paste (Cmd+V).");}).catch(function(e){';
+ doc += '   navigator.clipboard.writeText(text).then(function(){alert("Plain text copied (formatted copy unavailable in this browser).");});';
+ doc += '  });';
+ doc += ' }catch(e){';
+ doc += '  navigator.clipboard.writeText(text).then(function(){alert("Plain text copied.");});';
+ doc += ' }';
+ doc += '}';
+ doc += 'function copyText(){';
+ doc += ' var t=document.getElementById("plainText").innerText;';
+ doc += ' navigator.clipboard.writeText(t).then(function(){alert("✓ Plain text copied!");});';
+ doc += '}';
+ doc += '<\/script>';
+
+ doc += '</body></html>';
+
+ win.document.open();
+ win.document.write(doc);
+ win.document.close();
+ showToast('Comparison opened in new tab — use the buttons to copy & paste into Gmail.', 5000);
 }
 
 function runIndexProjection(){
@@ -2147,31 +2836,9 @@ function runIndexProjection(){
 
 
 function emailIndexReport(){
- var d = idxInputs;
- var sA = window._scenA, sB = window._scenB;
- if(!sA||!sB){ showToast('Run the projection first'); return; }
- var lastA = sA.rows[sA.rows.length-1], lastB = sB.rows[sB.rows.length-1];
- var projYears = sA.rows.length-1;
- var diff = lastB.total - lastA.total;
- var fmtK = function(n){return '$'+Math.round(n).toLocaleString()};
-
- var plain = 'S&P vs Annuity — Two-Scenario Comparison\nPrepared for: '+(d.clientName||'Client')+'\n\n';
- plain += 'Total Investment: '+fmtK(d.amount)+' | '+d.startYear+'–'+(d.startYear+projYears)+' ('+projYears+' years, actual historical data)\n\n';
- plain += '━━ Scenario A — All Market ━━\n';
- plain += 'Allocation: '+d.aSpPct+'% S&P / '+d.aBondPct+'% Bonds | Withdrawal: '+d.aWdRate+'%/yr\n';
- plain += 'Ending Balance: '+fmtK(lastA.total)+'\n\n';
- plain += '━━ Scenario B — Market + Annuity ━━\n';
- plain += 'Allocation: '+d.bSpPct+'% S&P / '+d.bBondPct+'% Bonds / '+d.bAnnPct+'% Annuity | Withdrawal: '+d.bWdRate+'%/yr\n';
- plain += 'Cap Rate: '+d.capRate+'% | Mgmt Fee: '+d.mgmtFee+'%\n';
- plain += 'Ending Balance: '+fmtK(lastB.total)+'\n\n';
- if(diff>=0) plain += '✅ Scenario B produces '+fmtK(diff)+' MORE than all-market\n';
- else plain += 'Scenario A produces '+fmtK(Math.abs(diff))+' more — but with 100% market risk\n';
- plain += '🛡️ '+sB.protectedYears+' down years where the annuity floor protected your money (0% vs market losses)\n';
- plain += '\n— '+(currentAgent?currentAgent.name:'Agent')+' | AAA Life Specialist\nGenerated by DuetIncome';
-
- var subject = encodeURIComponent('S&P vs Annuity Comparison — '+(d.clientName||'Client'));
- var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&su='+subject+'&body='+encodeURIComponent(plain.substring(0,1500));
- window.open(gmailUrl, '_blank');
+ // Delegate to copyIndexHtml — it builds the same full report and opens in a new tab
+ // with reliable copy-to-clipboard + Gmail compose button (no URL length limits).
+ copyIndexHtml();
 }
 
 function copyIndexHtml(){
@@ -2231,13 +2898,80 @@ function copyIndexHtml(){
  eh += '<div style="margin-top:12px;padding-top:8px;border-top:1px solid #ddd;font-size:11px;color:#999">'+(currentAgent?currentAgent.name:'Agent')+' | AAA Life Specialist | Branch '+(currentAgent?currentAgent.branch:'')+'<br>'+(settings.agentEmail||'')+'</div>';
  eh += '</div>';
 
- var blob = new Blob([eh], {type:'text/html'});
- var item = new ClipboardItem({'text/html': blob, 'text/plain': new Blob([eh], {type:'text/plain'})});
- navigator.clipboard.write([item]).then(function(){
-  showToast('✅ HTML copied! Open Gmail, compose, and paste (Cmd+V).', 8000);
- }).catch(function(){
-  showToast('Could not copy — try again', 3000);
- });
+ // Plain-text version for the Copy Plain Text button
+ var plain = 'S&P vs Annuity — Two-Scenario Comparison\nPrepared for: '+(d.clientName||'Client')+'\n\n';
+ plain += 'Total Investment: '+fmtK(d.amount)+' | '+d.startYear+'–'+(d.startYear+projYears)+' ('+projYears+' years, actual historical data)\n\n';
+ plain += '━━ Scenario A — All Market ━━\n';
+ plain += 'Allocation: '+d.aSpPct+'% S&P / '+d.aBondPct+'% Bonds | Withdrawal: '+d.aWdRate+'%/yr\n';
+ plain += 'Ending Balance: '+fmtK(lastA.total)+'\n\n';
+ plain += '━━ Scenario B — Market + Annuity ━━\n';
+ plain += 'Allocation: '+d.bSpPct+'% S&P / '+d.bBondPct+'% Bonds / '+d.bAnnPct+'% Annuity | Withdrawal: '+d.bWdRate+'%/yr\n';
+ plain += 'Ending Balance: '+fmtK(lastB.total)+'\n\n';
+ if(diff>=0) plain += 'Scenario B produces '+fmtK(diff)+' MORE than all-market\n';
+ else plain += 'Scenario A produces '+fmtK(Math.abs(diff))+' more — but with 100% market risk\n';
+ plain += sB.protectedYears+' down years where the annuity floor protected your money (0% vs market losses)\n';
+ plain += '\n— '+(currentAgent?currentAgent.name:'Agent')+' | AAA Life Specialist\nGenerated by DuetIncome';
+
+ // Open new tab synchronously (popup-blocker safe)
+ var subject = 'S&P vs Annuity Comparison — '+(d.clientName||'Client');
+ var gmailUrl = 'https://mail.google.com/mail/?view=cm&fs=1&su='+encodeURIComponent(subject);
+
+ var win = window.open('', '_blank');
+ if(!win){
+  showToast('Popup blocked — allow popups for localhost to generate the comparison.', 5000);
+  return;
+ }
+
+ var doc = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>'+subject+'</title>';
+ doc += '<style>';
+ doc += 'body{font-family:Arial,sans-serif;color:#333;max-width:820px;margin:20px auto;padding:20px;background:#fff}';
+ doc += '.act{text-align:center;margin-bottom:20px;padding:12px;background:#f5f5f5;border-radius:8px;position:sticky;top:0;z-index:10}';
+ doc += '.act button,.act a{padding:10px 18px;margin:0 4px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer;border:1px solid #ddd;background:#fff;color:#333;text-decoration:none;display:inline-block}';
+ doc += '.act button.pri,.act a.pri{background:#534AB7;color:#fff;border-color:#534AB7}';
+ doc += '.act button.ok{background:#1D9E75;color:#fff;border-color:#1D9E75}';
+ doc += '.hint{font-size:11px;color:#666;margin-top:8px}';
+ doc += '@media print{.act{display:none}}';
+ doc += '</style></head><body>';
+
+ doc += '<div class="act">';
+ doc += '<button class="pri" onclick="copyHtml()">📋 Copy Formatted Email</button>';
+ doc += '<button onclick="copyText()">📄 Copy Plain Text</button>';
+ doc += '<a class="ok" href="'+gmailUrl+'" target="_blank">✉️ Open Gmail Compose</a>';
+ doc += '<button onclick="window.print()">🖨 Print</button>';
+ doc += '<button onclick="window.close()">Close</button>';
+ doc += '<div class="hint">Click <b>Copy Formatted Email</b> → click <b>Open Gmail Compose</b> → paste (Cmd+V) in the message body.</div>';
+ doc += '</div>';
+
+ doc += '<pre id="plainText" style="display:none">'+plain.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'</pre>';
+ doc += '<div id="emailContent">'+eh+'</div>';
+
+ doc += '<script>';
+ doc += 'function copyHtml(){';
+ doc += ' var el=document.getElementById("emailContent");';
+ doc += ' var html=el.innerHTML;';
+ doc += ' var text=el.innerText;';
+ doc += ' try{';
+ doc += '  var blob=new Blob([html],{type:"text/html"});';
+ doc += '  var item=new ClipboardItem({"text/html":blob,"text/plain":new Blob([text],{type:"text/plain"})});';
+ doc += '  navigator.clipboard.write([item]).then(function(){alert("✓ Formatted email copied! Switch to Gmail compose and paste (Cmd+V).");}).catch(function(e){';
+ doc += '   navigator.clipboard.writeText(text).then(function(){alert("Plain text copied (formatted copy unavailable in this browser).");});';
+ doc += '  });';
+ doc += ' }catch(e){';
+ doc += '  navigator.clipboard.writeText(text).then(function(){alert("Plain text copied.");});';
+ doc += ' }';
+ doc += '}';
+ doc += 'function copyText(){';
+ doc += ' var t=document.getElementById("plainText").innerText;';
+ doc += ' navigator.clipboard.writeText(t).then(function(){alert("✓ Plain text copied! Paste into any email.");});';
+ doc += '}';
+ doc += '<\/script>';
+
+ doc += '</body></html>';
+
+ win.document.open();
+ win.document.write(doc);
+ win.document.close();
+ showToast('Comparison opened in new tab — use the buttons to copy & paste into Gmail.', 5000);
 }
 
 function copyTalkingPoints(){
@@ -2263,6 +2997,1273 @@ function copyTalkingPoints(){
   });
  });
 }
+
+// ═══════════════════════════════════════════════════
+// TAB 5: PORTFOLIO MANAGER (local-only, per-agent)
+// ═══════════════════════════════════════════════════
+var clients = [];
+var selectedClientId = null;
+var nextClientId = 1;
+var nextHoldingId = 1;
+var nextRecId = 1;
+var pfSearchTerm = '';
+var pfClientsLoaded = false;
+var pfSelectedPlan = 'protection'; // 'protection' | 'income' | 'growth'
+
+// Definitions for each recommendation "move type"
+// key: internal id; label: shown in dropdown; fields: per-type data entry;
+// planImpact: which plan(s) this move naturally belongs to
+var MOVE_TYPES = {
+ cd_to_annuity: {
+  label: 'Convert CD → Annuity',
+  shortLabel: 'CD → Annuity',
+  plans: ['protection','income','growth'],
+  fields: [
+   {k:'amount',l:'Amount ($)',type:'number'},
+   {k:'fromInstitution',l:'From (CD institution)',type:'text'},
+   {k:'toProduct',l:'To (annuity product)',type:'text',placeholder:'e.g. Platinum Annuity 5'},
+   {k:'toRate',l:'New rate (%)',type:'number',step:'0.01'}
+  ]
+ },
+ brokerage_to_annuity: {
+  label: 'Move brokerage → Fixed annuity',
+  shortLabel: 'Brokerage → Annuity',
+  plans: ['protection','growth'],
+  fields: [
+   {k:'amount',l:'Amount ($)',type:'number'},
+   {k:'fromAccount',l:'From (brokerage name)',type:'text',placeholder:'e.g. Fidelity taxable'},
+   {k:'toProduct',l:'To (annuity product)',type:'text'},
+   {k:'toRate',l:'New rate (%)',type:'number',step:'0.01'}
+  ]
+ },
+ consolidate_annuity: {
+  label: 'Consolidate old annuity → Better annuity',
+  shortLabel: 'Upgrade annuity',
+  plans: ['protection','growth','income'],
+  fields: [
+   {k:'amount',l:'Current value ($)',type:'number'},
+   {k:'fromCarrier',l:'From (old carrier/product)',type:'text'},
+   {k:'oldRate',l:'Old rate (%)',type:'number',step:'0.01'},
+   {k:'toCarrier',l:'To (new carrier/product)',type:'text'},
+   {k:'newRate',l:'New rate (%)',type:'number',step:'0.01'}
+  ]
+ },
+ medicaid_compliant: {
+  label: 'Structure as Medicaid-compliant (FL)',
+  shortLabel: 'Medicaid-compliant',
+  plans: ['protection'],
+  fields: [
+   {k:'amount',l:'Amount to protect ($)',type:'number'},
+   {k:'who',l:'For',type:'select',opts:['Client','Spouse','Both']},
+   {k:'sourceDetail',l:'Source account (optional)',type:'text',placeholder:'e.g. existing annuity'}
+  ]
+ },
+ qualified_rollover: {
+  label: 'Roll qualified 401k/IRA → Fixed annuity',
+  shortLabel: 'Qualified rollover',
+  plans: ['protection','growth','income'],
+  fields: [
+   {k:'amount',l:'Amount ($)',type:'number'},
+   {k:'sourceAccount',l:'From (account type)',type:'select',opts:['401k','Traditional IRA','Roth IRA','Other qualified']},
+   {k:'sourceCustodian',l:'Custodian',type:'text'},
+   {k:'toProduct',l:'To (annuity product)',type:'text'},
+   {k:'toRate',l:'New rate (%)',type:'number',step:'0.01'}
+  ]
+ },
+ custom: {
+  label: 'Custom move (freeform)',
+  shortLabel: 'Custom',
+  plans: ['protection','income','growth'],
+  fields: [
+   {k:'amount',l:'Amount affected ($) — optional',type:'number'},
+   {k:'summary',l:'Summary of the move',type:'text'}
+  ]
+ }
+};
+
+var PLANS = [
+ {key:'protection', label:'Protection', enabled:true},
+ {key:'income',     label:'Income',     enabled:false, note:'Coming in Stage 2b'},
+ {key:'growth',     label:'Growth',     enabled:false, note:'Coming in Stage 2c'}
+];
+
+function pfStorageKey(){
+ return 'doi_clients_' + (currentAgent ? currentAgent.id : 'anon');
+}
+
+function loadClients(){
+ try {
+  var raw = localStorage.getItem(pfStorageKey());
+  clients = raw ? JSON.parse(raw) : [];
+ } catch(e){ clients = []; }
+ if(!Array.isArray(clients)) clients = [];
+ // Recompute next IDs + migrate old clients missing the recommendations field
+ nextClientId = 1;
+ nextHoldingId = 1;
+ nextRecId = 1;
+ clients.forEach(function(c){
+  var cn = parseInt(String(c.id||'').replace('cl_',''));
+  if(!isNaN(cn) && cn >= nextClientId) nextClientId = cn + 1;
+  ['cds','annuities','market','cash','realEstate','socialSecurity','pensions','otherIncome'].forEach(function(k){
+   (c[k]||[]).forEach(function(h){
+    var hn = parseInt(String(h.id||'').replace('h_',''));
+    if(!isNaN(hn) && hn >= nextHoldingId) nextHoldingId = hn + 1;
+   });
+  });
+  // Stage 2 migration: ensure recommendations array exists
+  if(!Array.isArray(c.recommendations)) c.recommendations = [];
+  c.recommendations.forEach(function(r){
+   var rn = parseInt(String(r.id||'').replace('rec_',''));
+   if(!isNaN(rn) && rn >= nextRecId) nextRecId = rn + 1;
+  });
+ });
+ pfClientsLoaded = true;
+}
+
+function makeRecId(){ return 'rec_' + (nextRecId++); }
+
+function saveClients(){
+ try { localStorage.setItem(pfStorageKey(), JSON.stringify(clients)); }
+ catch(e){ showToast('Error saving — localStorage may be full', 4000); }
+}
+
+function makeClientId(){ return 'cl_' + (nextClientId++); }
+function makeHoldingId(){ return 'h_' + (nextHoldingId++); }
+
+function getSelectedClient(){
+ return clients.find(function(c){ return c.id === selectedClientId; }) || null;
+}
+
+function pfTotalAssets(c){
+ if(!c) return 0;
+ var t = 0;
+ (c.cds||[]).forEach(function(h){ t += parseFloat(h.amount)||0; });
+ (c.annuities||[]).forEach(function(h){ t += parseFloat(h.currentValue)||0; });
+ (c.market||[]).forEach(function(h){ t += parseFloat(h.value)||0; });
+ (c.cash||[]).forEach(function(h){ t += parseFloat(h.balance)||0; });
+ (c.realEstate||[]).forEach(function(h){ t += (parseFloat(h.estimatedValue)||0) - (parseFloat(h.mortgageBalance)||0); });
+ return t;
+}
+
+function pfMonthlyIncome(c){
+ if(!c) return 0;
+ var t = 0;
+ (c.socialSecurity||[]).forEach(function(h){ t += parseFloat(h.monthlyBenefit)||0; });
+ (c.pensions||[]).forEach(function(h){ t += parseFloat(h.monthlyAmount)||0; });
+ (c.otherIncome||[]).forEach(function(h){ t += parseFloat(h.monthlyAmount)||0; });
+ return t;
+}
+
+function fmtMoney(n){ return '$' + Math.round(parseFloat(n)||0).toLocaleString(); }
+function fmtMoney2(n){ return '$' + (parseFloat(n)||0).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+
+function renderPortfolio(){
+ if(!pfClientsLoaded) loadClients();
+
+ var h = '<h2 style="margin-bottom:4px;color:var(--pri)">Portfolio</h2>';
+ h += '<p style="font-size:12px;color:var(--muted);margin-bottom:10px">Client portfolio manager — holdings, income, and game plan reports.</p>';
+ h += '<div class="pf-warning">⚠️ Client data is stored only on this device. Not backed up. Not synced. Use Export JSON to create backups.</div>';
+
+ h += '<div style="display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap">';
+ h += '<button class="btn btn-outline btn-sm" onclick="pfExportJSON()">💾 Export Backup</button>';
+ h += '<button class="btn btn-outline btn-sm" onclick="pfImportJSONPrompt()">📥 Import Backup</button>';
+ h += '<input type="file" id="pfImportFile" accept="application/json" style="display:none" onchange="pfImportJSON(event)">';
+ h += '</div>';
+
+ h += '<div class="pf-layout">';
+ h += renderClientList();
+ h += '<div class="pf-detail" id="pfDetail">' + renderClientDetail() + '</div>';
+ h += '</div>';
+
+ document.getElementById('p4').innerHTML = h;
+}
+
+function renderClientList(){
+ var h = '<div class="pf-sidebar">';
+ h += '<div class="pf-sidebar-head">';
+ h += '<b style="font-size:12px;color:var(--pri)">CLIENTS ('+clients.length+')</b>';
+ h += '<button class="btn btn-pri btn-sm" onclick="pfAddClient()" style="font-size:10px;padding:4px 8px">+ Add</button>';
+ h += '</div>';
+ h += '<input class="pf-search" id="pfSearch" placeholder="🔍 Search..." value="'+escapeHtml(pfSearchTerm)+'" oninput="pfSearchTerm=this.value;pfUpdateList()">';
+ h += '<div id="pfClientList">' + renderClientListItems() + '</div>';
+ h += '</div>';
+ return h;
+}
+
+function renderClientListItems(){
+ var filtered = clients.filter(function(c){
+  if(!pfSearchTerm) return true;
+  return (c.name||'').toLowerCase().indexOf(pfSearchTerm.toLowerCase()) !== -1;
+ });
+ // Sort alphabetically by name
+ filtered.sort(function(a,b){ return (a.name||'').localeCompare(b.name||''); });
+ if(filtered.length === 0){
+  return '<div class="pf-client-empty">' + (clients.length === 0 ? 'No clients yet.<br>Click + Add to start.' : 'No matches.') + '</div>';
+ }
+ var h = '';
+ filtered.forEach(function(c){
+  var active = c.id === selectedClientId ? ' active' : '';
+  var assets = pfTotalAssets(c);
+  h += '<div class="pf-client-item'+active+'" onclick="pfSelectClient(\''+c.id+'\')">';
+  h += '<div>'+escapeHtml(c.name || '(no name)')+'</div>';
+  h += '<div style="font-size:10px;color:var(--muted);margin-top:2px">'+fmtMoney(assets)+(c.age?' · age '+c.age:'')+'</div>';
+  h += '</div>';
+ });
+ return h;
+}
+
+function pfUpdateList(){
+ var el = document.getElementById('pfClientList');
+ if(el) el.innerHTML = renderClientListItems();
+}
+
+function pfSelectClient(id){
+ selectedClientId = id;
+ renderPortfolio();
+}
+
+function pfAddClient(){
+ var newClient = {
+  id: makeClientId(),
+  name: 'New Client',
+  age: '',
+  spouseAge: '',
+  notes: '',
+  createdAt: new Date().toISOString(),
+  updatedAt: new Date().toISOString(),
+  cds: [], annuities: [], market: [], cash: [], realEstate: [],
+  socialSecurity: [], pensions: [], otherIncome: [],
+  recommendations: []
+ };
+ clients.push(newClient);
+ selectedClientId = newClient.id;
+ saveClients();
+ renderPortfolio();
+ // Focus the name field
+ setTimeout(function(){
+  var el = document.getElementById('pfClientName');
+  if(el){ el.focus(); el.select(); }
+ }, 50);
+}
+
+function pfDeleteClient(){
+ var c = getSelectedClient();
+ if(!c) return;
+ if(!confirm('Delete ' + (c.name || 'this client') + ' permanently? This cannot be undone.')) return;
+ clients = clients.filter(function(x){ return x.id !== selectedClientId; });
+ selectedClientId = null;
+ saveClients();
+ renderPortfolio();
+ showToast('Client deleted', 2500);
+}
+
+function pfUpdateClientField(field, val){
+ var c = getSelectedClient();
+ if(!c) return;
+ c[field] = val;
+ c.updatedAt = new Date().toISOString();
+ saveClients();
+ // Update list on name change
+ if(field === 'name') pfUpdateList();
+}
+
+function renderClientDetail(){
+ var c = getSelectedClient();
+ if(!c){
+  return '<div class="pf-detail-empty">Select a client from the list<br>or click <b>+ Add</b> to create one.</div>';
+ }
+
+ var assets = pfTotalAssets(c);
+ var income = pfMonthlyIncome(c);
+ var updated = c.updatedAt ? new Date(c.updatedAt).toLocaleString() : '';
+
+ var h = '';
+ // Summary card
+ h += '<div class="pf-summary-card">';
+ h += '<div class="pf-stat"><div class="pf-stat-val">'+fmtMoney(assets)+'</div><div class="pf-stat-lbl">Total Assets</div></div>';
+ h += '<div class="pf-stat"><div class="pf-stat-val">'+fmtMoney(income)+'</div><div class="pf-stat-lbl">Monthly Income</div></div>';
+ h += '<div class="pf-stat"><div class="pf-stat-val" style="font-size:11px;font-weight:500;color:var(--muted)">'+updated+'</div><div class="pf-stat-lbl">Last Updated</div></div>';
+ h += '</div>';
+
+ // Basic info + delete
+ h += '<div class="pf-basic-grid">';
+ h += '<div><label>Name</label><input id="pfClientName" value="'+escapeHtml(c.name||'')+'" onchange="pfUpdateClientField(\'name\',this.value)"></div>';
+ h += '<div><label>Age</label><input type="number" value="'+(c.age||'')+'" onchange="pfUpdateClientField(\'age\',this.value)"></div>';
+ h += '<div><label>Spouse Age</label><input type="number" value="'+(c.spouseAge||'')+'" onchange="pfUpdateClientField(\'spouseAge\',this.value)"></div>';
+ h += '</div>';
+
+ h += '<div class="pf-notes-wrap"><label style="font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:2px">Notes</label>';
+ h += '<textarea onchange="pfUpdateClientField(\'notes\',this.value)" placeholder="Freeform notes, goals, meeting history...">'+escapeHtml(c.notes||'')+'</textarea></div>';
+
+ // Holdings sections
+ h += '<h3 style="font-size:12px;color:var(--pri);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;border-bottom:1px solid var(--border);padding-bottom:4px">Holdings</h3>';
+ h += pfRenderSection(c, 'cds', 'Certificates of Deposit', [
+  {k:'institution',l:'Institution',type:'text',w:'1fr'},
+  {k:'amount',l:'Amount ($)',type:'number'},
+  {k:'apy',l:'APY (%)',type:'number',step:'0.01'},
+  {k:'maturityDate',l:'Maturity Date',type:'date'},
+  {k:'termYears',l:'Term (yrs)',type:'number',step:'0.5'}
+ ]);
+ h += pfRenderSection(c, 'annuities', 'Annuities', [
+  {k:'carrier',l:'Carrier',type:'text'},
+  {k:'product',l:'Product',type:'text'},
+  {k:'currentValue',l:'Current Value ($)',type:'number'},
+  {k:'rate',l:'Rate (%)',type:'number',step:'0.01'},
+  {k:'startDate',l:'Start Date',type:'date'},
+  {k:'surrenderEnd',l:'Surrender End',type:'date'},
+  {k:'qualified',l:'Qualified?',type:'select',opts:['No','Yes']}
+ ]);
+ h += pfRenderSection(c, 'market', 'Market / Investment Accounts', [
+  {k:'accountType',l:'Account Type',type:'select',opts:['Brokerage','401k','Traditional IRA','Roth IRA','HSA','Other']},
+  {k:'custodian',l:'Custodian',type:'text'},
+  {k:'value',l:'Current Value ($)',type:'number'},
+  {k:'stockPct',l:'Stock %',type:'number'},
+  {k:'bondPct',l:'Bond %',type:'number'},
+  {k:'cashPct',l:'Cash %',type:'number'}
+ ]);
+ h += pfRenderSection(c, 'cash', 'Cash Accounts', [
+  {k:'accountType',l:'Type',type:'select',opts:['Checking','Savings','Money Market']},
+  {k:'institution',l:'Institution',type:'text'},
+  {k:'balance',l:'Balance ($)',type:'number'}
+ ]);
+ h += pfRenderSection(c, 'realEstate', 'Real Estate', [
+  {k:'propertyType',l:'Property Type',type:'select',opts:['Primary Home','Rental','Land','Other']},
+  {k:'estimatedValue',l:'Estimated Value ($)',type:'number'},
+  {k:'mortgageBalance',l:'Mortgage Balance ($)',type:'number'}
+ ]);
+
+ // Income sections
+ h += '<h3 style="font-size:12px;color:var(--pri);text-transform:uppercase;letter-spacing:.5px;margin:16px 0 8px;border-bottom:1px solid var(--border);padding-bottom:4px">Income</h3>';
+ h += pfRenderSection(c, 'socialSecurity', 'Social Security', [
+  {k:'who',l:'Who',type:'select',opts:['Client','Spouse']},
+  {k:'monthlyBenefit',l:'Monthly Benefit ($)',type:'number'},
+  {k:'startAge',l:'Start Age',type:'number'}
+ ]);
+ h += pfRenderSection(c, 'pensions', 'Pension', [
+  {k:'source',l:'Source',type:'text'},
+  {k:'monthlyAmount',l:'Monthly Amount ($)',type:'number'}
+ ]);
+ h += pfRenderSection(c, 'otherIncome', 'Other Income', [
+  {k:'source',l:'Source',type:'text'},
+  {k:'monthlyAmount',l:'Monthly Amount ($)',type:'number'}
+ ]);
+
+ // Action Plans section
+ h += pfRenderPlansSection(c);
+
+ // Actions
+ h += '<div style="display:flex;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--border);flex-wrap:wrap">';
+ h += '<button class="btn btn-outline" onclick="pfGenerateReport()">📄 Portfolio Snapshot</button>';
+ h += '<button class="btn btn-outline" style="color:#c0392b;border-color:#c0392b" onclick="pfDeleteClient()">🗑 Delete Client</button>';
+ h += '</div>';
+
+ return h;
+}
+
+function pfRenderPlansSection(c){
+ var recs = (c.recommendations || []);
+ var planRecs = recs.filter(function(r){ return (r.plans||[]).indexOf(pfSelectedPlan) !== -1; });
+
+ var h = '<div class="pf-plans-wrap">';
+ h += '<div class="pf-plans-head"><h3>🎯 Action Plans</h3></div>';
+ h += '<div style="font-size:11px;color:var(--muted);margin-bottom:10px">Select a plan angle and add recommendations. Each rec can belong to multiple plans.</div>';
+
+ // Plan tabs
+ h += '<div class="pf-plan-tabs">';
+ PLANS.forEach(function(p){
+  var active = p.key === pfSelectedPlan ? ' active' : '';
+  var disabled = !p.enabled ? ' disabled' : '';
+  var onclick = p.enabled ? 'onclick="pfSelectPlan(\''+p.key+'\')"' : 'title="'+p.note+'"';
+  h += '<button class="pf-plan-tab'+active+disabled+'" '+onclick+'>'+p.label+(p.enabled?'':' (soon)')+'</button>';
+ });
+ h += '</div>';
+
+ // Rec list for selected plan
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">';
+ h += '<b style="font-size:12px;color:var(--pri)">'+planRecs.length+' recommendation'+(planRecs.length===1?'':'s')+' for '+pfPlanLabel(pfSelectedPlan)+' Plan</b>';
+ h += '<button class="btn btn-pri btn-sm" onclick="pfShowRecModal()" style="font-size:11px;padding:4px 10px">+ Add Recommendation</button>';
+ h += '</div>';
+
+ if(planRecs.length === 0){
+  h += '<div class="pf-rec-empty">No recommendations yet. Click <b>+ Add Recommendation</b> to build the '+pfPlanLabel(pfSelectedPlan)+' plan.</div>';
+ } else {
+  planRecs.forEach(function(r, idx){
+   var mt = MOVE_TYPES[r.moveType] || MOVE_TYPES.custom;
+   h += '<div class="pf-rec-item">';
+   h += '<div class="pf-rec-head">';
+   h += '<div class="pf-rec-title">'+(idx+1)+'. '+escapeHtml(pfRecTitle(r))+'</div>';
+   h += '<div style="display:flex;gap:4px">';
+   h += '<button class="btn btn-outline btn-sm" style="font-size:10px;padding:2px 6px" onclick="pfEditRec(\''+r.id+'\')">Edit</button>';
+   h += '<button class="btn btn-outline btn-sm" style="font-size:10px;padding:2px 6px;color:#c0392b" onclick="pfDeleteRec(\''+r.id+'\')">×</button>';
+   h += '</div>';
+   h += '</div>';
+   h += '<div style="font-size:10px;color:var(--muted)">'+mt.shortLabel+' · Tagged: '+(r.plans||[]).map(function(p){return pfPlanLabel(p)}).join(', ')+'</div>';
+   if(r.whyItMatters) h += '<div class="pf-rec-why">💡 '+escapeHtml(r.whyItMatters)+'</div>';
+   h += '</div>';
+  });
+ }
+
+ // Generate button (only for enabled plans)
+ if(pfSelectedPlan === 'protection'){
+  h += '<div style="margin-top:14px;text-align:center">';
+  h += '<button class="btn btn-pri" style="padding:10px 20px;font-size:13px" onclick="pfGenerateProtectionReport()">🛡 Generate Protection Plan Report</button>';
+  h += '</div>';
+ }
+
+ h += '</div>';
+ return h;
+}
+
+function pfPlanLabel(key){
+ var p = PLANS.find(function(x){ return x.key === key; });
+ return p ? p.label : key;
+}
+
+function pfRecTitle(r){
+ var mt = MOVE_TYPES[r.moveType] || MOVE_TYPES.custom;
+ var p = r.params || {};
+ var amt = p.amount ? fmtMoney(p.amount) : '';
+ switch(r.moveType){
+  case 'cd_to_annuity':
+   return 'Convert '+amt+' CD'+(p.fromInstitution?' ('+p.fromInstitution+')':'')+' → '+(p.toProduct||'annuity')+(p.toRate?' @ '+p.toRate+'%':'');
+  case 'brokerage_to_annuity':
+   return 'Move '+amt+' from '+(p.fromAccount||'brokerage')+' → '+(p.toProduct||'fixed annuity')+(p.toRate?' @ '+p.toRate+'%':'');
+  case 'consolidate_annuity':
+   return 'Upgrade '+amt+(p.fromCarrier?' '+p.fromCarrier:'')+(p.oldRate?' @ '+p.oldRate+'%':'')+' → '+(p.toCarrier||'new annuity')+(p.newRate?' @ '+p.newRate+'%':'');
+  case 'medicaid_compliant':
+   return 'Structure '+amt+' as Medicaid-compliant'+(p.who?' for '+p.who:'');
+  case 'qualified_rollover':
+   return 'Roll '+amt+' '+(p.sourceAccount||'qualified')+(p.sourceCustodian?' ('+p.sourceCustodian+')':'')+' → '+(p.toProduct||'fixed annuity')+(p.toRate?' @ '+p.toRate+'%':'');
+  case 'custom':
+   return p.summary || 'Custom move'+(amt?' · '+amt:'');
+ }
+ return mt.label;
+}
+
+function pfSelectPlan(key){
+ pfSelectedPlan = key;
+ renderPortfolio();
+}
+
+function pfShowRecModal(editId){
+ var c = getSelectedClient();
+ if(!c){ showToast('Select a client first', 2500); return; }
+
+ var editing = null;
+ if(editId){
+  editing = (c.recommendations||[]).find(function(r){ return r.id === editId; });
+ }
+
+ var currentType = editing ? editing.moveType : 'cd_to_annuity';
+ var currentPlans = editing ? (editing.plans || ['protection']) : ['protection'];
+ var currentParams = editing ? (editing.params || {}) : {};
+ var currentWhy = editing ? (editing.whyItMatters || '') : '';
+
+ var h = '';
+ h += '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">';
+ h += '<div style="font-size:18px;font-weight:700;color:var(--pri)">'+(editing?'Edit':'Add')+' Recommendation</div>';
+ h += '<button onclick="pfCloseRecModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:var(--muted)">&times;</button>';
+ h += '</div>';
+
+ // Move type selector
+ h += '<div class="form-group" style="margin-bottom:12px"><label>Move Type</label>';
+ h += '<select id="pfr_moveType" onchange="pfRerenderRecFields()" style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;background:var(--card);color:var(--txt)">';
+ Object.keys(MOVE_TYPES).forEach(function(k){
+  var sel = k === currentType ? ' selected' : '';
+  h += '<option value="'+k+'"'+sel+'>'+MOVE_TYPES[k].label+'</option>';
+ });
+ h += '</select></div>';
+
+ // Dynamic fields for the current move type
+ h += '<div id="pfr_fields">' + pfRenderMoveFields(currentType, currentParams) + '</div>';
+
+ // Plan checkboxes (Protection enabled, others placeholders)
+ h += '<div style="margin-bottom:12px"><label style="font-size:11px;font-weight:600;color:var(--muted);display:block;margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px">Include in Plans</label>';
+ h += '<div style="display:flex;gap:10px;flex-wrap:wrap">';
+ PLANS.forEach(function(p){
+  var checked = currentPlans.indexOf(p.key) !== -1 ? ' checked' : '';
+  var dis = p.enabled ? '' : ' disabled';
+  var style = p.enabled ? '' : 'opacity:.4;';
+  h += '<label style="display:flex;align-items:center;gap:6px;font-size:12px;'+style+'"><input type="checkbox" id="pfr_plan_'+p.key+'" value="'+p.key+'"'+checked+dis+'>'+p.label+'</label>';
+ });
+ h += '</div></div>';
+
+ // Why this matters textarea
+ h += '<div class="form-group" style="margin-bottom:14px"><label>Why This Matters <span style="color:var(--muted);font-weight:400;text-transform:none;letter-spacing:0">(your expertise voice — shown on the client report)</span></label>';
+ h += '<textarea id="pfr_whyItMatters" rows="4" placeholder="e.g. Moving this CD into a tax-deferred annuity means you stop paying taxes on interest every year, and your money compounds faster. It also protects principal and names your beneficiary directly — avoiding probate." style="width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:6px;font-size:13px;font-family:inherit;resize:vertical;background:var(--card);color:var(--txt)">'+escapeHtml(currentWhy)+'</textarea></div>';
+
+ h += '<input type="hidden" id="pfr_editId" value="'+(editing?editing.id:'')+'">';
+ h += '<button class="btn btn-pri" style="width:100%;padding:10px;font-size:14px" onclick="pfSaveRec()">'+(editing?'Save Changes':'Add Recommendation')+'</button>';
+
+ document.getElementById('pfRecModalContent').innerHTML = h;
+ document.getElementById('pfRecModal').className = 'fb-modal-overlay show';
+}
+
+function pfRenderMoveFields(moveType, params){
+ var mt = MOVE_TYPES[moveType] || MOVE_TYPES.custom;
+ params = params || {};
+ var h = '<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">';
+ mt.fields.forEach(function(f){
+  h += '<div';
+  // Full-width for text inputs with placeholders (summary, why, etc.)
+  if(f.type === 'text' && f.k === 'summary') h += ' style="grid-column:1/-1"';
+  h += '>';
+  h += '<label style="font-size:10px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:2px">'+f.l+'</label>';
+  var val = params[f.k] || '';
+  if(f.type === 'select'){
+   h += '<select id="pfr_f_'+f.k+'" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:4px;font-size:12px;background:var(--card);color:var(--txt)">';
+   f.opts.forEach(function(o){
+    var sel = o === val ? ' selected' : '';
+    h += '<option value="'+o+'"'+sel+'>'+o+'</option>';
+   });
+   h += '</select>';
+  } else {
+   var step = f.step ? ' step="'+f.step+'"' : '';
+   var ph = f.placeholder ? ' placeholder="'+f.placeholder+'"' : '';
+   h += '<input id="pfr_f_'+f.k+'" type="'+f.type+'"'+step+ph+' value="'+escapeHtml(String(val))+'" style="width:100%;padding:6px 8px;border:1px solid var(--border);border-radius:4px;font-size:12px;background:var(--card);color:var(--txt)">';
+  }
+  h += '</div>';
+ });
+ h += '</div>';
+ return h;
+}
+
+function pfRerenderRecFields(){
+ var mt = document.getElementById('pfr_moveType').value;
+ document.getElementById('pfr_fields').innerHTML = pfRenderMoveFields(mt, {});
+}
+
+function pfCloseRecModal(){
+ document.getElementById('pfRecModal').className = 'fb-modal-overlay';
+}
+
+function pfSaveRec(){
+ var c = getSelectedClient();
+ if(!c) return;
+ if(!c.recommendations) c.recommendations = [];
+
+ var moveType = document.getElementById('pfr_moveType').value;
+ var mt = MOVE_TYPES[moveType] || MOVE_TYPES.custom;
+ var editId = document.getElementById('pfr_editId').value || '';
+ var whyItMatters = document.getElementById('pfr_whyItMatters').value.trim();
+
+ // Gather the params
+ var params = {};
+ mt.fields.forEach(function(f){
+  var el = document.getElementById('pfr_f_'+f.k);
+  if(el) params[f.k] = el.value;
+ });
+
+ // Gather the plan tags
+ var plans = [];
+ PLANS.forEach(function(p){
+  var el = document.getElementById('pfr_plan_'+p.key);
+  if(el && el.checked) plans.push(p.key);
+ });
+ if(plans.length === 0) plans = ['protection']; // fallback — at least tag current plan
+
+ if(editId){
+  var idx = c.recommendations.findIndex(function(r){ return r.id === editId; });
+  if(idx !== -1){
+   c.recommendations[idx] = {
+    id: editId,
+    moveType: moveType,
+    plans: plans,
+    params: params,
+    whyItMatters: whyItMatters,
+    updatedAt: new Date().toISOString()
+   };
+  }
+ } else {
+  c.recommendations.push({
+   id: makeRecId(),
+   moveType: moveType,
+   plans: plans,
+   params: params,
+   whyItMatters: whyItMatters,
+   createdAt: new Date().toISOString()
+  });
+ }
+
+ c.updatedAt = new Date().toISOString();
+ saveClients();
+ pfCloseRecModal();
+ renderPortfolio();
+ showToast(editId ? 'Recommendation updated' : 'Recommendation added', 2500);
+}
+
+function pfEditRec(recId){
+ pfShowRecModal(recId);
+}
+
+function pfDeleteRec(recId){
+ var c = getSelectedClient();
+ if(!c) return;
+ if(!confirm('Delete this recommendation?')) return;
+ c.recommendations = (c.recommendations || []).filter(function(r){ return r.id !== recId; });
+ c.updatedAt = new Date().toISOString();
+ saveClients();
+ renderPortfolio();
+}
+
+// ═══ PROTECTION METRIC CALCULATOR ═══
+// Returns 3 protection metrics — before and after — for the Protection Plan report.
+// Metrics:
+//   tax-protected: $ in tax-deferred or tax-free buckets (vs taxable)
+//   medicaid-protected: $ in Medicaid-compliant structures (FL)
+//   principal-protected: $ with guaranteed principal (vs at-market-risk)
+function pfCalcProtectionMetrics(client){
+ var cur = { taxable:0, taxDeferred:0, taxFree:0, medicaidCountable:0, medicaidProtected:0, principalProtected:0, marketRisk:0 };
+
+ // CDs: taxable interest, Medicaid-countable, FDIC principal-protected
+ (client.cds||[]).forEach(function(h){
+  var a = parseFloat(h.amount)||0;
+  cur.taxable += a;
+  cur.medicaidCountable += a;
+  cur.principalProtected += a;
+ });
+ // Annuities: always tax-deferred + principal-protected, countable by default
+ (client.annuities||[]).forEach(function(h){
+  var a = parseFloat(h.currentValue)||0;
+  cur.taxDeferred += a;
+  cur.medicaidCountable += a;
+  cur.principalProtected += a;
+ });
+ // Market accounts: tax bucket depends on account type; principal protection by cash % only
+ (client.market||[]).forEach(function(h){
+  var a = parseFloat(h.value)||0;
+  var stockPct = parseFloat(h.stockPct)||0;
+  var bondPct = parseFloat(h.bondPct)||0;
+  var cashPct = parseFloat(h.cashPct)||0;
+  var at = (h.accountType||'').toLowerCase();
+  if(at.indexOf('roth') !== -1){ cur.taxFree += a; }
+  else if(at === '401k' || at === 'traditional ira' || at === 'hsa'){ cur.taxDeferred += a; }
+  else { cur.taxable += a; }
+  cur.medicaidCountable += a;
+  cur.principalProtected += a * (cashPct/100);
+  cur.marketRisk += a * ((stockPct + bondPct)/100);
+ });
+ // Cash: taxable (interest), Medicaid-countable, principal-protected (FDIC)
+ (client.cash||[]).forEach(function(h){
+  var a = parseFloat(h.balance)||0;
+  cur.taxable += a;
+  cur.medicaidCountable += a;
+  cur.principalProtected += a;
+ });
+ // Real estate: skip for Medicaid (primary home usually exempt), skip for tax bucket
+
+ // Start proposed state identical to current
+ var prop = JSON.parse(JSON.stringify(cur));
+
+ // Apply each protection-tagged recommendation
+ var recs = (client.recommendations||[]).filter(function(r){ return (r.plans||[]).indexOf('protection') !== -1; });
+ recs.forEach(function(r){
+  var p = r.params || {};
+  var amt = parseFloat(p.amount)||0;
+  if(!amt) return;
+  switch(r.moveType){
+   case 'cd_to_annuity':
+    prop.taxable -= amt;
+    prop.taxDeferred += amt;
+    break;
+   case 'brokerage_to_annuity':
+    prop.taxable -= amt;
+    prop.taxDeferred += amt;
+    prop.principalProtected += amt;
+    prop.marketRisk -= amt;
+    break;
+   case 'consolidate_annuity':
+    // No net protection change — rate/yield move. Agent's "why it matters" explains value.
+    break;
+   case 'medicaid_compliant':
+    prop.medicaidCountable -= amt;
+    prop.medicaidProtected += amt;
+    break;
+   case 'qualified_rollover':
+    // Stays tax-deferred, but gains principal protection from market
+    prop.principalProtected += amt;
+    prop.marketRisk -= amt;
+    break;
+   case 'custom':
+    // Agent explains via why-it-matters; no auto math
+    break;
+  }
+ });
+
+ // Guard against negative buckets
+ ['taxable','taxDeferred','taxFree','medicaidCountable','medicaidProtected','principalProtected','marketRisk'].forEach(function(k){
+  if(prop[k] < 0) prop[k] = 0;
+  if(cur[k] < 0) cur[k] = 0;
+ });
+
+ return {current: cur, proposed: prop, recs: recs};
+}
+
+// ═══ PROTECTION PLAN REPORT ═══
+function pfGenerateProtectionReport(){
+ var c = getSelectedClient();
+ if(!c){ showToast('Select a client first', 2500); return; }
+
+ var protRecs = (c.recommendations||[]).filter(function(r){ return (r.plans||[]).indexOf('protection') !== -1; });
+ if(protRecs.length === 0){
+  if(!confirm('No Protection Plan recommendations have been added yet. Generate report anyway?')) return;
+ }
+
+ var m = pfCalcProtectionMetrics(c);
+ var cur = m.current, prop = m.proposed;
+
+ var agentName = currentAgent ? currentAgent.name : 'Agent';
+ var agentBranch = currentAgent ? currentAgent.branch : '';
+ var agentEmail = settings.agentEmail || '';
+ var reportDate = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+
+ var totalAssets = pfTotalAssets(c);
+ var totalIncome = pfMonthlyIncome(c);
+ var curTaxProtected = cur.taxDeferred + cur.taxFree;
+ var propTaxProtected = prop.taxDeferred + prop.taxFree;
+ var taxProtectedDelta = propTaxProtected - curTaxProtected;
+ var medicaidDelta = prop.medicaidProtected - cur.medicaidProtected;
+ var principalDelta = prop.principalProtected - cur.principalProtected;
+
+ var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Protection Plan — '+escapeHtml(c.name||'Client')+'</title>';
+ html += '<style>';
+ html += 'body{font-family:Arial,sans-serif;color:#333;max-width:820px;margin:20px auto;padding:20px;background:#fff}';
+ html += 'h1{color:#534AB7;font-size:26px;margin-bottom:4px}';
+ html += 'h2{color:#534AB7;font-size:17px;border-bottom:2px solid #534AB7;padding-bottom:4px;margin-top:26px}';
+ html += 'h3{color:#0F6E56;font-size:14px;margin-top:16px;margin-bottom:6px}';
+ html += 'table{width:100%;border-collapse:collapse;margin-top:6px;font-size:12px}';
+ html += 'th{background:#0F6E56;color:#fff;padding:6px 8px;text-align:left;font-size:11px}';
+ html += 'td{padding:6px 8px;border-bottom:1px solid #eee}';
+ html += '.page1-summary{background:linear-gradient(135deg,#EEEDFE 0%,#F0FBF7 100%);padding:16px;border-radius:8px;margin:16px 0;display:flex;gap:20px;justify-content:space-around}';
+ html += '.page1-stat{text-align:center}';
+ html += '.page1-val{font-size:22px;font-weight:700;color:#534AB7}';
+ html += '.page1-lbl{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}';
+ html += '.prot-card{background:linear-gradient(135deg,#EEEDFE 0%,#D7F3E8 100%);border-radius:12px;padding:22px;margin:20px 0}';
+ html += '.prot-card h2{color:#0F6E56;border:none;margin:0 0 14px;font-size:18px;text-align:center}';
+ html += '.prot-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}';
+ html += '.prot-stat{background:#fff;padding:14px;border-radius:8px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,.08)}';
+ html += '.prot-stat .label{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}';
+ html += '.prot-stat .current{font-size:13px;color:#888;text-decoration:line-through}';
+ html += '.prot-stat .proposed{font-size:20px;font-weight:700;color:#0F6E56;margin:2px 0}';
+ html += '.prot-stat .delta{font-size:11px;color:#0F6E56;font-weight:600}';
+ html += '.delta-positive{color:#0F6E56}';
+ html += '.rec-card{border-left:4px solid #534AB7;background:#f7f6fd;padding:12px 14px;border-radius:6px;margin-bottom:10px}';
+ html += '.rec-title{font-weight:700;color:#534AB7;font-size:13px;margin-bottom:4px}';
+ html += '.rec-why{font-size:11px;color:#555;white-space:pre-wrap;padding:8px;background:#fff;border-radius:4px;border-left:3px solid #0F6E56;margin-top:6px}';
+ html += '.total-row{background:#F0FBF7;font-weight:700}';
+ html += '.disclaimer{background:#FFF5F5;border-left:4px solid #c0392b;padding:10px;margin-top:20px;font-size:10px;color:#666}';
+ html += '.footer{margin-top:24px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999;text-align:center}';
+ html += '.page-break{page-break-before:always;margin-top:30px;border-top:2px dashed #ccc;padding-top:20px}';
+ html += '@media print{body{margin:0;padding:15px}}';
+ html += '.noprint{margin:10px 0;text-align:center}';
+ html += '.noprint button{padding:8px 16px;background:#534AB7;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px;margin:0 4px}';
+ html += '@media print{.noprint{display:none}}';
+ html += '</style></head><body>';
+
+ html += '<div class="noprint">';
+ html += '<button onclick="window.print()">🖨 Print</button>';
+ html += '<button onclick="copyReportHTML()">📋 Copy HTML to Clipboard</button>';
+ html += '<button onclick="window.close()">Close</button>';
+ html += '</div>';
+
+ // ═══ PAGE 1: Current Portfolio Summary ═══
+ html += '<h1>Protection Plan</h1>';
+ html += '<div style="font-size:14px;color:#666">Prepared for <b>'+escapeHtml(c.name||'Client')+'</b>';
+ if(c.age) html += ', age '+c.age;
+ if(c.spouseAge) html += ' (spouse age '+c.spouseAge+')';
+ html += '</div>';
+ html += '<div style="font-size:12px;color:#999;margin-bottom:8px">Report Date: '+reportDate+'</div>';
+
+ html += '<h2>Where You Are Today</h2>';
+ html += '<p style="font-size:12px;color:#666">A snapshot of your current portfolio and income.</p>';
+
+ html += '<div class="page1-summary">';
+ html += '<div class="page1-stat"><div class="page1-val">'+fmtMoney(totalAssets)+'</div><div class="page1-lbl">Total Assets</div></div>';
+ html += '<div class="page1-stat"><div class="page1-val">'+fmtMoney(totalIncome)+'</div><div class="page1-lbl">Monthly Income</div></div>';
+ html += '<div class="page1-stat"><div class="page1-val">'+fmtMoney(totalIncome*12)+'</div><div class="page1-lbl">Annual Income</div></div>';
+ html += '</div>';
+
+ // Holdings table
+ var cdTotal = 0, annTotal = 0, mktTotal = 0, cashTotal = 0, reEquity = 0;
+ (c.cds||[]).forEach(function(h){ cdTotal += parseFloat(h.amount)||0; });
+ (c.annuities||[]).forEach(function(h){ annTotal += parseFloat(h.currentValue)||0; });
+ (c.market||[]).forEach(function(h){ mktTotal += parseFloat(h.value)||0; });
+ (c.cash||[]).forEach(function(h){ cashTotal += parseFloat(h.balance)||0; });
+ (c.realEstate||[]).forEach(function(h){ reEquity += (parseFloat(h.estimatedValue)||0) - (parseFloat(h.mortgageBalance)||0); });
+
+ html += '<h3>Holdings Breakdown</h3>';
+ html += '<table><tr><th>Category</th><th style="text-align:right">Value</th><th style="text-align:right">% of Total</th></tr>';
+ var cats = [
+  ['Certificates of Deposit', cdTotal],
+  ['Annuities', annTotal],
+  ['Market / Investment', mktTotal],
+  ['Cash Accounts', cashTotal],
+  ['Real Estate (Equity)', reEquity]
+ ];
+ cats.forEach(function(row){
+  if(row[1] === 0) return;
+  var pct = totalAssets > 0 ? (row[1]/totalAssets*100).toFixed(1) : '0';
+  html += '<tr><td>'+row[0]+'</td><td style="text-align:right">'+fmtMoney(row[1])+'</td><td style="text-align:right">'+pct+'%</td></tr>';
+ });
+ html += '<tr class="total-row"><td>TOTAL</td><td style="text-align:right">'+fmtMoney(totalAssets)+'</td><td style="text-align:right">100.0%</td></tr>';
+ html += '</table>';
+
+ // ═══ PAGE 2: Protection Plan ═══
+ html += '<div class="page-break"></div>';
+ html += '<h1 style="color:#0F6E56">🛡 Your Protection Plan</h1>';
+ html += '<p style="font-size:13px;color:#555">Based on your current portfolio, here are the moves we recommend to reduce your tax exposure, protect your assets from Medicaid spend-down, and safeguard your principal from market downturns.</p>';
+
+ // THREE PROTECTION METRICS CARD (the Q1d answer)
+ html += '<div class="prot-card">';
+ html += '<h2>How Your Protection Changes</h2>';
+ html += '<div class="prot-stats">';
+ // Tax-protected
+ html += '<div class="prot-stat">';
+ html += '<div class="label">Tax-Protected Assets</div>';
+ html += '<div class="current">'+fmtMoney(curTaxProtected)+'</div>';
+ html += '<div class="proposed">'+fmtMoney(propTaxProtected)+'</div>';
+ html += '<div class="delta">'+(taxProtectedDelta >= 0 ? '+' : '')+fmtMoney(taxProtectedDelta)+' shielded from annual tax</div>';
+ html += '</div>';
+ // Medicaid-protected
+ html += '<div class="prot-stat">';
+ html += '<div class="label">Medicaid-Protected (FL)</div>';
+ html += '<div class="current">'+fmtMoney(cur.medicaidProtected)+'</div>';
+ html += '<div class="proposed">'+fmtMoney(prop.medicaidProtected)+'</div>';
+ html += '<div class="delta">'+(medicaidDelta >= 0 ? '+' : '')+fmtMoney(medicaidDelta)+' protected from spend-down</div>';
+ html += '</div>';
+ // Principal-protected
+ html += '<div class="prot-stat">';
+ html += '<div class="label">Principal-Protected</div>';
+ html += '<div class="current">'+fmtMoney(cur.principalProtected)+'</div>';
+ html += '<div class="proposed">'+fmtMoney(prop.principalProtected)+'</div>';
+ html += '<div class="delta">'+(principalDelta >= 0 ? '+' : '')+fmtMoney(principalDelta)+' shielded from market</div>';
+ html += '</div>';
+ html += '</div></div>';
+
+ // Before / After summary table
+ html += '<h3>Before &amp; After — Detailed Breakdown</h3>';
+ html += '<table>';
+ html += '<tr><th>Metric</th><th style="text-align:right">Current</th><th style="text-align:right">Proposed</th><th style="text-align:right">Change</th></tr>';
+ function row(label, a, b){
+  var d = b - a;
+  var color = d > 0 ? '#0F6E56' : (d < 0 ? '#c0392b' : '#666');
+  html += '<tr><td>'+label+'</td><td style="text-align:right">'+fmtMoney(a)+'</td><td style="text-align:right">'+fmtMoney(b)+'</td><td style="text-align:right;color:'+color+';font-weight:600">'+(d>=0?'+':'')+fmtMoney(d)+'</td></tr>';
+ }
+ row('Taxable assets',          cur.taxable,         prop.taxable);
+ row('Tax-deferred assets',     cur.taxDeferred,     prop.taxDeferred);
+ row('Tax-free assets',         cur.taxFree,         prop.taxFree);
+ row('Medicaid-protected (FL)', cur.medicaidProtected, prop.medicaidProtected);
+ row('Medicaid-countable (FL)', cur.medicaidCountable, prop.medicaidCountable);
+ row('Principal-protected',     cur.principalProtected, prop.principalProtected);
+ row('At market risk',          cur.marketRisk,      prop.marketRisk);
+ html += '</table>';
+
+ // Recommendations list
+ html += '<h2>The Plan — Step by Step</h2>';
+ if(protRecs.length === 0){
+  html += '<p style="color:#999;font-style:italic">No recommendations have been added yet.</p>';
+ } else {
+  protRecs.forEach(function(r, i){
+   html += '<div class="rec-card">';
+   html += '<div class="rec-title">'+(i+1)+'. '+escapeHtml(pfRecTitle(r))+'</div>';
+   if(r.whyItMatters){
+    html += '<div class="rec-why"><b style="color:#0F6E56">Why this matters:</b> '+escapeHtml(r.whyItMatters)+'</div>';
+   }
+   html += '</div>';
+  });
+ }
+
+ html += '<div class="disclaimer"><b>Important:</b> This protection plan is for informational and planning purposes only. Medicaid rules, tax laws, and annuity features vary and may change. Florida Medicaid asset protection requires specific legal structuring — always consult a qualified Florida elder law attorney for your specific situation. Not financial, tax, or legal advice.</div>';
+ html += '<div class="footer">'+escapeHtml(agentName)+' | AAA Life Specialist | Branch '+escapeHtml(agentBranch)+'<br>'+escapeHtml(agentEmail)+'</div>';
+
+ html += '<script>function copyReportHTML(){var html=document.documentElement.outerHTML;var blob=new Blob([html],{type:"text/html"});var item=new ClipboardItem({"text/html":blob,"text/plain":new Blob([document.body.innerText],{type:"text/plain"})});navigator.clipboard.write([item]).then(function(){alert("HTML copied! Paste into a Gmail compose window.");}).catch(function(){navigator.clipboard.writeText(document.body.innerText);alert("Plain text copied.");});}<\/script>';
+
+ html += '</body></html>';
+
+ var win = window.open('', '_blank');
+ if(!win){ showToast('Popup blocked — allow popups for this site', 4000); return; }
+ win.document.open();
+ win.document.write(html);
+ win.document.close();
+}
+
+function pfRenderSection(client, key, label, fields){
+ var items = client[key] || [];
+ var h = '<div class="pf-section">';
+ h += '<div class="pf-section-head"><h4>'+label+' ('+items.length+')</h4>';
+ h += '<button class="btn btn-grn btn-sm" style="font-size:10px;padding:3px 8px" onclick="pfShowAddForm(\''+key+'\')">+ Add</button>';
+ h += '</div>';
+
+ if(items.length === 0){
+  h += '<div style="font-size:11px;color:var(--muted);font-style:italic;padding:4px 0">None</div>';
+ } else {
+  items.forEach(function(it, idx){
+   h += '<div class="pf-row">';
+   h += '<div>' + pfFormatRow(key, it) + '</div>';
+   h += '<div class="pf-row-actions">';
+   h += '<button class="btn btn-outline btn-sm" style="font-size:10px;padding:2px 6px" onclick="pfEditHolding(\''+key+'\',\''+it.id+'\')">Edit</button>';
+   h += '<button class="btn btn-outline btn-sm" style="font-size:10px;padding:2px 6px;color:#c0392b" onclick="pfDeleteHolding(\''+key+'\',\''+it.id+'\')">×</button>';
+   h += '</div>';
+   h += '</div>';
+  });
+ }
+
+ // Inline add/edit form (hidden by default)
+ h += '<div class="pf-addform" id="pfForm_'+key+'">';
+ h += '<div class="pf-fields">';
+ fields.forEach(function(f){
+  h += '<div><label>'+f.l+'</label>';
+  if(f.type === 'select'){
+   h += '<select id="pff_'+key+'_'+f.k+'">';
+   f.opts.forEach(function(o){ h += '<option value="'+o+'">'+o+'</option>'; });
+   h += '</select>';
+  } else {
+   var step = f.step ? ' step="'+f.step+'"' : '';
+   h += '<input id="pff_'+key+'_'+f.k+'" type="'+f.type+'"'+step+'>';
+  }
+  h += '</div>';
+ });
+ h += '</div>';
+ h += '<input type="hidden" id="pff_'+key+'_editid">';
+ h += '<div style="display:flex;gap:6px">';
+ h += '<button class="btn btn-pri btn-sm" onclick="pfSaveHolding(\''+key+'\')">Save</button>';
+ h += '<button class="btn btn-outline btn-sm" onclick="pfHideAddForm(\''+key+'\')">Cancel</button>';
+ h += '</div>';
+ h += '</div>';
+
+ h += '</div>';
+ return h;
+}
+
+function pfFormatRow(key, it){
+ switch(key){
+  case 'cds':
+   return '<b>'+escapeHtml(it.institution||'—')+'</b> · '+fmtMoney(it.amount)+' @ '+(it.apy||0)+'% · matures '+(it.maturityDate||'—');
+  case 'annuities':
+   return '<b>'+escapeHtml(it.carrier||'—')+'</b> '+escapeHtml(it.product||'')+' · '+fmtMoney(it.currentValue)+' @ '+(it.rate||0)+'%'+(it.qualified==='Yes'?' <span style="color:var(--amb)">[Qualified]</span>':'');
+  case 'market':
+   return '<b>'+escapeHtml(it.accountType||'—')+'</b> ('+escapeHtml(it.custodian||'')+') · '+fmtMoney(it.value)+' · '+(it.stockPct||0)+'/'+(it.bondPct||0)+'/'+(it.cashPct||0)+' S/B/C';
+  case 'cash':
+   return '<b>'+escapeHtml(it.accountType||'—')+'</b> ('+escapeHtml(it.institution||'')+') · '+fmtMoney(it.balance);
+  case 'realEstate':
+   var equity = (parseFloat(it.estimatedValue)||0) - (parseFloat(it.mortgageBalance)||0);
+   return '<b>'+escapeHtml(it.propertyType||'—')+'</b> · '+fmtMoney(it.estimatedValue)+' value'+(it.mortgageBalance?' · -'+fmtMoney(it.mortgageBalance)+' mortgage · <span style="color:var(--grn)">'+fmtMoney(equity)+' equity</span>':'');
+  case 'socialSecurity':
+   return '<b>'+escapeHtml(it.who||'—')+'</b> · '+fmtMoney(it.monthlyBenefit)+'/mo'+(it.startAge?' · starts age '+it.startAge:'');
+  case 'pensions':
+   return '<b>'+escapeHtml(it.source||'—')+'</b> · '+fmtMoney(it.monthlyAmount)+'/mo';
+  case 'otherIncome':
+   return '<b>'+escapeHtml(it.source||'—')+'</b> · '+fmtMoney(it.monthlyAmount)+'/mo';
+ }
+ return '';
+}
+
+function pfShowAddForm(key){
+ // Hide any other open forms
+ document.querySelectorAll('.pf-addform').forEach(function(el){ el.classList.remove('show'); });
+ var form = document.getElementById('pfForm_'+key);
+ if(form){
+  form.classList.add('show');
+  // Clear the edit ID (new add)
+  var editEl = document.getElementById('pff_'+key+'_editid');
+  if(editEl) editEl.value = '';
+  // Clear fields
+  form.querySelectorAll('input[id^="pff_"], select[id^="pff_"]').forEach(function(inp){
+   if(inp.type !== 'hidden') inp.value = inp.tagName === 'SELECT' ? inp.options[0].value : '';
+  });
+ }
+}
+
+function pfHideAddForm(key){
+ var form = document.getElementById('pfForm_'+key);
+ if(form) form.classList.remove('show');
+}
+
+function pfEditHolding(key, id){
+ var c = getSelectedClient();
+ if(!c) return;
+ var item = (c[key]||[]).find(function(x){ return x.id === id; });
+ if(!item) return;
+ pfShowAddForm(key);
+ // Populate fields from item
+ setTimeout(function(){
+  Object.keys(item).forEach(function(k){
+   if(k === 'id') return;
+   var el = document.getElementById('pff_'+key+'_'+k);
+   if(el) el.value = item[k];
+  });
+  var editEl = document.getElementById('pff_'+key+'_editid');
+  if(editEl) editEl.value = id;
+ }, 20);
+}
+
+function pfSaveHolding(key){
+ var c = getSelectedClient();
+ if(!c) return;
+ if(!c[key]) c[key] = [];
+
+ var editId = (document.getElementById('pff_'+key+'_editid')||{}).value || '';
+ var data = {};
+ document.querySelectorAll('#pfForm_'+key+' input, #pfForm_'+key+' select').forEach(function(inp){
+  if(inp.type === 'hidden') return;
+  var fieldName = inp.id.replace('pff_'+key+'_', '');
+  data[fieldName] = inp.value;
+ });
+
+ if(editId){
+  var idx = c[key].findIndex(function(x){ return x.id === editId; });
+  if(idx !== -1){
+   data.id = editId;
+   c[key][idx] = data;
+  }
+ } else {
+  data.id = makeHoldingId();
+  c[key].push(data);
+ }
+
+ c.updatedAt = new Date().toISOString();
+ saveClients();
+ renderPortfolio();
+}
+
+function pfDeleteHolding(key, id){
+ var c = getSelectedClient();
+ if(!c) return;
+ if(!confirm('Delete this item?')) return;
+ c[key] = (c[key]||[]).filter(function(x){ return x.id !== id; });
+ c.updatedAt = new Date().toISOString();
+ saveClients();
+ renderPortfolio();
+}
+
+function pfGenerateReport(){
+ var c = getSelectedClient();
+ if(!c){ showToast('Select a client first', 2500); return; }
+
+ var agentName = currentAgent ? currentAgent.name : 'Agent';
+ var agentBranch = currentAgent ? currentAgent.branch : '';
+ var agentEmail = settings.agentEmail || '';
+ var reportDate = new Date().toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'});
+
+ var totalAssets = pfTotalAssets(c);
+ var totalIncome = pfMonthlyIncome(c);
+
+ var cdTotal = 0, annTotal = 0, mktTotal = 0, cashTotal = 0, reEquity = 0;
+ (c.cds||[]).forEach(function(h){ cdTotal += parseFloat(h.amount)||0; });
+ (c.annuities||[]).forEach(function(h){ annTotal += parseFloat(h.currentValue)||0; });
+ (c.market||[]).forEach(function(h){ mktTotal += parseFloat(h.value)||0; });
+ (c.cash||[]).forEach(function(h){ cashTotal += parseFloat(h.balance)||0; });
+ (c.realEstate||[]).forEach(function(h){ reEquity += (parseFloat(h.estimatedValue)||0) - (parseFloat(h.mortgageBalance)||0); });
+
+ var ssTotal = 0, penTotal = 0, otherTotal = 0;
+ (c.socialSecurity||[]).forEach(function(h){ ssTotal += parseFloat(h.monthlyBenefit)||0; });
+ (c.pensions||[]).forEach(function(h){ penTotal += parseFloat(h.monthlyAmount)||0; });
+ (c.otherIncome||[]).forEach(function(h){ otherTotal += parseFloat(h.monthlyAmount)||0; });
+
+ var html = '<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Portfolio Report — '+escapeHtml(c.name||'Client')+'</title>';
+ html += '<style>';
+ html += 'body{font-family:Arial,sans-serif;color:#333;max-width:780px;margin:20px auto;padding:20px;background:#fff}';
+ html += 'h1{color:#534AB7;font-size:24px;margin-bottom:4px}';
+ html += 'h2{color:#534AB7;font-size:16px;border-bottom:2px solid #534AB7;padding-bottom:4px;margin-top:24px}';
+ html += 'h3{color:#0F6E56;font-size:13px;margin-top:14px;margin-bottom:6px}';
+ html += 'table{width:100%;border-collapse:collapse;margin-top:6px;font-size:12px}';
+ html += 'th{background:#0F6E56;color:#fff;padding:6px 8px;text-align:left;font-size:11px}';
+ html += 'td{padding:5px 8px;border-bottom:1px solid #eee}';
+ html += '.summary{background:linear-gradient(135deg,#EEEDFE 0%,#F0FBF7 100%);padding:16px;border-radius:8px;margin:16px 0;display:flex;gap:20px;justify-content:space-around}';
+ html += '.summary-stat{text-align:center}';
+ html += '.summary-val{font-size:22px;font-weight:700;color:#534AB7}';
+ html += '.summary-lbl{font-size:10px;color:#666;text-transform:uppercase;letter-spacing:.5px;margin-top:2px}';
+ html += '.total-row{background:#F0FBF7;font-weight:700}';
+ html += '.disclaimer{background:#FFF5F5;border-left:4px solid #c0392b;padding:10px;margin-top:20px;font-size:10px;color:#666}';
+ html += '.footer{margin-top:24px;padding-top:12px;border-top:1px solid #ddd;font-size:11px;color:#999;text-align:center}';
+ html += '@media print{body{margin:0;padding:15px}}';
+ html += '.noprint{margin:10px 0;text-align:center}';
+ html += '.noprint button{padding:8px 16px;background:#534AB7;color:#fff;border:none;border-radius:6px;cursor:pointer;font-size:13px;margin:0 4px}';
+ html += '@media print{.noprint{display:none}}';
+ html += '</style></head><body>';
+
+ html += '<div class="noprint">';
+ html += '<button onclick="window.print()">🖨 Print</button>';
+ html += '<button onclick="copyReportHTML()">📋 Copy HTML to Clipboard</button>';
+ html += '<button onclick="window.close()">Close</button>';
+ html += '</div>';
+
+ html += '<h1>Portfolio Report</h1>';
+ html += '<div style="font-size:13px;color:#666">Prepared for <b>'+escapeHtml(c.name||'Client')+'</b>';
+ if(c.age) html += ', age '+c.age;
+ if(c.spouseAge) html += ' (spouse age '+c.spouseAge+')';
+ html += '</div>';
+ html += '<div style="font-size:12px;color:#999">Report Date: '+reportDate+'</div>';
+
+ // Summary
+ html += '<div class="summary">';
+ html += '<div class="summary-stat"><div class="summary-val">'+fmtMoney(totalAssets)+'</div><div class="summary-lbl">Total Assets</div></div>';
+ html += '<div class="summary-stat"><div class="summary-val">'+fmtMoney(totalIncome)+'</div><div class="summary-lbl">Monthly Income</div></div>';
+ html += '<div class="summary-stat"><div class="summary-val">'+fmtMoney(totalIncome*12)+'</div><div class="summary-lbl">Annual Income</div></div>';
+ html += '</div>';
+
+ // Holdings breakdown
+ html += '<h2>Holdings Summary</h2>';
+ html += '<table><tr><th>Category</th><th style="text-align:right">Value</th><th style="text-align:right">% of Total</th></tr>';
+ var cats = [
+  ['Certificates of Deposit', cdTotal],
+  ['Annuities', annTotal],
+  ['Market / Investment', mktTotal],
+  ['Cash Accounts', cashTotal],
+  ['Real Estate (Equity)', reEquity]
+ ];
+ cats.forEach(function(row){
+  if(row[1] === 0) return;
+  var pct = totalAssets > 0 ? (row[1]/totalAssets*100).toFixed(1) : '0';
+  html += '<tr><td>'+row[0]+'</td><td style="text-align:right">'+fmtMoney(row[1])+'</td><td style="text-align:right">'+pct+'%</td></tr>';
+ });
+ html += '<tr class="total-row"><td>TOTAL</td><td style="text-align:right">'+fmtMoney(totalAssets)+'</td><td style="text-align:right">100.0%</td></tr>';
+ html += '</table>';
+
+ // Detailed sections
+ if((c.cds||[]).length){
+  html += '<h3>Certificates of Deposit</h3><table><tr><th>Institution</th><th>Amount</th><th>APY</th><th>Maturity</th><th>Term (yrs)</th></tr>';
+  c.cds.forEach(function(h2){
+   html += '<tr><td>'+escapeHtml(h2.institution||'—')+'</td><td>'+fmtMoney(h2.amount)+'</td><td>'+(h2.apy||0)+'%</td><td>'+(h2.maturityDate||'—')+'</td><td>'+(h2.termYears||'—')+'</td></tr>';
+  });
+  html += '</table>';
+ }
+ if((c.annuities||[]).length){
+  html += '<h3>Annuities</h3><table><tr><th>Carrier</th><th>Product</th><th>Value</th><th>Rate</th><th>Surrender End</th><th>Qualified</th></tr>';
+  c.annuities.forEach(function(h2){
+   html += '<tr><td>'+escapeHtml(h2.carrier||'—')+'</td><td>'+escapeHtml(h2.product||'—')+'</td><td>'+fmtMoney(h2.currentValue)+'</td><td>'+(h2.rate||0)+'%</td><td>'+(h2.surrenderEnd||'—')+'</td><td>'+(h2.qualified||'No')+'</td></tr>';
+  });
+  html += '</table>';
+ }
+ if((c.market||[]).length){
+  html += '<h3>Market / Investment Accounts</h3><table><tr><th>Type</th><th>Custodian</th><th>Value</th><th>Stock/Bond/Cash %</th></tr>';
+  c.market.forEach(function(h2){
+   html += '<tr><td>'+escapeHtml(h2.accountType||'—')+'</td><td>'+escapeHtml(h2.custodian||'—')+'</td><td>'+fmtMoney(h2.value)+'</td><td>'+(h2.stockPct||0)+'/'+(h2.bondPct||0)+'/'+(h2.cashPct||0)+'</td></tr>';
+  });
+  html += '</table>';
+ }
+ if((c.cash||[]).length){
+  html += '<h3>Cash Accounts</h3><table><tr><th>Type</th><th>Institution</th><th>Balance</th></tr>';
+  c.cash.forEach(function(h2){
+   html += '<tr><td>'+escapeHtml(h2.accountType||'—')+'</td><td>'+escapeHtml(h2.institution||'—')+'</td><td>'+fmtMoney(h2.balance)+'</td></tr>';
+  });
+  html += '</table>';
+ }
+ if((c.realEstate||[]).length){
+  html += '<h3>Real Estate</h3><table><tr><th>Type</th><th>Value</th><th>Mortgage</th><th>Equity</th></tr>';
+  c.realEstate.forEach(function(h2){
+   var eq = (parseFloat(h2.estimatedValue)||0) - (parseFloat(h2.mortgageBalance)||0);
+   html += '<tr><td>'+escapeHtml(h2.propertyType||'—')+'</td><td>'+fmtMoney(h2.estimatedValue)+'</td><td>'+fmtMoney(h2.mortgageBalance)+'</td><td>'+fmtMoney(eq)+'</td></tr>';
+  });
+  html += '</table>';
+ }
+
+ // Income breakdown
+ if(totalIncome > 0){
+  html += '<h2>Monthly Income</h2>';
+  html += '<table><tr><th>Source</th><th style="text-align:right">Monthly</th><th style="text-align:right">Annual</th></tr>';
+  if(ssTotal > 0) html += '<tr><td>Social Security</td><td style="text-align:right">'+fmtMoney(ssTotal)+'</td><td style="text-align:right">'+fmtMoney(ssTotal*12)+'</td></tr>';
+  if(penTotal > 0) html += '<tr><td>Pension</td><td style="text-align:right">'+fmtMoney(penTotal)+'</td><td style="text-align:right">'+fmtMoney(penTotal*12)+'</td></tr>';
+  if(otherTotal > 0) html += '<tr><td>Other Income</td><td style="text-align:right">'+fmtMoney(otherTotal)+'</td><td style="text-align:right">'+fmtMoney(otherTotal*12)+'</td></tr>';
+  html += '<tr class="total-row"><td>TOTAL</td><td style="text-align:right">'+fmtMoney(totalIncome)+'</td><td style="text-align:right">'+fmtMoney(totalIncome*12)+'</td></tr>';
+  html += '</table>';
+
+  // Detail of SS if any
+  if((c.socialSecurity||[]).length){
+   html += '<h3>Social Security Details</h3><table><tr><th>Who</th><th>Monthly Benefit</th><th>Start Age</th></tr>';
+   c.socialSecurity.forEach(function(h2){
+    html += '<tr><td>'+escapeHtml(h2.who||'—')+'</td><td>'+fmtMoney(h2.monthlyBenefit)+'</td><td>'+(h2.startAge||'—')+'</td></tr>';
+   });
+   html += '</table>';
+  }
+  if((c.pensions||[]).length){
+   html += '<h3>Pension Details</h3><table><tr><th>Source</th><th>Monthly Amount</th></tr>';
+   c.pensions.forEach(function(h2){
+    html += '<tr><td>'+escapeHtml(h2.source||'—')+'</td><td>'+fmtMoney(h2.monthlyAmount)+'</td></tr>';
+   });
+   html += '</table>';
+  }
+  if((c.otherIncome||[]).length){
+   html += '<h3>Other Income Details</h3><table><tr><th>Source</th><th>Monthly Amount</th></tr>';
+   c.otherIncome.forEach(function(h2){
+    html += '<tr><td>'+escapeHtml(h2.source||'—')+'</td><td>'+fmtMoney(h2.monthlyAmount)+'</td></tr>';
+   });
+   html += '</table>';
+  }
+ }
+
+ if(c.notes){
+  html += '<h2>Notes</h2>';
+  html += '<div style="font-size:12px;white-space:pre-wrap;background:#f9f9f9;padding:10px;border-radius:6px">'+escapeHtml(c.notes)+'</div>';
+ }
+
+ html += '<div class="disclaimer"><b>Important:</b> This report is for informational and planning purposes only. Values are based on information provided and may not reflect current market conditions. Not financial, tax, or legal advice. Please consult qualified professionals for specific guidance.</div>';
+ html += '<div class="footer">'+escapeHtml(agentName)+' | AAA Life Specialist | Branch '+escapeHtml(agentBranch)+'<br>'+escapeHtml(agentEmail)+'</div>';
+
+ html += '<script>function copyReportHTML(){var html=document.documentElement.outerHTML;var blob=new Blob([html],{type:"text/html"});var item=new ClipboardItem({"text/html":blob,"text/plain":new Blob([document.body.innerText],{type:"text/plain"})});navigator.clipboard.write([item]).then(function(){alert("HTML copied! Paste into a Gmail compose window.");}).catch(function(){navigator.clipboard.writeText(document.body.innerText);alert("Plain text copied.");});}<\/script>';
+
+ html += '</body></html>';
+
+ var win = window.open('', '_blank');
+ if(!win){ showToast('Popup blocked — allow popups for this site', 4000); return; }
+ win.document.open();
+ win.document.write(html);
+ win.document.close();
+}
+
+function pfExportJSON(){
+ if(clients.length === 0){ showToast('No clients to export', 2500); return; }
+ var data = {
+  version: 1,
+  agentId: currentAgent ? currentAgent.id : '',
+  agentName: currentAgent ? currentAgent.name : '',
+  exportedAt: new Date().toISOString(),
+  clients: clients
+ };
+ var blob = new Blob([JSON.stringify(data, null, 2)], {type:'application/json'});
+ var url = URL.createObjectURL(blob);
+ var a = document.createElement('a');
+ a.href = url;
+ a.download = 'duetincome-portfolio-' + (currentAgent ? currentAgent.id : 'agent') + '-' + new Date().toISOString().slice(0,10) + '.json';
+ document.body.appendChild(a);
+ a.click();
+ document.body.removeChild(a);
+ URL.revokeObjectURL(url);
+ showToast('Exported ' + clients.length + ' client(s)', 3000);
+}
+
+function pfImportJSONPrompt(){
+ document.getElementById('pfImportFile').click();
+}
+
+function pfImportJSON(event){
+ var file = event.target.files[0];
+ if(!file) return;
+ var reader = new FileReader();
+ reader.onload = function(e){
+  try {
+   var data = JSON.parse(e.target.result);
+   if(!data.clients || !Array.isArray(data.clients)){
+    showToast('Invalid file format', 4000);
+    return;
+   }
+   var count = data.clients.length;
+   if(!confirm('Import ' + count + ' client(s)? This will REPLACE your current client list.')) return;
+   clients = data.clients;
+   saveClients();
+   loadClients(); // recomputes next IDs
+   selectedClientId = null;
+   renderPortfolio();
+   showToast('Imported ' + count + ' client(s)', 3000);
+  } catch(err){
+   showToast('Import error: ' + err.message, 4000);
+  }
+ };
+ reader.readAsText(file);
+ // Reset so re-importing same file works
+ event.target.value = '';
+}
+
 
 // ═══ INIT ═══
 (async function(){
