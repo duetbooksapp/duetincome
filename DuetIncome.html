@@ -1,6 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!-- duet-auth:start -->
+<script>
+/* Duet Auth v1: Firebase email sign-in for the shared Duet database.
+   This exact block is pasted at the top of <head> in every Duet app that uses
+   duet-crm-default-rtdb. It attaches a Firebase ID token to every database
+   request (fetch + EventSource), so the database rules can refuse anyone who
+   isn't signed in. Apps need no other changes. Canonical copy: smaxim-spec/duet
+   auth/duet-auth.js. Edit it there, then re-paste it into each app.
+   Sign out from the browser console: duetAuth.signOut() */
+(function(){
+ var API_KEY = 'AIzaSyDlu3Om5HZh-er_1OIotYNuIau6LkAVFjs';
+ var DB_HOST = 'duet-crm-default-rtdb.firebaseio.com';
+ var STORE = 'duet_auth_v1';
+ var state = null;
+ try { state = JSON.parse(localStorage.getItem(STORE) || 'null'); } catch(e){}
+ var pending = null;
+ var origFetch = window.fetch.bind(window);
+
+ function save(s){
+  state = s;
+  try { s ? localStorage.setItem(STORE, JSON.stringify(s)) : localStorage.removeItem(STORE); } catch(e){}
+ }
+ function fromResp(d){
+  return {
+   idToken: d.idToken || d.id_token,
+   refreshToken: d.refreshToken || d.refresh_token,
+   email: d.email || (state && state.email) || '',
+   exp: Date.now() + (parseInt(d.expiresIn || d.expires_in, 10) || 3600) * 1000
+  };
+ }
+ function refresh(){
+  return origFetch('https://securetoken.googleapis.com/v1/token?key=' + API_KEY, {
+   method: 'POST',
+   headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+   body: 'grant_type=refresh_token&refresh_token=' + encodeURIComponent(state.refreshToken)
+  }).then(function(r){ if(!r.ok) throw new Error('refresh failed'); return r.json(); })
+    .then(function(d){ save(fromResp(d)); return state.idToken; });
+ }
+ // Resolves with a valid ID token, refreshing it or showing the sign-in form as needed.
+ // Concurrent callers share one in-flight request.
+ function token(){
+  if(state && state.idToken && state.exp - Date.now() > 5 * 60 * 1000) return Promise.resolve(state.idToken);
+  if(!pending){
+   pending = (state && state.refreshToken
+     ? refresh().catch(function(){ save(null); return signIn(); })
+     : signIn()
+   ).then(function(t){ pending = null; return t; });
+  }
+  return pending;
+ }
+ function withAuth(url, t){ return url + (url.indexOf('?') < 0 ? '?' : '&') + 'auth=' + encodeURIComponent(t); }
+
+ window.fetch = function(input, init){
+  var url = typeof input === 'string' ? input : (input && input.url);
+  if(!url || url.indexOf(DB_HOST) < 0) return origFetch(input, init);
+  function send(t){
+   return origFetch(typeof input === 'string' ? withAuth(url, t) : new Request(withAuth(url, t), input), init);
+  }
+  return token().then(send).then(function(r){
+   if(r.status !== 401) return r;
+   // Token rejected (revoked or expired early): force a refresh and retry once.
+   if(state) state.exp = 0;
+   return token().then(send);
+  });
+ };
+
+ // Firebase streams (EventSource) can't wait for a token and end with
+ // 'auth_revoked' when it expires, so wrap them and reconnect with a fresh one.
+ var OrigES = window.EventSource;
+ if(OrigES){
+  var AuthES = function(url, cfg){
+   if(String(url).indexOf(DB_HOST) < 0) return new OrigES(url, cfg);
+   var listeners = [], es = null, closed = false;
+   function open(){
+    token().then(function(t){
+     if(closed) return;
+     es = new OrigES(withAuth(String(url), t), cfg);
+     listeners.forEach(function(l){ es.addEventListener(l[0], l[1], l[2]); });
+     es.addEventListener('auth_revoked', function(){ es.close(); if(state) state.exp = 0; open(); });
+     es.addEventListener('error', function(){
+      if(es.readyState === 2 && !closed) setTimeout(open, 5000);
+     });
+    });
+   }
+   this.addEventListener = function(type, fn, opt){ listeners.push([type, fn, opt]); if(es) es.addEventListener(type, fn, opt); };
+   this.removeEventListener = function(type, fn, opt){
+    listeners = listeners.filter(function(l){ return !(l[0] === type && l[1] === fn); });
+    if(es) es.removeEventListener(type, fn, opt);
+   };
+   this.close = function(){ closed = true; if(es) es.close(); };
+   open();
+  };
+  AuthES.CONNECTING = 0; AuthES.OPEN = 1; AuthES.CLOSED = 2;
+  window.EventSource = AuthES;
+ }
+
+ function signIn(){
+  return new Promise(function(resolve){
+   function show(){
+    var box = document.createElement('div');
+    box.id = 'duet-auth';
+    box.style.cssText = 'position:fixed;inset:0;z-index:2147483647;background:rgba(10,12,20,.92);display:flex;align-items:center;justify-content:center;padding:16px;font:15px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif';
+    box.innerHTML =
+     '<form style="background:#1a1d24;color:#e8eaed;border:1px solid #2c313c;border-radius:14px;padding:22px;width:100%;max-width:340px">' +
+     '<div style="font-size:18px;font-weight:700;margin-bottom:4px">Sign in to Duet</div>' +
+     '<div style="color:#9aa0ab;font-size:13px;margin-bottom:14px">Once per device. Your data stays locked to your account.</div>' +
+     '<input name="e" type="email" autocomplete="username" placeholder="Email" required style="width:100%;box-sizing:border-box;margin-bottom:8px;padding:10px;border-radius:8px;border:1px solid #2c313c;background:#0f1115;color:#e8eaed;font-size:15px">' +
+     '<input name="p" type="password" autocomplete="current-password" placeholder="Password" required style="width:100%;box-sizing:border-box;margin-bottom:10px;padding:10px;border-radius:8px;border:1px solid #2c313c;background:#0f1115;color:#e8eaed;font-size:15px">' +
+     '<div class="err" style="color:#ff6b6b;font-size:13px;min-height:18px;margin-bottom:6px"></div>' +
+     '<button type="submit" style="width:100%;padding:11px;border:none;border-radius:10px;background:#7c6cf0;color:#fff;font-weight:700;font-size:15px;cursor:pointer">Sign in</button>' +
+     '</form>';
+    document.body.appendChild(box);
+    var form = box.querySelector('form'), err = box.querySelector('.err'), btn = box.querySelector('button');
+    if(state && state.email) form.e.value = state.email;
+    form.addEventListener('submit', function(ev){
+     ev.preventDefault();
+     btn.disabled = true; btn.textContent = 'Signing in…'; err.textContent = '';
+     origFetch('https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=' + API_KEY, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({email: form.e.value.trim(), password: form.p.value, returnSecureToken: true})
+     }).then(function(r){ return r.json(); }).then(function(d){
+      if(!d.idToken){
+       var code = (d.error && d.error.message) || '';
+       throw new Error(/INVALID|PASSWORD|EMAIL_NOT_FOUND/.test(code) ? 'Wrong email or password.'
+        : /TOO_MANY/.test(code) ? 'Too many tries. Wait a minute and try again.'
+        : 'Sign-in failed: ' + (code || 'network error'));
+      }
+      save(fromResp(d));
+      box.remove();
+      resolve(state.idToken);
+     }).catch(function(e){
+      err.textContent = e.message || 'Sign-in failed.';
+      btn.disabled = false; btn.textContent = 'Sign in';
+     });
+    });
+   }
+   if(document.body) show(); else document.addEventListener('DOMContentLoaded', show);
+  });
+ }
+
+ window.duetAuth = {
+  email: function(){ return state && state.email; },
+  signOut: function(){ save(null); location.reload(); }
+ };
+})();
+</script>
+<!-- duet-auth:end -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DuetIncome — Smart Retirement Comparison Tools</title>
