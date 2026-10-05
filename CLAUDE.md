@@ -9,12 +9,12 @@ DuetIncome: client-facing retirement comparison tools (CD vs annuity, annuity vs
 Every app is one self-contained HTML file deployed to GitHub Pages from `main`
 (push to main, wait ~60s). The one exception is weekly1-companion, which is on Vercel.
 The shared Firebase Realtime DB is `https://duet-crm-default-rtdb.firebaseio.com/`.
-Its rules are open, so treat everything in it and in every public repo as public.
+Its rules are open, so treat everything in it as public. Pages sites are always public, even from private repos.
 
 | App | Repo | Live URL | Data |
 |---|---|---|---|
-| DuetCRM (+ Mobile `m.html`, DuetHome, SalesTracker demo) | smaxim-spec/duet | https://smaxim-spec.github.io/duet/ | Firebase root (`/leads`, `/backups`, `/calley_webhook_logs`, `/phone_inbox_leads`, `/weeklyReviews`); reads `/duetbooks/steve_maxim/cases.json` |
-| DuetBooks (cases and commissions) | duetbooksapp/duetbooks | https://duetbooksapp.github.io/duetbooks/ | Firebase `/duetbooks/<agent>/…`; PATCHes CRM `/leads/data/<idx>/policyStatus`; Anthropic API (user key) |
+| DuetCRM (+ Mobile `m.html`, DuetHome, SalesTracker demo) | smaxim-spec/duet (private) | https://smaxim-spec.github.io/duet/ | Firebase root (`/leads`, `/backups`, `/calley_webhook_logs`, `/phone_inbox_leads`, `/weeklyReviews`); reads `/duetbooks/steve_maxim/cases.json` |
+| DuetBooks (cases and commissions) | duetbooksapp/duetbooks (private) | https://duetbooksapp.github.io/duetbooks/ | Firebase `/duetbooks/<agent>/…`; PATCHes CRM `/leads/data/<idx>/policyStatus`; Anthropic API (user key) |
 | DuetCoach (sales roleplay) | duetbooksapp/duetcoach | https://duetbooksapp.github.io/duetcoach/ (app: `/app.html`) | Firebase `/duetcoach`; Anthropic + ElevenLabs (user keys) |
 | DuetIncome (retirement comparisons) | duetbooksapp/duetincome | https://duetbooksapp.github.io/duetincome/ | Firebase `/duetincome`; localStorage `doi_*` |
 | DuetMealPrep (Steve & Max) | duetbooksapp/mealprep | https://duetbooksapp.github.io/mealprep/ | Firebase `/duetmealprep/steve_maxim.json`; recipes live in the `RECIPES` array |
